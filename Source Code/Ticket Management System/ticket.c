@@ -11,7 +11,7 @@ struct Note
 struct Ticket
 {
 	wchar_t* id;
-	wchar_t* customer_email;
+	char* customer_email;
 	wchar_t* title;
 	wchar_t* type;
 	wchar_t* severity;
