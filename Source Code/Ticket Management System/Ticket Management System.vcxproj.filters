@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Menu">
       <UniqueIdentifier>{f6bb289b-9b02-4f30-9475-131d7c1fb6be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\BL">
+      <UniqueIdentifier>{4e36d740-32da-4846-ab45-fe58daa1e9a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BL">
+      <UniqueIdentifier>{972e1da1-8089-452a-a559-49a1ee9235e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -42,6 +48,15 @@
     <ClCompile Include="menu_option.c">
       <Filter>Source Files\Menu</Filter>
     </ClCompile>
+    <ClCompile Include="customer_menu.c">
+      <Filter>Source Files\BL</Filter>
+    </ClCompile>
+    <ClCompile Include="supportgiver_menu.c">
+      <Filter>Source Files\BL</Filter>
+    </ClCompile>
+    <ClCompile Include="auth_menu.c">
+      <Filter>Source Files\BL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ticket.h">
@@ -61,6 +76,15 @@
     </ClInclude>
     <ClInclude Include="menu_option.h">
       <Filter>Header Files\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="customer_menu.h">
+      <Filter>Header Files\BL</Filter>
+    </ClInclude>
+    <ClInclude Include="supportgiver_menu.h">
+      <Filter>Header Files\BL</Filter>
+    </ClInclude>
+    <ClInclude Include="auth_menu.h">
+      <Filter>Header Files\BL</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

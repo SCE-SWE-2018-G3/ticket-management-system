@@ -1,34 +1,90 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "menu.h"
+#include "auth_menu.h"
+#include "customer_menu.h"
+#include "supportgiver_menu.h"
+#include "auth.h"
 
-void action()
+struct Menu* auth_menu = NULL;
+struct Menu* customer_menu = NULL;
+struct Menu* supportgiver_menu = NULL;
+struct Menu* current_menu = NULL;
+
+void whenAuth()
 {
-	wprintf(L"We have success!\n");
-	wprintf(L"יש לנו הצלחה\n");
+	if (auth_isSupportGiver())
+	{
+		current_menu = supportgiver_menu;
+	}
+	else
+	{
+		current_menu = customer_menu;
+	}
+}
+
+bool init()
+{
+	auth_menu = createAuthMenu(whenAuth);
+	if (auth_menu == NULL)
+	{
+		return false;
+	}
+
+	customer_menu = createCustomerMenu();
+	if (customer_menu == NULL)
+	{
+		return false;
+	}
+
+	supportgiver_menu = createSupportGiverMenu();
+	if (supportgiver_menu == NULL)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+void deinit()
+{
+	if (auth_menu != NULL)
+	{
+		menu_destroy(auth_menu);
+	}
+	if (customer_menu != NULL)
+	{
+		menu_destroy(customer_menu);
+	}
+	if (supportgiver_menu != NULL)
+	{
+		menu_destroy(supportgiver_menu);
+	}
 }
 
 int main(int argc, wchar_t* argv[])
 {
-	struct Menu* menu = menu_create();
-	if (menu == NULL)
+	if (!init())
 	{
 		fwprintf(stderr, L"Could not create menu\n");
+		deinit();
 		return EXIT_FAILURE;
 	}
 
-	while (menu_isOpen(menu) && !menu_hasError(menu))
+	current_menu = auth_menu;
+
+	while (menu_isOpen(current_menu) && !menu_hasError(current_menu))
 	{
-		menu_tick(menu);
+		system("CLS");
+		menu_tick(current_menu);
 	}
 
-	if (menu_hasError(menu))
+	if (menu_hasError(current_menu))
 	{
-		fwprintf(stderr, L"Error in menu: %s\n", menu_getError(menu));
-		menu_destroy(menu);
+		fwprintf(stderr, L"Error in menu: %s\n", menu_getError(current_menu));
+		deinit();
 		return EXIT_FAILURE;
 	}
 
-	menu_destroy(menu);
+	deinit();
 	return EXIT_SUCCESS;
 }

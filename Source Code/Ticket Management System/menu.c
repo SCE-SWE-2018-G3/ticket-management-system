@@ -7,6 +7,7 @@ struct Menu
 {
 	bool is_open;
 	wchar_t* error;
+	wchar_t* title;
 	struct Vector* options;
 };
 
@@ -17,6 +18,7 @@ struct Menu* menu_create()
 	{
 		menu->is_open = true;
 		menu->error = NULL;
+		menu->title = NULL;
 
 		menu->options = vector_create();
 		if (menu->options == NULL)
@@ -72,10 +74,23 @@ wchar_t* menu_getError(struct Menu* menu)
 	return L"Menu is NULL";
 }
 
+void menu_setTitle(struct Menu* menu, wchar_t* title)
+{
+	if (menu != NULL)
+	{
+		menu->title = title;
+	}
+}
+
 void menu_tick(struct Menu* menu)
 {
 	if (menu != NULL)
 	{
+		if (menu->title != NULL)
+		{
+			wprintf(L"%s\n", menu->title);
+		}
+
 		for (unsigned int i = 0; i < vector_getSize(menu->options); ++i)
 		{
 			struct MenuOption* option = vector_getAt(menu->options, i);
