@@ -118,7 +118,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="auth.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="menu.c" />
+    <ClCompile Include="menu_option.c" />
+    <ClCompile Include="ticket.c" />
+    <ClCompile Include="user.c" />
+    <ClCompile Include="vector.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="auth.h" />
+    <ClInclude Include="menu.h" />
+    <ClInclude Include="menu_option.h" />
+    <ClInclude Include="ticket.h" />
+    <ClInclude Include="user.h" />
+    <ClInclude Include="vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
