@@ -23,7 +23,7 @@ void setEmail()
 		swprintf(email_wchar, 64, L"%S", email);
 		wchar_t new_title[64] = L"E-Mail: ";
 		wcscat(new_title, email_wchar);
-		menuOption_setTitle(email_option, new_title);
+		menuOption_setTitleAlloc(email_option, new_title);
 	}
 }
 
@@ -39,7 +39,7 @@ void setPassword()
 	{
 		wchar_t new_title[64] = L"Password: ";
 		wcscat(new_title, password);
-		menuOption_setTitle(password_option, new_title);
+		menuOption_setTitleAlloc(password_option, new_title);
 	}
 }
 

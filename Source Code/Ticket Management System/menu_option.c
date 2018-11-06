@@ -27,7 +27,7 @@ void menuOption_destroy(struct MenuOption* option)
 	{
 		if (option->title_was_malloced)
 		{
-			free(option->title);
+			//free(option->title);
 		}
 		free(option);
 	}
@@ -42,7 +42,7 @@ wchar_t* menuOption_getTitle(struct MenuOption* option)
 	return NULL;
 }
 
-void menuOption_setTitle(struct MenuOption* option, wchar_t* title)
+void menuOption_setTitleLiteral(struct MenuOption* option, wchar_t* title)
 {
 	if (option != NULL)
 	{
@@ -51,11 +51,25 @@ void menuOption_setTitle(struct MenuOption* option, wchar_t* title)
 			free(option->title);
 		}
 
+		option->title = title;
+		option->title_was_malloced = false;
+	}
+}
+
+void menuOption_setTitleAlloc(struct MenuOption* option, wchar_t* title)
+{
+	if (option != NULL)
+	{
+		if (option->title_was_malloced && option->title != NULL)
+		{
+			//free(option->title);
+		}
+
 		option->title = malloc(sizeof(wchar_t) * wcslen(title));
 		if (option->title != NULL)
 		{
-			option->title_was_malloced = true;
 			wcscpy(option->title, title);
+			option->title_was_malloced = true;
 		}
 	}
 }
