@@ -76,6 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,7 +119,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="auth.c" />
+    <ClCompile Include="auth_menu.c" />
+    <ClCompile Include="customer_menu.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="menu.c" />
+    <ClCompile Include="menu_option.c" />
+    <ClCompile Include="supportgiver_menu.c" />
+    <ClCompile Include="ticket.c" />
+    <ClCompile Include="user.c" />
+    <ClCompile Include="vector.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="auth.h" />
+    <ClInclude Include="auth_menu.h" />
+    <ClInclude Include="customer_menu.h" />
+    <ClInclude Include="menu.h" />
+    <ClInclude Include="menu_option.h" />
+    <ClInclude Include="supportgiver_menu.h" />
+    <ClInclude Include="ticket.h" />
+    <ClInclude Include="user.h" />
+    <ClInclude Include="vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -13,10 +13,78 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Menu">
+      <UniqueIdentifier>{e597a68f-ecd2-4712-a507-291c1d95c0c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menu">
+      <UniqueIdentifier>{f6bb289b-9b02-4f30-9475-131d7c1fb6be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BL">
+      <UniqueIdentifier>{4e36d740-32da-4846-ab45-fe58daa1e9a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BL">
+      <UniqueIdentifier>{972e1da1-8089-452a-a559-49a1ee9235e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ticket.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="user.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="auth.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vector.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="menu.c">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="menu_option.c">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="customer_menu.c">
+      <Filter>Source Files\BL</Filter>
+    </ClCompile>
+    <ClCompile Include="supportgiver_menu.c">
+      <Filter>Source Files\BL</Filter>
+    </ClCompile>
+    <ClCompile Include="auth_menu.c">
+      <Filter>Source Files\BL</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ticket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="user.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="auth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="menu.h">
+      <Filter>Header Files\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="menu_option.h">
+      <Filter>Header Files\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="customer_menu.h">
+      <Filter>Header Files\BL</Filter>
+    </ClInclude>
+    <ClInclude Include="supportgiver_menu.h">
+      <Filter>Header Files\BL</Filter>
+    </ClInclude>
+    <ClInclude Include="auth_menu.h">
+      <Filter>Header Files\BL</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
