@@ -1,7 +1,7 @@
 #include "auth.h"
 
 bool authenticated = false;
-bool support_giver = true;
+bool support_giver = false;
 
 void auth_authenticate(char* email, wchar_t* password)
 {
@@ -16,4 +16,10 @@ bool auth_isAuthenticated()
 bool auth_isSupportGiver()
 {
 	return support_giver;
+}
+
+char* auth_getEmail()
+{
+	// TODO
+	return "somecustomer@gmail.com";
 }
