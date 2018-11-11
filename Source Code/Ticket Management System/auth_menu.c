@@ -23,23 +23,22 @@ void setEmail()
 		swprintf(email_wchar, 64, L"%S", email);
 		wchar_t new_title[64] = L"E-Mail: ";
 		wcscat(new_title, email_wchar);
-		menuOption_setTitleAlloc(email_option, new_title);
+		menuOption_setTitle(email_option, new_title);
 	}
 }
 
 void setPassword()
 {
-	wchar_t* context = malloc(sizeof(wchar_t));
+	wchar_t* context;
 	wchar_t input[100];
 	fgetws(input, 10, stdin);
 	wcstok(input, L"\n", &context);
-	free(context);
 	password = input;
 	if (email_option != NULL)
 	{
 		wchar_t new_title[64] = L"Password: ";
 		wcscat(new_title, password);
-		menuOption_setTitleAlloc(password_option, new_title);
+		menuOption_setTitle(password_option, new_title);
 	}
 }
 
