@@ -22,6 +22,12 @@ void whenAuth()
 	}
 }
 
+void whenLogOut()
+{
+	auth_logOut();
+	current_menu = auth_menu;
+}
+
 bool init()
 {
 	auth_menu = createAuthMenu(whenAuth);
@@ -30,13 +36,13 @@ bool init()
 		return false;
 	}
 
-	customer_menu = createCustomerMenu();
+	customer_menu = createCustomerMenu(whenLogOut);
 	if (customer_menu == NULL)
 	{
 		return false;
 	}
 
-	supportgiver_menu = createSupportGiverMenu();
+	supportgiver_menu = createSupportGiverMenu(whenLogOut);
 	if (supportgiver_menu == NULL)
 	{
 		return false;

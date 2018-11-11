@@ -8,6 +8,11 @@ void auth_authenticate(char* email, wchar_t* password)
 	authenticated = true; // TODO
 }
 
+void auth_logOut()
+{
+	authenticated = false; // TODO
+}
+
 bool auth_isAuthenticated()
 {
 	return authenticated;

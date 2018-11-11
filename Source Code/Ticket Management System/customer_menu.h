@@ -2,4 +2,4 @@
 
 #include "menu.h"
 
-struct Menu* createCustomerMenu();
+struct Menu* createCustomerMenu(void(*onLogOutCallback)());

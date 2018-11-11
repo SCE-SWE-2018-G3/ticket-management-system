@@ -2,4 +2,4 @@
 
 #include "menu.h"
 
-struct Menu* createAuthMenu();
+struct Menu* createAuthMenu(void(*onAuthCallback)());

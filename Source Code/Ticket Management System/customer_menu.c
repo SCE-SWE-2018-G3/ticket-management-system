@@ -42,7 +42,7 @@ void doNothing1()
 {
 }
 
-struct Menu* createCustomerMenu()
+struct Menu* createCustomerMenu(void(*onLogOutCallback)())
 {
 	struct Menu* menu = menu_create();
 	if (menu != NULL)
@@ -53,7 +53,7 @@ struct Menu* createCustomerMenu()
 		menu_addOption(menu, menuOption_create(L"List My Support Calls", doNothing1));
 		menu_addOption(menu, menuOption_create(L"Update Contact Information", doNothing1));
 		menu_addOption(menu, menuOption_create(L"FAQ / Q&A", doNothing1));
-		menu_addOption(menu, menuOption_create(L"Log Out", doNothing1));
+		menu_addOption(menu, menuOption_create(L"Log Out", onLogOutCallback));
 	}
 	return menu;
 }
