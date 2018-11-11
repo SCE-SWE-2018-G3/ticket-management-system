@@ -29,11 +29,10 @@ void setEmail()
 
 void setPassword()
 {
-	wchar_t* context = malloc(sizeof(wchar_t));
+	wchar_t* context;
 	wchar_t input[100];
 	fgetws(input, 10, stdin);
 	wcstok(input, L"\n", &context);
-	free(context);
 	password = input;
 	if (email_option != NULL)
 	{
