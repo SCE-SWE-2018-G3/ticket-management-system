@@ -4,7 +4,7 @@ void doNothing2()
 {
 }
 
-struct Menu* createSupportGiverMenu()
+struct Menu* createSupportGiverMenu(void(*onLogOutCallback)())
 {
 	struct Menu* menu = menu_create();
 	if (menu != NULL)
@@ -14,7 +14,7 @@ struct Menu* createSupportGiverMenu()
 		menu_addOption(menu, menuOption_create(L"View / Update Ticket", doNothing2));
 		menu_addOption(menu, menuOption_create(L"Browse Tickets", doNothing2));
 		menu_addOption(menu, menuOption_create(L"Create User", doNothing2));
-		menu_addOption(menu, menuOption_create(L"Log Out", doNothing2));
+		menu_addOption(menu, menuOption_create(L"Log Out", onLogOutCallback));
 	}
 	return menu;
 }
