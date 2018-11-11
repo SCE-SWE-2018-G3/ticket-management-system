@@ -38,6 +38,17 @@ void createTicket()
 	}
 }
 
+void viewFAQ()
+{
+	wprintf(L"Q: My computer is on but I can't see anything on the screen.\n");
+	wprintf(L"A: Try moving the mouse or hitting any key on the keyboard.\nIf that fails, locate the power button on the screen and press it.\n");
+	wprintf(L"\n");
+	wprintf(L"Q: I sent a document to print but it doesn't do anything\n");
+	wprintf(L"A: Check if the printer has enough paper. Check if the paper tray is fully engaged. If all else fails, contact technical support.\n");
+	wprintf(L"\n");
+	system("PAUSE");
+}
+
 void doNothing1()
 {
 }
@@ -52,7 +63,7 @@ struct Menu* createCustomerMenu(void(*onLogOutCallback)())
 		menu_addOption(menu, menuOption_create(L"View Support Call Status", doNothing1));
 		menu_addOption(menu, menuOption_create(L"List My Support Calls", doNothing1));
 		menu_addOption(menu, menuOption_create(L"Update Contact Information", doNothing1));
-		menu_addOption(menu, menuOption_create(L"FAQ / Q&A", doNothing1));
+		menu_addOption(menu, menuOption_create(L"FAQ / Q&A", viewFAQ));
 		menu_addOption(menu, menuOption_create(L"Log Out", onLogOutCallback));
 	}
 	return menu;
