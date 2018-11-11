@@ -30,7 +30,7 @@ void createTicket()
 		wprintf(L"Your support call was saved in the system.");
 		wprintf(L"Your ticket ID is:\n%s\n", ticket_getId(ticket));
 		wprintf(L"Please save this ID for future reference.\n");
-		wscanf(L"%s");
+		system("PAUSE");
 	}
 	else
 	{
