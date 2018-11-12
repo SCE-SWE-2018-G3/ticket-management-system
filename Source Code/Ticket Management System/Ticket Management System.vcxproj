@@ -127,6 +127,7 @@
     <ClCompile Include="menu_option.c" />
     <ClCompile Include="supportgiver_menu.c" />
     <ClCompile Include="ticket.c" />
+    <ClCompile Include="ticket_container.c" />
     <ClCompile Include="user.c" />
     <ClCompile Include="vector.c" />
   </ItemGroup>
@@ -138,6 +139,7 @@
     <ClInclude Include="menu_option.h" />
     <ClInclude Include="supportgiver_menu.h" />
     <ClInclude Include="ticket.h" />
+    <ClInclude Include="ticket_container.h" />
     <ClInclude Include="user.h" />
     <ClInclude Include="vector.h" />
   </ItemGroup>

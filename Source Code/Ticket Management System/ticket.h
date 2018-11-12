@@ -2,7 +2,9 @@
 
 #include "vector.h"
 #include <stdlib.h>
+#include <time.h>
 
+struct Note;
 struct Ticket;
 
 struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description, char* customer_email);
@@ -18,4 +20,8 @@ wchar_t* ticket_getTier(struct Ticket*);
 wchar_t* ticket_getStatus(struct Ticket*);
 struct Vector* ticket_getTags(struct Ticket*);
 struct Vector* ticket_getNotes(struct Ticket*);
-void ticket_save(struct Ticket*);
+time_t ticket_getDate(struct Ticket*);
+
+time_t note_getDate(struct Note*);
+wchar_t* note_getAuthor(struct Note*);
+wchar_t* note_getContent(struct Note*);
