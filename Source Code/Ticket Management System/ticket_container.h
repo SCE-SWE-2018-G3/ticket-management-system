@@ -1,9 +1,8 @@
 #pragma once
 
 #include "ticket.h"
-
-struct TicketContainer;
+#include "vector.h"
 
 void ticketContainer_update(struct Ticket*);
-struct Ticket* ticketContainer_getAll(struct Ticket*);
+struct Vector* ticketContainer_getAll();
 struct Ticket* ticketContainer_getById(wchar_t*);

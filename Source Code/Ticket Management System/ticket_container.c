@@ -1,17 +1,14 @@
 #include "ticket_container.h"
 #include "vector.h"
 
-struct TicketContainer
-{
-	struct Vector* tickets;
-};
+struct Vector* tickets;
 
 void ticketContainer_update(struct Ticket* ticket)
 {
 	// TODO
 }
 
-struct Ticket* ticketContainer_getAll(struct Ticket* ticket)
+struct Vector* ticketContainer_getAll()
 {
 	return NULL; // TODO
 }
