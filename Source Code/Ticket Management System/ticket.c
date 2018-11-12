@@ -22,6 +22,7 @@ struct Ticket
 	struct Vector* stakeholders;
 	struct Vector* tags;
 	struct Vector* notes;
+	time_t creation_date;
 };
 
 struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description, char* customer_email)
@@ -40,6 +41,7 @@ struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description
 		ticket->stakeholders = NULL;
 		ticket->tags = NULL;
 		ticket->notes = NULL;
+		ticket->creation_date = time(NULL);
 	}
 	return ticket;
 }
@@ -202,10 +204,38 @@ struct Vector* ticket_getNotes(struct Ticket* ticket)
 	return NULL;
 }
 
-void ticket_save(struct Ticket* ticket)
+time_t ticket_getDate(struct Ticket* ticket)
 {
 	if (ticket != NULL)
 	{
-		// TODO: Save to file
+		return ticket->creation_date;
 	}
+	return time(NULL);
+}
+
+time_t note_getDate(struct Note* note)
+{
+	if (note != NULL)
+	{
+		return note->date;
+	}
+	return time(NULL);
+}
+
+wchar_t* note_getAuthor(struct Note* note)
+{
+	if (note != NULL)
+	{
+		return note->author;
+	}
+	return NULL;
+}
+
+wchar_t* note_getContent(struct Note* note)
+{
+	if (note != NULL)
+	{
+		return note->content;
+	}
+	return NULL;
 }
