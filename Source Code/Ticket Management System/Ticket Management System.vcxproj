@@ -129,6 +129,7 @@
     <ClCompile Include="ticket.c" />
     <ClCompile Include="ticket_container.c" />
     <ClCompile Include="user.c" />
+    <ClCompile Include="user_container.c" />
     <ClCompile Include="vector.c" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +142,7 @@
     <ClInclude Include="ticket.h" />
     <ClInclude Include="ticket_container.h" />
     <ClInclude Include="user.h" />
+    <ClInclude Include="user_container.h" />
     <ClInclude Include="vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
