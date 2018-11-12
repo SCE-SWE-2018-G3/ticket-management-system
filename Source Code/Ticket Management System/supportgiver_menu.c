@@ -42,6 +42,7 @@ void browseTickets()
 		bool go_back = false;
 		while (!go_back)
 		{
+			// TODO: Rewrite this function using the Menu and MenuOption system
 			wprintf(L"\n");
 			wprintf(L"Would you like to search/filter/sort the results?\n");
 			wprintf(L"1: Filter by status\n");
