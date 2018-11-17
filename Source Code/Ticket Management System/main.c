@@ -72,9 +72,11 @@ void deinit()
 	}
 }
 
+bool i18n_picked = false;
+
 void whenPickI18n()
 {
-	current_menu = auth_menu;
+	i18n_picked = true;
 }
 
 void runI18nMenu()
@@ -84,7 +86,7 @@ void runI18nMenu()
 	struct Menu* i18n_menu = createI18nMenu(whenPickI18n);
 	if (i18n_menu != NULL)
 	{
-		while (menu_isOpen(i18n_menu) && !menu_hasError(i18n_menu))
+		while (menu_isOpen(i18n_menu) && !menu_hasError(i18n_menu) && !i18n_picked)
 		{
 			system("CLS");
 			menu_tick(i18n_menu);
@@ -92,11 +94,19 @@ void runI18nMenu()
 
 		menu_destroy(i18n_menu);
 	}
+	else
+	{
+		i18n_picked = true;
+	}
 }
 
 int main(int argc, wchar_t* argv[])
 {
 	runI18nMenu(); // Needs to run before the rest of initialization, so the correct strings will be selected.
+	if (!i18n_picked) // means exit
+	{
+		return EXIT_SUCCESS;
+	}
 
 	if (!init())
 	{
