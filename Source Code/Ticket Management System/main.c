@@ -3,6 +3,8 @@
 #include "auth_menu.h"
 #include "customer_menu.h"
 #include "supportgiver_menu.h"
+#include "i18n_menu.h"
+#include "i18n.h"
 #include "auth.h"
 
 struct Menu* auth_menu = NULL;
@@ -56,19 +58,46 @@ void deinit()
 	if (auth_menu != NULL)
 	{
 		menu_destroy(auth_menu);
+		auth_menu = NULL;
 	}
 	if (customer_menu != NULL)
 	{
 		menu_destroy(customer_menu);
+		customer_menu = NULL;
 	}
 	if (supportgiver_menu != NULL)
 	{
 		menu_destroy(supportgiver_menu);
+		supportgiver_menu = NULL;
+	}
+}
+
+void whenPickI18n()
+{
+	current_menu = auth_menu;
+}
+
+void runI18nMenu()
+{
+	i18n_init();
+
+	struct Menu* i18n_menu = createI18nMenu(whenPickI18n);
+	if (i18n_menu != NULL)
+	{
+		while (menu_isOpen(i18n_menu) && !menu_hasError(i18n_menu))
+		{
+			system("CLS");
+			menu_tick(i18n_menu);
+		}
+
+		menu_destroy(i18n_menu);
 	}
 }
 
 int main(int argc, wchar_t* argv[])
 {
+	runI18nMenu(); // Needs to run before the rest of initialization, so the correct strings will be selected.
+
 	if (!init())
 	{
 		fwprintf(stderr, L"Could not create menu\n");
