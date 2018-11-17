@@ -56,14 +56,17 @@ void deinit()
 	if (auth_menu != NULL)
 	{
 		menu_destroy(auth_menu);
+		auth_menu = NULL;
 	}
 	if (customer_menu != NULL)
 	{
 		menu_destroy(customer_menu);
+		customer_menu = NULL;
 	}
 	if (supportgiver_menu != NULL)
 	{
 		menu_destroy(supportgiver_menu);
+		supportgiver_menu = NULL;
 	}
 }
 
