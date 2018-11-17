@@ -1,6 +1,7 @@
 #include "menu.h"
 #include "vector.h"
 #include "menu_option.h"
+#include "i18n.h"
 #include <stdio.h>
 
 struct Menu
@@ -65,6 +66,14 @@ bool menu_isOpen(struct Menu* menu)
 	return false;
 }
 
+void menu_close(struct Menu* menu)
+{
+	if (menu != NULL)
+	{
+		menu->is_open = false;
+	}
+}
+
 wchar_t* menu_getError(struct Menu* menu)
 {
 	if (menu != NULL)
@@ -96,7 +105,7 @@ void menu_tick(struct Menu* menu)
 			struct MenuOption* option = vector_getAt(menu->options, i);
 			wprintf(L"%d: %s\n", i+1, menuOption_getTitle(option));
 		}
-		wprintf(L"Press Q to quit.\n");
+		wprintf(L"%s\n", i18n_getString(I18N_STRING_QUIT, I18N_LOCALE_CURRENT));
 
 		char input[10];
 		bool input_is_valid;
@@ -142,7 +151,7 @@ void menu_tick(struct Menu* menu)
 
 			if (!input_is_valid)
 			{
-				wprintf(L"Input is invalid. Try again.\n");
+				wprintf(L"%s\n", i18n_getString(I18N_STRING_INVALID_INPUT, I18N_LOCALE_CURRENT));
 			}
 		} while (!input_is_valid);
 	}

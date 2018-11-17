@@ -42,7 +42,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -89,6 +89,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,6 +127,8 @@
     <ClCompile Include="auth.c" />
     <ClCompile Include="auth_menu.c" />
     <ClCompile Include="customer_menu.c" />
+    <ClCompile Include="i18n.c" />
+    <ClCompile Include="i18n_menu.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="menu.c" />
     <ClCompile Include="menu_option.c" />
@@ -140,6 +143,8 @@
     <ClInclude Include="auth.h" />
     <ClInclude Include="auth_menu.h" />
     <ClInclude Include="customer_menu.h" />
+    <ClInclude Include="i18n.h" />
+    <ClInclude Include="i18n_menu.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="menu_option.h" />
     <ClInclude Include="supportgiver_menu.h" />

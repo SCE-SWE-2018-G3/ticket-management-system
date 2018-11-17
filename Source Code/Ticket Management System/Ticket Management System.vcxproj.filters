@@ -69,6 +69,12 @@
     <ClCompile Include="user_container.c">
       <Filter>Source Files\Data</Filter>
     </ClCompile>
+    <ClCompile Include="i18n.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="i18n_menu.c">
+      <Filter>Source Files\BL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ticket.h">
@@ -103,6 +109,12 @@
     </ClInclude>
     <ClInclude Include="user_container.h">
       <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="i18n.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="i18n_menu.h">
+      <Filter>Header Files\BL</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
