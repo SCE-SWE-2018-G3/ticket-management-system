@@ -262,3 +262,22 @@ wchar_t* note_getContent(struct Note* note)
 	}
 	return NULL;
 }
+
+void ticket_copyFrom(struct Ticket* dest, struct Ticket* src)
+{
+	if (dest != NULL && src != NULL)
+	{
+		dest->id = src->id;
+		dest->customer_email = src->customer_email;
+		dest->title = src->title;
+		dest->type = src->type;
+		dest->severity = src->severity;
+		dest->description = src->description;
+		dest->tier = src->tier;
+		dest->status = src->status;
+		dest->stakeholders = src->stakeholders;
+		dest->tags = src->tags;
+		dest->notes = src->notes;
+		dest->creation_date = src->creation_date;
+	}
+}

@@ -21,6 +21,7 @@ wchar_t* ticket_getStatus(struct Ticket*);
 struct Vector* ticket_getTags(struct Ticket*);
 struct Vector* ticket_getNotes(struct Ticket*);
 time_t ticket_getDate(struct Ticket*);
+void ticket_copyFrom(struct Ticket* dest, struct Ticket* src);
 
 time_t note_getDate(struct Note*);
 wchar_t* note_getAuthor(struct Note*);
