@@ -108,6 +108,15 @@ struct Vector* vector_copy(struct Vector* source_vector)
 	return result_vector;
 }
 
+void vector_push(struct Vector* vector, void* data)
+{
+	if (vector != NULL && data != NULL)
+	{
+		vector_resize(vector, vector->size + 1);
+		vector->data[vector, vector->size - 1] = data;
+	}
+}
+
 struct Vector* vector_filter(struct Vector* source_vector, bool(*filterCondition)(void*, void*), void* filter_value)
 {
 	struct Vector* result_vector = NULL;
