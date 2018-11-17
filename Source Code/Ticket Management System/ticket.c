@@ -2,6 +2,29 @@
 #include <time.h>
 #include <stdio.h>
 
+wchar_t* generateRandomString(unsigned int length)
+{
+	wchar_t* str = malloc(sizeof(wchar_t) * (length + 1));
+	if (str != NULL)
+	{
+		for (unsigned int i = 0; i < length; ++i)
+		{
+			wchar_t random_symbol[] = {
+				(rand() % (L'Z' - L'A')) + L'A',
+				(rand() % (L'9' - L'0')) + L'0',
+				L'-'
+			};
+			str[i] = random_symbol[rand() % 3];
+			if (i > 0 && str[i - 1] == str[i] && str[i] == '-')
+			{
+				--i;
+			}
+		}
+		str[length] = L'\0';
+	}
+	return str;
+}
+
 struct Note
 {
 	time_t date;
@@ -30,7 +53,7 @@ struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description
 	struct Ticket* ticket = malloc(sizeof(struct Ticket));
 	if (ticket != NULL)
 	{
-		ticket->id = L"somerandomticketID"; // TODO: random string
+		ticket->id = generateRandomString(20);
 		ticket->customer_email = customer_email;
 		ticket->title = title;
 		ticket->type = type;
