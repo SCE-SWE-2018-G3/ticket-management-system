@@ -1,11 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "auth_menu.h"
 #include "customer_menu.h"
 #include "supportgiver_menu.h"
 #include "i18n_menu.h"
 #include "i18n.h"
 #include "auth.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 struct Menu* auth_menu = NULL;
 struct Menu* customer_menu = NULL;
@@ -32,6 +33,8 @@ void whenLogOut()
 
 bool init()
 {
+	srand(time(NULL));
+
 	auth_menu = createAuthMenu(whenAuth);
 	if (auth_menu == NULL)
 	{
