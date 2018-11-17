@@ -74,7 +74,6 @@ wchar_t* reverseString(wchar_t* src_str)
 	}
 	reversed[len] = L'\0';
 	
-	wprintf(L"%s\n", reversed);
 	free(src_cpy);
 	return reversed;
 }
