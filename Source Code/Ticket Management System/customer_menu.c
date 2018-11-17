@@ -6,8 +6,8 @@
 
 void createTicket()
 {
-	wchar_t title[128];
-	wchar_t type[128];
+	wchar_t title[256];
+	wchar_t type[256];
 	wchar_t description[512];
 
 	system("CLS");
@@ -28,8 +28,9 @@ void createTicket()
 		system("CLS");
 		wprintf(L"%s\n", i18n_getString(I18N_STRING_CUSTOMER_CONTACTSUPPORT_SUCCESS, I18N_LOCALE_CURRENT));
 		wprintf(L"==================\n");
-		wprintf(L"%s", i18n_getString(I18N_STRING_CUSTOMER_CONTACTSUPPORT_SUCCESS_ELABORATION, I18N_LOCALE_CURRENT));
-		wprintf(L"%s\n%s\n", i18n_getString(I18N_STRING_CUSTOMER_CONTACTSUPPORT_SUCCESS_TICKETID, I18N_LOCALE_CURRENT), ticket_getId(ticket));
+		wprintf(L"%s\n", i18n_getString(I18N_STRING_CUSTOMER_CONTACTSUPPORT_SUCCESS_ELABORATION, I18N_LOCALE_CURRENT));
+		wprintf(L"%s\n", i18n_getString(I18N_STRING_CUSTOMER_CONTACTSUPPORT_SUCCESS_TICKETID, I18N_LOCALE_CURRENT));
+		wprintf(L"%s\n", ticket_getId(ticket));
 		wprintf(L"%s\n", i18n_getString(I18N_STRING_CUSTOMER_CONTACTSUPPORT_SUCCESS_PLEASESAVE, I18N_LOCALE_CURRENT));
 		system("PAUSE");
 	}
