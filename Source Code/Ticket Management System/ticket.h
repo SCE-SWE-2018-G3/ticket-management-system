@@ -7,7 +7,7 @@
 struct Note;
 struct Ticket;
 
-struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description, char* customer_email);
+struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* severity,wchar_t* description, char* customer_email);
 void ticket_destroy(struct Ticket*);
 void ticket_addNote(struct Ticket*, wchar_t* author, wchar_t* content);
 wchar_t* ticket_getId(struct Ticket*);

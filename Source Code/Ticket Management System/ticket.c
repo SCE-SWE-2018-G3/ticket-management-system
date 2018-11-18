@@ -48,7 +48,7 @@ struct Ticket
 	time_t creation_date;
 };
 
-struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description, char* customer_email)
+struct Ticket* ticket_create(wchar_t* title, wchar_t* type,wchar_t* severity ,wchar_t* description, char* customer_email)
 {
 	struct Ticket* ticket = malloc(sizeof(struct Ticket));
 	if (ticket != NULL)
@@ -58,7 +58,7 @@ struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description
 		ticket->title = title;
 		ticket->type = type;
 		ticket->description = description;
-		ticket->severity = L"unset";
+		ticket->severity =severity;
 		ticket->tier = L"T1";
 		ticket->status = L"open";
 		ticket->stakeholders = NULL;
