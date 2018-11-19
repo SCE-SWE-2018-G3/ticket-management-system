@@ -1,6 +1,5 @@
 #include "supportgiver_menu.h"
 #include "ticket_container.h"
-#include "i18n.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -13,11 +12,11 @@ void printTicketsArray(struct Vector* tickets)
 			struct Ticket* ticket = vector_getAt(tickets, i);
 			wprintf(L"%s: %s\n", ticket_getId(ticket), ticket_getTitle(ticket));
 		}
-		wprintf(L"%s: %d\n", i18n_getString(I18N_STRING_TICKETS_THAT_ANSWER_CRITERIA, I18N_LOCALE_CURRENT), vector_getSize(tickets));
+		wprintf(L"Tickets that answer the criteria: %d\n", vector_getSize(tickets));
 	}
 	else
 	{
-		wprintf(L"%s: 0\n", i18n_getString(I18N_STRING_TICKETS_THAT_ANSWER_CRITERIA, I18N_LOCALE_CURRENT));
+		wprintf(L"Tickets that answer the criteria: 0\n");
 	}
 }
 
@@ -55,7 +54,7 @@ bool searchByTags(void* ticket1, void* tag)
 
 void browseTickets()
 {
-	wprintf(L"%s\n", i18n_getString(I18N_STRING_BROWSE_TICKETS, I18N_LOCALE_CURRENT));
+	wprintf(L"Browse Tickets\n");
 	wprintf(L"==============\n");
 	struct Vector* tickets = ticketContainer_getAll();
 	if (tickets != NULL)
@@ -67,15 +66,15 @@ void browseTickets()
 		{
 			// TODO: Rewrite this function using the Menu and MenuOption system
 			wprintf(L"\n");
-			wprintf(L"%s\n", i18n_getString(I18N_STRING_TICKETS_FILTER_QUESTION, I18N_LOCALE_CURRENT));
-			wprintf(L"1: %s\n", i18n_getString(I18N_STRING_FILTER_BY_STATUS, I18N_LOCALE_CURRENT));
-			wprintf(L"2: %s\n", i18n_getString(I18N_STRING_FILTER_BY_TIER, I18N_LOCALE_CURRENT));
-			wprintf(L"3: %s\n", i18n_getString(I18N_STRING_FILTER_BY_TYPE, I18N_LOCALE_CURRENT));
-			wprintf(L"4: %s\n", i18n_getString(I18N_STRING_FILTER_BY_STAKEHOLDERS, I18N_LOCALE_CURRENT));
-			wprintf(L"5: %s\n", i18n_getString(I18N_STRING_SEARCH_BY_CUSTOMER_EMAIL, I18N_LOCALE_CURRENT));
-			wprintf(L"6: %s\n", i18n_getString(I18N_STRING_SEARCH_BY_TAGS, I18N_LOCALE_CURRENT));
-			wprintf(L"7: %s\n", i18n_getString(I18N_STRING_SORT_BY_TITLE, I18N_LOCALE_CURRENT));
-			wprintf(L"%s\n", i18n_getString(I18N_STRING_GO_BACK, I18N_LOCALE_CURRENT));
+			wprintf(L"Would you like to search/filter/sort the results?\n");
+			wprintf(L"1: Filter by status\n");
+			wprintf(L"2: Filter by tier\n");
+			wprintf(L"3: Filter by type\n");
+			wprintf(L"4: Filter by stakeholders\n");
+			wprintf(L"5: Search by customer email\n");
+			wprintf(L"6: Search by tags\n");
+			wprintf(L"7: Sort by title\n");
+			wprintf(L"Press Q to go back.\n");
 			char input[2];
 			bool input_is_valid;
 			do
@@ -89,7 +88,7 @@ void browseTickets()
 					{
 						wchar_t* ctx;
 						wchar_t status[32];
-						wprintf(L"%s\n", i18n_getString(I18N_STRING_PLEASE_INPUT_STATUS, I18N_LOCALE_CURRENT));
+						wprintf(L"Please input status.\n");
 						wscanf(L"%s", status);
 						wcstok(status, "\n", &ctx);
 						struct Vector* filtered_vector = vector_filter(tickets, filterByStatus, status);
@@ -174,7 +173,7 @@ void browseTickets()
 					default:
 					{
 						input_is_valid = false;
-						wprintf(L"%s.\n", i18n_getString(I18N_STRING_INVALID_INPUT, I18N_LOCALE_CURRENT));
+						wprintf(L"Input is invalid. Try again.\n");
 					}
 				}
 			} while (!input_is_valid);
@@ -182,7 +181,7 @@ void browseTickets()
 	}
 	else
 	{
-		wprintf(L"%s\n", i18n_getString(I18N_STRING_NO_TICKETS, I18N_LOCALE_CURRENT));
+		wprintf(L"No tickets in the system.\n");
 		system("PAUSE");
 	}
 }
@@ -233,12 +232,12 @@ struct Menu* createSupportGiverMenu(void(*onLogOutCallback)())
 	struct Menu* menu = menu_create();
 	if (menu != NULL)
 	{
-		menu_setTitle(menu, i18n_getString(I18N_STRING_SUPPORTGIVER_WELCOME, I18N_LOCALE_CURRENT));
-		menu_addOption(menu, menuOption_create(i18n_getString(I18N_STRING_SUPPORTGIVER_OPENTICKET, I18N_LOCALE_CURRENT),openTickets));
-		menu_addOption(menu, menuOption_create(i18n_getString(I18N_STRING_SUPPORTGIVER_VIEWTICKET, I18N_LOCALE_CURRENT), doNothing2));
-		menu_addOption(menu, menuOption_create(i18n_getString(I18N_STRING_SUPPORTGIVER_BROWSETICKETS, I18N_LOCALE_CURRENT), browseTickets));
-		menu_addOption(menu, menuOption_create(i18n_getString(I18N_STRING_SUPPORTGIVER_CREATEUSER, I18N_LOCALE_CURRENT), doNothing2));
-		menu_addOption(menu, menuOption_create(i18n_getString(I18N_STRING_LOG_OUT, I18N_LOCALE_CURRENT), onLogOutCallback));
+		menu_setTitle(menu, L"Welcome\nWhat would you like to do?");
+		menu_addOption(menu, menuOption_create(L"Open Ticket", openTickets));
+		menu_addOption(menu, menuOption_create(L"View / Update Ticket", doNothing2));
+		menu_addOption(menu, menuOption_create(L"Browse Tickets", browseTickets));
+		menu_addOption(menu, menuOption_create(L"Create User", doNothing2));
+		menu_addOption(menu, menuOption_create(L"Log Out", onLogOutCallback));
 	}
 	return menu;
 }

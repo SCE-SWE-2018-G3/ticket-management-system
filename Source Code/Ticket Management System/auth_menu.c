@@ -1,6 +1,5 @@
 #include "auth_menu.h"
 #include "auth.h"
-#include "i18n.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -22,8 +21,7 @@ void setEmail()
 		wchar_t email_wchar[64];
 		email_wchar[0] = L'\0';
 		swprintf(email_wchar, 64, L"%S", email);
-		wchar_t new_title[64];
-		wcscpy(new_title, i18n_getString(I18N_STRING_AUTH_EMAIL, I18N_LOCALE_CURRENT));
+		wchar_t new_title[64] = L"E-Mail: ";
 		wcscat(new_title, email_wchar);
 		menuOption_setTitle(email_option, new_title);
 	}
@@ -38,8 +36,7 @@ void setPassword()
 	password = input;
 	if (email_option != NULL)
 	{
-		wchar_t new_title[64];
-		wcscpy(new_title, i18n_getString(I18N_STRING_AUTH_PASSWORD, I18N_LOCALE_CURRENT));
+		wchar_t new_title[64] = L"Password: ";
 		wcscat(new_title, password);
 		menuOption_setTitle(password_option, new_title);
 	}
@@ -57,7 +54,7 @@ void login()
 	}
 	else
 	{
-		wprintf(L"%s\n", i18n_getString(I18N_STRING_AUTH_INVALID, I18N_LOCALE_CURRENT));
+		wprintf(L"Invalid E-Mail or Password.\n");
 	}
 }
 
@@ -67,11 +64,11 @@ struct Menu* createAuthMenu(void(*onAuthCallback)())
 	struct Menu* menu = menu_create();
 	if (menu != NULL)
 	{
-		menu_setTitle(menu, i18n_getString(I18N_STRING_AUTH_WELCOME, I18N_LOCALE_CURRENT));
-		
-		email_option    = menuOption_create(i18n_getString(I18N_STRING_AUTH_EMAIL, I18N_LOCALE_CURRENT),   setEmail);
-		password_option = menuOption_create(i18n_getString(I18N_STRING_AUTH_PASSWORD, I18N_LOCALE_CURRENT), setPassword);
-		login_option    = menuOption_create(i18n_getString(I18N_STRING_AUTH_LOGIN, I18N_LOCALE_CURRENT),    login);
+		menu_setTitle(menu, L"Welcome to the system\n=====================\nPlease log in:\n(Don't have a user? Contact HR)");
+
+		email_option    = menuOption_create(L"E-Mail:",   setEmail);
+		password_option = menuOption_create(L"Password:", setPassword);
+		login_option    = menuOption_create(L"Log In",    login);
 
 		menu_addOption(menu, email_option);
 		menu_addOption(menu, password_option);

@@ -1,8 +1,6 @@
 #include "auth_menu.h"
 #include "customer_menu.h"
 #include "supportgiver_menu.h"
-#include "i18n_menu.h"
-#include "i18n.h"
 #include "auth.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -75,42 +73,8 @@ void deinit()
 	}
 }
 
-bool i18n_picked = false;
-
-void whenPickI18n()
-{
-	i18n_picked = true;
-}
-
-void runI18nMenu()
-{
-	i18n_init();
-
-	struct Menu* i18n_menu = createI18nMenu(whenPickI18n);
-	if (i18n_menu != NULL)
-	{
-		while (menu_isOpen(i18n_menu) && !menu_hasError(i18n_menu) && !i18n_picked)
-		{
-			system("CLS");
-			menu_tick(i18n_menu);
-		}
-
-		menu_destroy(i18n_menu);
-	}
-	else
-	{
-		i18n_picked = true;
-	}
-}
-
 int main(int argc, wchar_t* argv[])
 {
-	runI18nMenu(); // Needs to run before the rest of initialization, so the correct strings will be selected.
-	if (!i18n_picked) // means exit
-	{
-		return EXIT_SUCCESS;
-	}
-
 	if (!init())
 	{
 		fwprintf(stderr, L"Could not create menu\n");
