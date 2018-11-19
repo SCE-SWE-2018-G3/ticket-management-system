@@ -196,13 +196,13 @@ void openTickets()
 
 		system("CLS");
 		wscanf(L"%s\n", customerEmail);
-		wprintf(L"%s\n", i18n_getString(I18N_STRING_CUSTOMER_CONTACTSUPPORT, I18N_LOCALE_CURRENT));
+		wprintf(L"Creating a ticket\n");
 		wprintf(L"===============\n");
-		wprintf(L"%s\n", i18n_getString(I18N_STRING_CUSTOMER_CONTACTSUPPORT_DESCRIPTION, I18N_LOCALE_CURRENT));
+		wprintf(L"Please input description\n");
 		wscanf(L"%s", description_support);
-		wprintf(L"%s\n", i18n_getString(I18N_STRING_CUSTOMER_CONTACTSUPPORT_TITLE, I18N_LOCALE_CURRENT));
+		wprintf(L"Please input title\n");
 		wscanf(L"%s", title_support);
-		wprintf(L"%s\n", i18n_getString(I18N_STRING_CUSTOMER_CONTACTSUPPORT_TYPE, I18N_LOCALE_CURRENT));
+		wprintf(L"Please input type\n");
 		wscanf(L"%s", type_support);
 
 		struct Ticket* ticket = ticket_create(customerEmail,title_support, type_support,severity,description_support, auth_getEmail());
@@ -211,12 +211,12 @@ void openTickets()
 			ticketContainer_update(ticket);
 
 			system("CLS");
-			wprintf(L"%s\n", i18n_getString(I18N_STRING_CUSTOMER_CONTACTSUPPORT_SUCCESS, I18N_LOCALE_CURRENT));
+			wprintf(L"Ticket saved\n");
 			wprintf(L"==================\n");
-			wprintf(L"%s\n", i18n_getString(I18N_STRING_CUSTOMER_CONTACTSUPPORT_SUCCESS_ELABORATION, I18N_LOCALE_CURRENT));
-			wprintf(L"%s\n", i18n_getString(I18N_STRING_CUSTOMER_CONTACTSUPPORT_SUCCESS_TICKETID, I18N_LOCALE_CURRENT));
+			wprintf(L"The ticked was saved in the system.\n");
+			wprintf(L"The ticket ID is:\n");
 			wprintf(L"%s\n", ticket_getId(ticket));
-			wprintf(L"%s\n", i18n_getString(I18N_STRING_CUSTOMER_CONTACTSUPPORT_SUCCESS_PLEASESAVE, I18N_LOCALE_CURRENT));
+			wprintf(L"Please save this ID for future reference.\n");
 			system("PAUSE");
 		}
 		else
