@@ -27,11 +27,11 @@ bool filterByStatus(void* ticket, void* status)
 }
 bool filterByTier(void* ticket1, void* tier)
 {
-	return wcscmp(ticket_getTier(ticket1), ticket_getTier(tier)) != 0;
+	return wcscmp(ticket_getTier(ticket1), tier) != 0;
 }
 bool filterByType(void* ticket1, void* type)
 {
-	return wcscmp(ticket_getType(ticket1), ticket_getType(type)) != 0;
+	return wcscmp(ticket_getType(ticket1), type) != 0;
 
 }
 bool sortByTitle(void* ticket1, void* ticket2)
@@ -40,16 +40,16 @@ bool sortByTitle(void* ticket1, void* ticket2)
 }
 bool filterByStakeholders(void* ticket1, void* stakeholders)
 {
-	return wcscmp(ticket_getStakeholders(ticket1), ticket_getStakeholders(stakeholders))!= 0;
+	return wcscmp(ticket_getStakeholders(ticket1), stakeholders)!= 0;
 }
-bool searchByCustomerEmail(void* ticket1, void*ticket2)
+bool searchByCustomerEmail(void* ticket1, void* customeremail)
 {
-	return wcscmp(ticket_getCustomerEmail(ticket1), ticket_getCustomerEmail(ticket2)) != 0;
+	return wcscmp(ticket_getCustomerEmail(ticket1), customeremail) != 0;
 
 }
-bool searchByTags(void* ticket1, void*ticket2)
+bool searchByTags(void* ticket1, void* tag)
 {
-	return wcscmp(ticket_getTags(ticket1), ticket_getTags(ticket2)) != 0;
+	return wcscmp(ticket_getTags(ticket1), tag) != 0;
 
 }
 
