@@ -2,6 +2,7 @@
 #include "customer_menu.h"
 #include "supportgiver_menu.h"
 #include "auth.h"
+#include <leansql.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -32,6 +33,8 @@ void whenLogOut()
 bool init()
 {
 	srand(time(NULL));
+
+	LeanSQL_init("database");
 
 	auth_menu = createAuthMenu(whenAuth);
 	if (auth_menu == NULL)

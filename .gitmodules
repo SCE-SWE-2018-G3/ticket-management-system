@@ -1,0 +1,3 @@
+[submodule "leansql"]
+	path = leansql
+	url = https://github.com/soryy708/leansql.git
