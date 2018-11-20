@@ -22,5 +22,6 @@ In addition, the system offers high-level overview dashboards, which manual syst
 - Your code should be commited to a branch which is not `master`.
 - When you're done, you shall open a pull request.
 - Pull request may be merged in to master after 3 aprooving reviews by your peers.
+- This repository uses [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules). Run `git submodule update` before working.
 
 #### Please compile and run your code before opening a pull request. Never merge to master code that doesn't compile, doesn't work, or crashes.
