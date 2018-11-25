@@ -237,14 +237,14 @@ void openTickets()
 		wprintf(L"Please input severity.\n1. Medium\n2. High\n3. Critical\n4. Urgent\n");
 		do
 		{
-			wscanf("%d", &severity_num);
+			wscanf(L"%d", &severity_num);
 			if(severity_num < 1 || severity_num > 4)
 			{
-				wprintf("Invaild severity. Try again.\n");
+				wprintf(L"Invaild severity. Try again.\n");
 			}
 		} while(severity_num < 1 || severity_num > 4);
 		
-		struct Ticket* ticket = ticket_create(customer_email,title, type_support,severity[severity_num],description_support);
+		struct Ticket* ticket = ticket_create(customer_email,title, type_support, severity[severity_num], description_support);
 		if (ticket != NULL)
 		{
 			ticketContainer_update(ticket);
