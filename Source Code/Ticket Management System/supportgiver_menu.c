@@ -120,7 +120,7 @@ void browseTickets()
 						vector_destroy(filtered_vector);
 						break;
 					}
-					case('5'): // Filter by stakeholders
+					case('4'): // Filter by stakeholders
 					{
 						wchar_t* ctx;
 						wchar_t stakeholders[32];
@@ -132,7 +132,7 @@ void browseTickets()
 						vector_destroy(filtered_vector);
 						break;
 					}
-					case('6'): // Search by customer email
+					case('5'): // Search by customer email
 					{
 						wchar_t* ctx;
 						wchar_t customer_email[32];
@@ -144,7 +144,7 @@ void browseTickets()
 						vector_destroy(filtered_vector);
 						break;
 					}
-					case('7'): // Search by tags
+					case('6'): // Search by tags
 					{
 						wchar_t* ctx;
 						wchar_t tags[32];
@@ -157,7 +157,7 @@ void browseTickets()
 						break;
 						
 					}
-					case('8'): // Sort by title
+					case('7'): // Sort by title
 					{
 						struct Vector* sorted_vector = vector_sort(tickets, sortByTitle);
 						printTicketsArray(sorted_vector);
@@ -188,24 +188,36 @@ void browseTickets()
 
 void openTickets()
 {
-		wchar_t customerEmail[256];
-		wchar_t title_support[256];
+		wchar_t customer_email[256];
+		wchar_t title[256];
 		wchar_t type_support[256];
-		wchar_t severity[] = { "Low", "Medium", "High", "Very high" };
+		wchar_t* severity[] = {"Medium","High","Critical","Urgent" };
 		wchar_t description_support[512];
+		int severity_num,i;
 
 		system("CLS");
-		wscanf(L"%s\n", customerEmail);
+		wprintf(L"Please input customer email\n");
+		wscanf(L"%s", customer_email);
 		wprintf(L"Creating a ticket\n");
 		wprintf(L"===============\n");
 		wprintf(L"Please input description\n");
 		wscanf(L"%s", description_support);
 		wprintf(L"Please input title\n");
-		wscanf(L"%s", title_support);
+		wscanf(L"%s", title);
 		wprintf(L"Please input type\n");
 		wscanf(L"%s", type_support);
+		wprintf(L"Please input the option of sevrity{1.Medium,2.High,3.Critical,4.Urgent}:\n");
+		scanf("%d",&severity_num);
+		if (severity_num >= 1 && severity_num <= 4)
+		{
+			severity[severity_num];
+		}
+		else
+		{
+			printf("invaild option!!!");
+		}
 
-		struct Ticket* ticket = ticket_create(customerEmail,title_support, type_support,severity,description_support, auth_getEmail());
+		struct Ticket* ticket = ticket_create(customer_email,title, type_support,severity[severity_num],description_support);
 		if (ticket != NULL)
 		{
 			ticketContainer_update(ticket);

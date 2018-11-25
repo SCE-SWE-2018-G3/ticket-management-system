@@ -1,7 +1,7 @@
 #include "auth.h"
 
 bool authenticated = false;
-bool support_giver = false;
+bool support_giver = true;
 
 void auth_authenticate(char* email, wchar_t* password)
 {
