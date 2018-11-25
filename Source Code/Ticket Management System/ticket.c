@@ -198,6 +198,18 @@ struct Vector* ticket_getStakeholders(struct Ticket* ticket)
 	return NULL;
 }
 
+void ticket_addStakeholder(struct Ticket* ticket, wchar_t* stakeholder)
+{
+	if (ticket != NULL)
+	{
+		if (ticket->stakeholders == NULL)
+		{
+			ticket->stakeholders = vector_create();
+		}
+		vector_push(ticket->stakeholders, stakeholder);
+	}
+}
+
 void ticket_setSeverity(struct Ticket* ticket, wchar_t* severity)
 {
 	if (ticket != NULL)
@@ -258,6 +270,18 @@ struct Vector* ticket_getTags(struct Ticket* ticket)
 	return NULL;
 }
 
+void ticket_addTag(struct Ticket* ticket, wchar_t* tag)
+{
+	if (ticket != NULL)
+	{
+		if (ticket->tags == NULL)
+		{
+			ticket->tags = vector_create();
+		}
+		vector_push(ticket->tags, tag);
+	}
+}
+
 struct Vector* ticket_getNotes(struct Ticket* ticket)
 {
 	if (ticket != NULL)
@@ -265,6 +289,18 @@ struct Vector* ticket_getNotes(struct Ticket* ticket)
 		return ticket->notes;
 	}
 	return NULL;
+}
+
+void ticket_addNote(struct Ticket* ticket, struct Note* note)
+{
+	if (ticket != NULL)
+	{
+		if (ticket->notes == NULL)
+		{
+			ticket->notes = vector_create();
+		}
+		vector_push(ticket->notes, note);
+	}
 }
 
 time_t ticket_getDate(struct Ticket* ticket)
