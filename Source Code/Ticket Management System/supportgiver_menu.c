@@ -41,9 +41,9 @@ bool filterByStakeholders(void* ticket1, void* stakeholders)
 {
 	return wcscmp(ticket_getStakeholders(ticket1), stakeholders)!= 0;
 }
-bool searchByCustomerEmail(void* ticket1, void* customeremail)
+bool searchByCustomerEmail(void* ticket1, void* customer_email)
 {
-	return wcscmp(ticket_getCustomerEmail(ticket1), customeremail) != 0;
+	return wcscmp(ticket_getCustomerEmail(ticket1), customer_email) != 0;
 
 }
 bool searchByTags(void* ticket1, void* tag)
@@ -148,7 +148,7 @@ void browseTickets()
 					{
 						wchar_t* ctx;
 						wchar_t tags[32];
-						wprintf(L"%s\n", L"please input Customer Email");
+						wprintf(L"%s\n", L"please input tags");
 						wscanf(L"%s", tags);
 						wcstok(tags, "\n", &ctx);
 						struct Vector* filtered_vector = vector_filter(tickets, searchByTags, tags);
@@ -193,7 +193,7 @@ void openTickets()
 		wchar_t type_support[256];
 		wchar_t* severity[] = {"Medium","High","Critical","Urgent" };
 		wchar_t description_support[512];
-		int severity_num,i;
+		int severity_num;
 
 		system("CLS");
 		wprintf(L"Please input customer email\n");
@@ -206,17 +206,16 @@ void openTickets()
 		wscanf(L"%s", title);
 		wprintf(L"Please input type\n");
 		wscanf(L"%s", type_support);
-		wprintf(L"Please input the option of sevrity{1.Medium,2.High,3.Critical,4.Urgent}:\n");
-		scanf("%d",&severity_num);
-		if (severity_num >= 1 && severity_num <= 4)
+		wprintf(L"Please input severity.\n1. Medium\n2. High\n3. Critical\n4. Urgent\n");
+		do
 		{
-			severity[severity_num];
-		}
-		else
-		{
-			printf("invaild option!!!");
-		}
-
+			wscanf("%d", &severity_num);
+			if(severity_num < 1 || severity_num > 4)
+			{
+				wprintf("Invaild severity. Try again.\n");
+			}
+		} while(severity_num < 1 || severity_num > 4);
+		
 		struct Ticket* ticket = ticket_create(customer_email,title, type_support,severity[severity_num],description_support);
 		if (ticket != NULL)
 		{
