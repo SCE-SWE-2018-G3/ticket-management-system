@@ -16,7 +16,7 @@ char* ticket_getCustomerEmail(struct Ticket*);
 wchar_t* ticket_getTitle(struct Ticket*);
 wchar_t* ticket_getType(struct Ticket*);
 wchar_t* ticket_getSeverity(struct Ticket*);
-wchar_t* ticket_getStakeholders(struct Ticket*);
+struct Vector* ticket_getStakeholders(struct Ticket*);
 void ticket_setSeverity(struct Ticket*, wchar_t*);
 wchar_t* ticket_getDescription(struct Ticket*);
 wchar_t* ticket_getTier(struct Ticket*);

@@ -39,17 +39,42 @@ bool sortByTitle(void* ticket1, void* ticket2)
 }
 bool filterByStakeholders(void* ticket1, void* stakeholders)
 {
-	return wcscmp(ticket_getStakeholders(ticket1), stakeholders)!= 0;
+	struct Vector* ticket_stakeholders = ticket_getStakeholders(ticket1);
+	struct Vector* desired_stakeholders = stakeholders;
+
+	bool found_matching_stakeholders = false;
+	for (unsigned int i = 0; i < vector_getSize(ticket_stakeholders) && !found_matching_stakeholders; ++i)
+	{
+		for (unsigned int j = 0; j < vector_getSize(desired_stakeholders) && !found_matching_stakeholders; ++j)
+		{
+			if (wcscmp(vector_getAt(ticket_stakeholders, i), vector_getAt(desired_stakeholders, j)) == 0)
+			{
+				found_matching_stakeholders = true;
+			}
+		}
+	}
+
+	return !found_matching_stakeholders;
 }
 bool searchByCustomerEmail(void* ticket1, void* customer_email)
 {
 	return wcscmp(ticket_getCustomerEmail(ticket1), customer_email) != 0;
 
 }
-bool searchByTags(void* ticket1, void* tag)
+bool searchByTags(void* ticket, void* tag)
 {
-	return wcscmp(ticket_getTags(ticket1), tag) != 0;
+	struct Vector* ticket_tags = ticket_getTags(ticket);
 
+	bool found_tag = false;
+	for (unsigned int i = 0; i < vector_getSize(ticket_tags); ++i)
+	{
+		if (wcscmp(ticket_tags, tag) == 0)
+		{
+			found_tag = true;
+		}
+	}
+
+	return found_tag;
 }
 
 void browseTickets()
@@ -127,8 +152,11 @@ void browseTickets()
 						wprintf(L"%s\n", L"please input stakeholders");
 						wscanf(L"%s", stakeholders);
 						wcstok(stakeholders, "\n", &ctx);
+						struct Vector* stakeholders_vector = vector_create();
+						vector_push(stakeholders_vector, stakeholders);
 						struct Vector* filtered_vector = vector_filter(tickets, filterByStakeholders, stakeholders);
 						printTicketsArray(filtered_vector);
+						vector_destroy(stakeholders_vector);
 						vector_destroy(filtered_vector);
 						break;
 					}

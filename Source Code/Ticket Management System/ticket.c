@@ -189,7 +189,7 @@ wchar_t* ticket_getSeverity(struct Ticket* ticket)
 	return NULL;
 }
 
-wchar_t* ticket_getStakeholders(struct Ticket* ticket)
+struct Vector* ticket_getStakeholders(struct Ticket* ticket)
 {
 	if (ticket != NULL)
 	{
