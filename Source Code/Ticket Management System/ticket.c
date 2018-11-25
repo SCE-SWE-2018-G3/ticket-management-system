@@ -146,6 +146,14 @@ wchar_t* ticket_getId(struct Ticket* ticket)
 	return NULL;
 }
 
+void ticket_setId(struct Ticket* ticket, wchar_t* id)
+{
+	if (ticket != NULL)
+	{
+		ticket->id = id;
+	}
+}
+
 char* ticket_getCustomerEmail(struct Ticket* ticket)
 {
 	if (ticket != NULL)
@@ -182,6 +190,14 @@ wchar_t* ticket_getSeverity(struct Ticket* ticket)
 	return NULL;
 }
 
+void ticket_setSeverity(struct Ticket* ticket, wchar_t* severity)
+{
+	if (ticket != NULL)
+	{
+		ticket->severity = severity;
+	}
+}
+
 wchar_t* ticket_getDescription(struct Ticket* ticket)
 {
 	if (ticket != NULL)
@@ -200,6 +216,14 @@ wchar_t* ticket_getTier(struct Ticket* ticket)
 	return NULL;
 }
 
+void ticket_setTier(struct Ticket* ticket, wchar_t* tier)
+{
+	if (ticket != NULL)
+	{
+		ticket->tier = tier;
+	}
+}
+
 wchar_t* ticket_getStatus(struct Ticket* ticket)
 {
 	if (ticket != NULL)
@@ -207,6 +231,14 @@ wchar_t* ticket_getStatus(struct Ticket* ticket)
 		return ticket->status;
 	}
 	return NULL;
+}
+
+void ticket_setStatus(struct Ticket* ticket, wchar_t* status)
+{
+	if (ticket != NULL)
+	{
+		ticket->status = status;
+	}
 }
 
 struct Vector* ticket_getTags(struct Ticket* ticket)
