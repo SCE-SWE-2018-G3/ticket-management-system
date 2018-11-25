@@ -110,6 +110,11 @@ void ticket_addNote(struct Ticket* ticket, wchar_t* author, wchar_t* content)
 	{
 		if (ticket->notes == NULL)
 		{
+			ticket->notes = vector_create();
+		}
+
+		if (ticket->notes != NULL)
+		{
 			struct Note* note = malloc(sizeof(struct Note));
 			if (note != NULL)
 			{
@@ -117,21 +122,16 @@ void ticket_addNote(struct Ticket* ticket, wchar_t* author, wchar_t* content)
 				note->content = content;
 				note->date = time(NULL);
 
-				ticket->notes = vector_create();
-				if (ticket->notes != NULL)
-				{
-					vector_resize(ticket->notes, 1);
-					vector_setAt(ticket->notes, 0, note);
-				}
-				else
-				{
-					fwprintf(stderr, L"Failed to create notes vector");
-				}
+				vector_push(ticket->notes, note);
 			}
 			else
 			{
 				fwprintf(stderr, L"Failed to create note");
 			}
+		}
+		else
+		{
+			fwprintf(stderr, L"Failed to create notes vector");
 		}
 	}
 }
@@ -289,18 +289,6 @@ struct Vector* ticket_getNotes(struct Ticket* ticket)
 		return ticket->notes;
 	}
 	return NULL;
-}
-
-void ticket_addNote(struct Ticket* ticket, struct Note* note)
-{
-	if (ticket != NULL)
-	{
-		if (ticket->notes == NULL)
-		{
-			ticket->notes = vector_create();
-		}
-		vector_push(ticket->notes, note);
-	}
 }
 
 time_t ticket_getDate(struct Ticket* ticket)

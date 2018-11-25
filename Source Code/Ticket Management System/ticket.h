@@ -27,7 +27,6 @@ void ticket_setStatus(struct Ticket*, wchar_t*);
 struct Vector* ticket_getTags(struct Ticket*);
 void ticket_addTag(struct Ticket*, wchar_t* tag);
 struct Vector* ticket_getNotes(struct Ticket*);
-void ticket_addNote(struct Ticket*, struct Note*);
 time_t ticket_getDate(struct Ticket*);
 void ticket_copyFrom(struct Ticket* dest, struct Ticket* src);
 
