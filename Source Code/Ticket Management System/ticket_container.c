@@ -68,10 +68,10 @@ void ticketContainer_update(struct Ticket* ticket)
 	{
 		wchar_t* data[12];
 		data[0] = ticket_getId(ticket);
-		data[1] = ticket_getCustomerEmail(ticket);
+		data[1] = ticket_getCustomerEmail(ticket); //
 		data[2] = ticket_getTitle(ticket);
 		data[3] = ticket_getType(ticket);
-		data[4] = ticket_getSeverity(ticket);
+		data[4] = ticket_getSeverity(ticket); //
 		data[5] = ticket_getDescription(ticket);
 		data[6] = ticket_getTier(ticket);
 		data[7] = ticket_getStatus(ticket);

@@ -1,6 +1,8 @@
 #include "ticket.h"
 #include <time.h>
 #include <stdio.h>
+#include <wchar.h>
+#include <string.h>
 
 wchar_t* generateRandomString(unsigned int length)
 {
@@ -48,18 +50,19 @@ struct Ticket
 	time_t creation_date;
 };
 
-struct Ticket* ticket_create(wchar_t* title, wchar_t* type,wchar_t* description, char* customer_email)
+struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description, char* customer_email)
 {
 	struct Ticket* ticket = malloc(sizeof(struct Ticket));
 	if (ticket != NULL)
 	{
 		ticket->id = generateRandomString(20);
-		ticket->customer_email = customer_email;
-		ticket->title = title;
-		ticket->type = type;
-		ticket->description = description;
-		ticket->tier = L"T1";
-		ticket->status = L"open";
+		ticket_setCustomerEmail(ticket, customer_email);
+		ticket_setTitle(ticket, title);
+		ticket_setType(ticket, type);
+		ticket->severity = NULL;
+		ticket_setDescription(ticket, description);
+		ticket_setTier(ticket, L"T1");
+		ticket_setStatus(ticket, L"open");
 		ticket->stakeholders = NULL;
 		ticket->tags = NULL;
 		ticket->notes = NULL;
@@ -72,6 +75,54 @@ void ticket_destroy(struct Ticket* ticket)
 {
 	if (ticket != NULL)
 	{
+		if (ticket->id != NULL)
+		{
+			free(ticket->id);
+			ticket->id = NULL;
+		}
+		
+		if (ticket->customer_email != NULL)
+		{
+			free(ticket->customer_email);
+			ticket->customer_email = NULL;
+		}
+
+		if (ticket->title != NULL)
+		{
+			free(ticket->title);
+			ticket->title = NULL;
+		}
+
+		if (ticket->type != NULL)
+		{
+			free(ticket->type);
+			ticket->type = NULL;
+		}
+
+		if (ticket->severity != NULL)
+		{
+			free(ticket->severity);
+			ticket->severity = NULL;
+		}
+
+		if (ticket->description != NULL)
+		{
+			free(ticket->description);
+			ticket->description = NULL;
+		}
+
+		if (ticket->tier != NULL)
+		{
+			free(ticket->tier);
+			ticket->tier = NULL;
+		}
+
+		if (ticket->status != NULL)
+		{
+			free(ticket->status);
+			ticket->status = NULL;
+		}
+
 		if (ticket->stakeholders != NULL)
 		{
 			for (unsigned int i = 0; i < vector_getSize(ticket->stakeholders); ++i)
@@ -149,7 +200,30 @@ void ticket_setId(struct Ticket* ticket, wchar_t* id)
 {
 	if (ticket != NULL)
 	{
-		ticket->id = id;
+		if (ticket->id == NULL)
+		{
+			ticket->id = malloc(sizeof(wchar_t) * (wcslen(id) + 1));
+			if (ticket->id == NULL)
+			{
+				return;
+			}
+		}
+		else
+		{
+			wchar_t* old_id = ticket->id;
+			ticket->id = realloc(ticket->id, sizeof(wchar_t) * (wcslen(id) + 1));
+			if (ticket->id == NULL)
+			{
+				ticket->id = old_id;
+				return;
+			}
+			else if(old_id != ticket->id)
+			{
+				free(old_id);
+			}
+		}
+
+		wcscpy(ticket->id, id);
 	}
 }
 
@@ -160,6 +234,37 @@ char* ticket_getCustomerEmail(struct Ticket* ticket)
 		return ticket->customer_email;
 	}
 	return NULL;
+}
+
+void ticket_setCustomerEmail(struct Ticket* ticket, char* email)
+{
+	if (ticket != NULL)
+	{
+		if (ticket->customer_email == NULL)
+		{
+			ticket->customer_email = malloc(strlen(email) + 1);
+			if (ticket->customer_email == NULL)
+			{
+				return;
+			}
+		}
+		else
+		{
+			char* old_email = ticket->customer_email;
+			ticket->customer_email = realloc(ticket->customer_email, strlen(email) + 1);
+			if (ticket->customer_email == NULL)
+			{
+				ticket->customer_email = old_email;
+				return;
+			}
+			else if(old_email != ticket->customer_email)
+			{
+				free(old_email);
+			}
+		}
+
+		strcpy(ticket->customer_email, email);
+	}
 }
 
 wchar_t* ticket_getTitle(struct Ticket* ticket)
@@ -214,7 +319,29 @@ void ticket_setSeverity(struct Ticket* ticket, wchar_t* severity)
 {
 	if (ticket != NULL)
 	{
-		ticket->severity = severity;
+		if (ticket->severity == NULL)
+		{
+			ticket->severity = malloc(sizeof(wchar_t) * (wcslen(severity) + 1));
+			if (ticket->severity == NULL)
+			{
+				return;
+			}
+		}
+		else
+		{
+			wchar_t* old_severity = ticket->severity;
+			ticket->severity = realloc(ticket->severity, sizeof(wchar_t) * (wcslen(severity) + 1));
+			if (ticket->severity == NULL)
+			{
+				ticket->severity = old_severity;
+				return;
+			}
+			else if (old_severity != ticket->severity)
+			{
+				free(old_severity);
+			}
+		}
+		wcscpy(ticket->severity, severity);
 	}
 }
 
@@ -225,6 +352,37 @@ wchar_t* ticket_getDescription(struct Ticket* ticket)
 		return ticket->description;
 	}
 	return NULL;
+}
+
+void ticket_setDescription(struct Ticket* ticket, wchar_t* description)
+{
+	if (ticket != NULL)
+	{
+		if (ticket->description == NULL)
+		{
+			ticket->description = malloc(sizeof(wchar_t) * (wcslen(description) + 1));
+			if (ticket->description == NULL)
+			{
+				return;
+			}
+		}
+		else
+		{
+			wchar_t* old_description = ticket->description;
+			ticket->description = realloc(ticket->description, sizeof(wchar_t) * (wcslen(description) + 1));
+			if (ticket->description == NULL)
+			{
+				ticket->description = old_description;
+				return;
+			}
+			else if (old_description != ticket->description)
+			{
+				free(old_description);
+			}
+		}
+
+		wcscpy(ticket->description, description);
+	}
 }
 
 wchar_t* ticket_getTier(struct Ticket* ticket)

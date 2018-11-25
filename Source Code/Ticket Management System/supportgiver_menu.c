@@ -244,9 +244,11 @@ void openTickets()
 			}
 		} while(severity_num < 1 || severity_num > 4);
 		
-		struct Ticket* ticket = ticket_create(customer_email,title, type_support, severity[severity_num], description_support);
+		struct Ticket* ticket = ticket_create(title, type_support, description_support, customer_email);
 		if (ticket != NULL)
 		{
+			ticket_setSeverity(ticket, severity[severity_num]);
+
 			ticketContainer_update(ticket);
 
 			system("CLS");
