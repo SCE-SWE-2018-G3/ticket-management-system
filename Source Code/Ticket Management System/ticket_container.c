@@ -86,7 +86,7 @@ void ticketContainer_update(struct Ticket* ticket)
 			if (update.error == LEANSQL_ERROR_NO_TABLE)
 			{
 				createDatabaseTable();
-				struct LeanSQL_ActionReport update = LeanSQL_update(L"Tickets", data, NULL, 12, filterByTicketId, ticket_getId(ticket));
+				struct LeanSQL_ActionReport update = LeanSQL_insert(L"Tickets", data, 12);
 				if (!update.success)
 				{
 					fwprintf(stderr, L"Could not update ticket.\n");
