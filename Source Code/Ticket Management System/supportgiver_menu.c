@@ -216,16 +216,16 @@ void browseTickets()
 
 void openTickets()
 {
-		wchar_t customer_email[256];
+		char customer_email[256];
 		wchar_t title[256];
 		wchar_t type_support[256];
-		wchar_t* severity[] = {"Medium","High","Critical","Urgent" };
+		wchar_t* severity[] = { L"Medium", L"High", L"Critical", L"Urgent" };
 		wchar_t description_support[512];
 		int severity_num;
 
 		system("CLS");
 		wprintf(L"Please input customer email\n");
-		wscanf(L"%s", customer_email);
+		wscanf(L"%S", customer_email);
 		wprintf(L"Creating a ticket\n");
 		wprintf(L"===============\n");
 		wprintf(L"Please input description\n");
@@ -237,16 +237,18 @@ void openTickets()
 		wprintf(L"Please input severity.\n1. Medium\n2. High\n3. Critical\n4. Urgent\n");
 		do
 		{
-			wscanf("%d", &severity_num);
+			wscanf(L"%d", &severity_num);
 			if(severity_num < 1 || severity_num > 4)
 			{
-				wprintf("Invaild severity. Try again.\n");
+				wprintf(L"Invaild severity. Try again.\n");
 			}
 		} while(severity_num < 1 || severity_num > 4);
 		
-		struct Ticket* ticket = ticket_create(customer_email,title, type_support,severity[severity_num],description_support);
+		struct Ticket* ticket = ticket_create(title, type_support, description_support, customer_email);
 		if (ticket != NULL)
 		{
+			ticket_setSeverity(ticket, severity[severity_num]);
+
 			ticketContainer_update(ticket);
 
 			system("CLS");

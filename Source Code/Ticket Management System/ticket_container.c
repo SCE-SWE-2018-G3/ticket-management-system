@@ -36,7 +36,9 @@ void createDatabaseTable()
 struct Ticket* createTicketFromDatabaseRow(wchar_t** data)
 {
 	wchar_t* id = data[0];
-	wchar_t* customer_email = data[1];
+	wchar_t* wide_customer_email = data[1];
+	char customer_email[128];
+	wcstombs(customer_email, wide_customer_email, 128);
 	wchar_t* title = data[2];
 	wchar_t* type = data[3];
 	wchar_t* severity = data[4];
@@ -68,7 +70,11 @@ void ticketContainer_update(struct Ticket* ticket)
 	{
 		wchar_t* data[12];
 		data[0] = ticket_getId(ticket);
-		data[1] = ticket_getCustomerEmail(ticket);
+		data[1] = malloc(sizeof(wchar_t) * (strlen(ticket_getCustomerEmail(ticket)) + 1));
+		if (data[1] != NULL)
+		{
+			mbstowcs(data[1], ticket_getCustomerEmail(ticket), strlen(ticket_getCustomerEmail(ticket)) + 1);
+		}
 		data[2] = ticket_getTitle(ticket);
 		data[3] = ticket_getType(ticket);
 		data[4] = ticket_getSeverity(ticket);
@@ -86,7 +92,7 @@ void ticketContainer_update(struct Ticket* ticket)
 			if (update.error == LEANSQL_ERROR_NO_TABLE)
 			{
 				createDatabaseTable();
-				struct LeanSQL_ActionReport update = LeanSQL_update(L"Tickets", data, NULL, 12, filterByTicketId, ticket_getId(ticket));
+				struct LeanSQL_ActionReport update = LeanSQL_insert(L"Tickets", data, 12);
 				if (!update.success)
 				{
 					fwprintf(stderr, L"Could not update ticket.\n");
@@ -96,6 +102,10 @@ void ticketContainer_update(struct Ticket* ticket)
 			{
 				fwprintf(stderr, L"Could not update ticket.\n");
 			}
+		}
+		if (data[1] != NULL)
+		{
+			free(data[1]);
 		}
 	}
 }
