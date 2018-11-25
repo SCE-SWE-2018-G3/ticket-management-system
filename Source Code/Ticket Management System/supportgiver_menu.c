@@ -216,16 +216,16 @@ void browseTickets()
 
 void openTickets()
 {
-		wchar_t customer_email[256];
+		char customer_email[256];
 		wchar_t title[256];
 		wchar_t type_support[256];
-		wchar_t* severity[] = {"Medium","High","Critical","Urgent" };
+		wchar_t* severity[] = { L"Medium", L"High", L"Critical", L"Urgent" };
 		wchar_t description_support[512];
 		int severity_num;
 
 		system("CLS");
 		wprintf(L"Please input customer email\n");
-		wscanf(L"%s", customer_email);
+		wscanf(L"%S", customer_email);
 		wprintf(L"Creating a ticket\n");
 		wprintf(L"===============\n");
 		wprintf(L"Please input description\n");

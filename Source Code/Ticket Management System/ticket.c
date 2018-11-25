@@ -55,17 +55,25 @@ struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description
 	struct Ticket* ticket = malloc(sizeof(struct Ticket));
 	if (ticket != NULL)
 	{
+		ticket->id = NULL;
+		ticket->customer_email = NULL;
+		ticket->title = NULL;
+		ticket->type = NULL;
+		ticket->severity = NULL;
+		ticket->description = NULL;
+		ticket->tier = NULL;
+		ticket->status = NULL;
+		ticket->stakeholders = NULL;
+		ticket->tags = NULL;
+		ticket->notes = NULL;
+
 		ticket->id = generateRandomString(20);
 		ticket_setCustomerEmail(ticket, customer_email);
 		ticket_setTitle(ticket, title);
 		ticket_setType(ticket, type);
-		ticket->severity = NULL;
 		ticket_setDescription(ticket, description);
 		ticket_setTier(ticket, L"T1");
 		ticket_setStatus(ticket, L"open");
-		ticket->stakeholders = NULL;
-		ticket->tags = NULL;
-		ticket->notes = NULL;
 		ticket->creation_date = time(NULL);
 	}
 	return ticket;
@@ -276,6 +284,37 @@ wchar_t* ticket_getTitle(struct Ticket* ticket)
 	return NULL;
 }
 
+void ticket_setTitle(struct Ticket* ticket, wchar_t* title)
+{
+	if (ticket != NULL)
+	{
+		if (ticket->title == NULL)
+		{
+			ticket->title = malloc(sizeof(wchar_t) * (wcslen(title) + 1));
+			if (ticket->title == NULL)
+			{
+				return;
+			}
+		}
+		else
+		{
+			wchar_t* old_title = ticket->title;
+			ticket->title = realloc(ticket->title, sizeof(wchar_t) * (wcslen(title) + 1));
+			if (ticket->title == NULL)
+			{
+				ticket->title = old_title;
+				return;
+			}
+			else if (old_title != ticket->title)
+			{
+				free(old_title);
+			}
+		}
+
+		wcscpy(ticket->title, title);
+	}
+}
+
 wchar_t* ticket_getType(struct Ticket* ticket)
 {
 	if (ticket != NULL)
@@ -283,6 +322,37 @@ wchar_t* ticket_getType(struct Ticket* ticket)
 		return ticket->type;
 	}
 	return NULL;
+}
+
+void ticket_setType(struct Ticket* ticket, wchar_t* type)
+{
+	if (ticket != NULL)
+	{
+		if (ticket->type == NULL)
+		{
+			ticket->type = malloc(sizeof(wchar_t) * (wcslen(type) + 1));
+			if (ticket->type == NULL)
+			{
+				return;
+			}
+		}
+		else
+		{
+			wchar_t* old_type = ticket->type;
+			ticket->type = realloc(ticket->type, sizeof(wchar_t) * (wcslen(type) + 1));
+			if (ticket->type == NULL)
+			{
+				ticket->type = old_type;
+				return;
+			}
+			else if (old_type != ticket->type)
+			{
+				free(old_type);
+			}
+		}
+
+		wcscpy(ticket->type, type);
+	}
 }
 
 wchar_t* ticket_getSeverity(struct Ticket* ticket)

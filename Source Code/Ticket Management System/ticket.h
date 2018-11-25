@@ -35,6 +35,7 @@ void ticket_addStakeholder(struct Ticket*, wchar_t* stakeholder);
 void ticket_setSeverity(struct Ticket*, wchar_t*);
 
 wchar_t* ticket_getDescription(struct Ticket*);
+void ticket_setDescription(struct Ticket*, wchar_t*);
 
 wchar_t* ticket_getTier(struct Ticket*);
 void ticket_setTier(struct Ticket*, wchar_t*);
