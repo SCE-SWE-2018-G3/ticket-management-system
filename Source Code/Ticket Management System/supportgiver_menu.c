@@ -24,10 +24,32 @@ bool filterByStatus(void* ticket, void* status)
 {
 	return wcscmp(ticket_getStatus(ticket), status) != 0;
 }
+bool filterByTier(void* ticket1, void* tier)
+{
+	return wcscmp(ticket_getTier(ticket1), tier) != 0;
+}
+bool filterByType(void* ticket1, void* type)
+{
+	return wcscmp(ticket_getType(ticket1), type) != 0;
 
+}
 bool sortByTitle(void* ticket1, void* ticket2)
 {
 	return wcscmp(ticket_getTitle(ticket1), ticket_getTitle(ticket2)) > 0;
+}
+bool filterByStakeholders(void* ticket1, void* stakeholders)
+{
+	return wcscmp(ticket_getStakeholders(ticket1), stakeholders)!= 0;
+}
+bool searchByCustomerEmail(void* ticket1, void* customer_email)
+{
+	return wcscmp(ticket_getCustomerEmail(ticket1), customer_email) != 0;
+
+}
+bool searchByTags(void* ticket1, void* tag)
+{
+	return wcscmp(ticket_getTags(ticket1), tag) != 0;
+
 }
 
 void browseTickets()
@@ -76,28 +98,64 @@ void browseTickets()
 					}
 					case('2'): // Filter by tier
 					{
-						// TODO
+						wchar_t* ctx;
+						wchar_t tier[32];
+						wprintf(L"%s\n", L"please input tier");
+						wscanf(L"%s", tier);
+						wcstok(tier, "\n", &ctx);
+						struct Vector* filtered_vector = vector_filter(tickets, filterByTier, tier);
+						printTicketsArray(filtered_vector);
+						vector_destroy(filtered_vector);
 						break;
 					}
 					case('3'): // Filter by type
 					{
-						// TODO
+						wchar_t* ctx;
+						wchar_t type[32];
+						wprintf(L"%s\n", L"please input type");
+						wscanf(L"%s", type);
+						wcstok(type, "\n", &ctx);
+						struct Vector* filtered_vector = vector_filter(tickets, filterByType, type);
+						printTicketsArray(filtered_vector);
+						vector_destroy(filtered_vector);
 						break;
 					}
 					case('4'): // Filter by stakeholders
 					{
-						// TODO
+						wchar_t* ctx;
+						wchar_t stakeholders[32];
+						wprintf(L"%s\n", L"please input stakeholders");
+						wscanf(L"%s", stakeholders);
+						wcstok(stakeholders, "\n", &ctx);
+						struct Vector* filtered_vector = vector_filter(tickets, filterByStakeholders, stakeholders);
+						printTicketsArray(filtered_vector);
+						vector_destroy(filtered_vector);
 						break;
 					}
 					case('5'): // Search by customer email
 					{
-						// TODO
+						wchar_t* ctx;
+						wchar_t customer_email[32];
+						wprintf(L"%s\n", L"please input Customer Email");
+						wscanf(L"%s", customer_email);
+						wcstok(customer_email, "\n", &ctx);
+						struct Vector* filtered_vector = vector_filter(tickets, searchByCustomerEmail, customer_email);
+						printTicketsArray(filtered_vector);
+						vector_destroy(filtered_vector);
 						break;
 					}
 					case('6'): // Search by tags
 					{
-						// TODO
+						wchar_t* ctx;
+						wchar_t tags[32];
+						wprintf(L"%s\n", L"please input tags");
+						wscanf(L"%s", tags);
+						wcstok(tags, "\n", &ctx);
+						struct Vector* filtered_vector = vector_filter(tickets, searchByTags, tags);
+						printTicketsArray(filtered_vector);
+						vector_destroy(filtered_vector);
 						break;
+						
 					}
 					case('7'): // Sort by title
 					{
@@ -128,17 +186,65 @@ void browseTickets()
 	}
 }
 
+void openTickets()
+{
+		wchar_t customer_email[256];
+		wchar_t title[256];
+		wchar_t type_support[256];
+		wchar_t* severity[] = {"Medium","High","Critical","Urgent" };
+		wchar_t description_support[512];
+		int severity_num;
+
+		system("CLS");
+		wprintf(L"Please input customer email\n");
+		wscanf(L"%s", customer_email);
+		wprintf(L"Creating a ticket\n");
+		wprintf(L"===============\n");
+		wprintf(L"Please input description\n");
+		wscanf(L"%s", description_support);
+		wprintf(L"Please input title\n");
+		wscanf(L"%s", title);
+		wprintf(L"Please input type\n");
+		wscanf(L"%s", type_support);
+		wprintf(L"Please input severity.\n1. Medium\n2. High\n3. Critical\n4. Urgent\n");
+		do
+		{
+			wscanf("%d", &severity_num);
+			if(severity_num < 1 || severity_num > 4)
+			{
+				wprintf("Invaild severity. Try again.\n");
+			}
+		} while(severity_num < 1 || severity_num > 4);
+		
+		struct Ticket* ticket = ticket_create(customer_email,title, type_support,severity[severity_num],description_support);
+		if (ticket != NULL)
+		{
+			ticketContainer_update(ticket);
+
+			system("CLS");
+			wprintf(L"Ticket saved\n");
+			wprintf(L"==================\n");
+			wprintf(L"The ticked was saved in the system.\n");
+			wprintf(L"The ticket ID is:\n");
+			wprintf(L"%s\n", ticket_getId(ticket));
+			wprintf(L"Please save this ID for future reference.\n");
+			system("PAUSE");
+		}
+		else
+		{
+			fwprintf(stderr, L"Failed to create ticket\n");
+		}
+	}
 void doNothing2()
 {
 }
-
 struct Menu* createSupportGiverMenu(void(*onLogOutCallback)())
 {
 	struct Menu* menu = menu_create();
 	if (menu != NULL)
 	{
 		menu_setTitle(menu, L"Welcome\nWhat would you like to do?");
-		menu_addOption(menu, menuOption_create(L"Open Ticket", doNothing2));
+		menu_addOption(menu, menuOption_create(L"Open Ticket", openTickets));
 		menu_addOption(menu, menuOption_create(L"View / Update Ticket", doNothing2));
 		menu_addOption(menu, menuOption_create(L"Browse Tickets", browseTickets));
 		menu_addOption(menu, menuOption_create(L"Create User", doNothing2));
