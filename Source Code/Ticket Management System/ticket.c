@@ -11,15 +11,17 @@ wchar_t* generateRandomString(unsigned int length)
 	{
 		for (unsigned int i = 0; i < length; ++i)
 		{
-			wchar_t random_symbol[] = {
-				(rand() % (L'Z' - L'A')) + L'A',
-				(rand() % (L'9' - L'0')) + L'0',
-				L'-'
-			};
-			str[i] = random_symbol[rand() % 3];
-			if (i > 0 && str[i - 1] == str[i] && str[i] == '-')
+			if (i % 4 == 0 && i > 0)
 			{
-				--i;
+				str[i] = L'-';
+			}
+			else
+			{
+				wchar_t random_symbol[] = {
+					(rand() % (L'Z' - L'A')) + L'A',
+					(rand() % (L'9' - L'0')) + L'0'
+				};
+				str[i] = random_symbol[rand() % 2];
 			}
 		}
 		str[length] = L'\0';
