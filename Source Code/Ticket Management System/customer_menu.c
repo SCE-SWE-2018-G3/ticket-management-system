@@ -87,10 +87,22 @@ void listTickets()
 void viewFAQ()
 {
 	wprintf(L"Q: My computer is on but I can't see anything on the screen.\n");
-	wprintf(L"A: Try moving the mouse or hitting any key on the keyboard.\nIf that fails, locate the power button on the screen and press it.\n");
+	wprintf(L"A: Try moving the mouse or hitting any key on the keyboard.\nIf that fails, locate the power button on the screen and press it./nCheck the connectivity of the screen monitor to the computer, and check if the screen is on.\n");
 	wprintf(L"\n");
-	wprintf(L"Q: I sent a document to print but it doesn't do anything\n");
-	wprintf(L"A: Check if the printer has enough paper. Check if the paper tray is fully engaged. If all else fails, contact technical support.\n");
+	wprintf(L"Q: I sent a document to print but it doesn't do anything.\n");
+	wprintf(L"A: Check if the printer has enough paper. Check if the paper tray is fully engaged. Check for paper jams. If all else fails, contact technical support.\n");
+	wprintf(L"\n");
+	wprintf(L"Q: I can't turn on my computer.\n");
+	wprintf(L"A: First of all check the electric supply, and if the switch behind the computer is on. After that, try to disconnect the power cord from the computer, and keep the power button pressed for 10 seconds,/nthen reinsert the power cord and try to turn on the computer.\n");
+	wprintf(L"\n");
+	wprintf(L"Q: My network doesn't work (there's an X symbol over the internet symbol).\n");
+	wprintf(L"A: Check if there is light coming from the ethernet cable (it's on the lower side behind the computer). It looks like a phones connection to the wall. Check connectivity of said cable. Try right clicking that icon, and making sure the internet isn't disabled. if using netstick, try to reinsert the netstick.\n");
+	wprintf(L"\n");
+	wprintf(L"Q: My computer works slowly.\n");
+	wprintf(L"A: Try to close programs to reduce work stress on the computer. If you didn't restart the computer in a while, do so. If that doesn't help then delete temporary files from the computer; you can find them by seraching %temp% in the search bar in the start menu. Check if the C: drive is full, and if it is then clean it up.\n");
+	wprintf(L"\n");
+	wprintf(L"Q: A program doesn't start no matter how many times I try to open it.\n");
+	wprintf(L"A: Try pressing CTRL + ALT + DEL or ctrl + shift + esc to open the task manager. There search for the programs name, right click it, and then on \"end process\". Now try to open the program again.\n");
 	wprintf(L"\n");
 	system("PAUSE");
 }
