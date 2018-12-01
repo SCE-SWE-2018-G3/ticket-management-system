@@ -218,7 +218,7 @@ void ticket_setId(struct Ticket* ticket, wchar_t* id)
 				return;
 			}
 		}
-		else
+		else if(wcslen(id) != wcslen(ticket->id))
 		{
 			wchar_t* old_id = ticket->id;
 			ticket->id = realloc(ticket->id, sizeof(wchar_t) * (wcslen(id) + 1));
@@ -258,7 +258,7 @@ void ticket_setCustomerEmail(struct Ticket* ticket, char* email)
 				return;
 			}
 		}
-		else
+		else if(strlen(email) != strlen(ticket->customer_email))
 		{
 			char* old_email = ticket->customer_email;
 			ticket->customer_email = realloc(ticket->customer_email, strlen(email) + 1);
@@ -298,7 +298,7 @@ void ticket_setTitle(struct Ticket* ticket, wchar_t* title)
 				return;
 			}
 		}
-		else
+		else if(wcslen(title) != wcslen(ticket->title))
 		{
 			wchar_t* old_title = ticket->title;
 			ticket->title = realloc(ticket->title, sizeof(wchar_t) * (wcslen(title) + 1));
@@ -338,7 +338,7 @@ void ticket_setType(struct Ticket* ticket, wchar_t* type)
 				return;
 			}
 		}
-		else
+		else if(wcslen(type) != wcslen(ticket->type))
 		{
 			wchar_t* old_type = ticket->type;
 			ticket->type = realloc(ticket->type, sizeof(wchar_t) * (wcslen(type) + 1));
@@ -399,7 +399,7 @@ void ticket_setSeverity(struct Ticket* ticket, wchar_t* severity)
 				return;
 			}
 		}
-		else
+		else if(wcslen(severity) != wcslen(ticket->severity))
 		{
 			wchar_t* old_severity = ticket->severity;
 			ticket->severity = realloc(ticket->severity, sizeof(wchar_t) * (wcslen(severity) + 1));
@@ -438,7 +438,7 @@ void ticket_setDescription(struct Ticket* ticket, wchar_t* description)
 				return;
 			}
 		}
-		else
+		else if(wcslen(description) != wcslen(ticket->description))
 		{
 			wchar_t* old_description = ticket->description;
 			ticket->description = realloc(ticket->description, sizeof(wchar_t) * (wcslen(description) + 1));
@@ -470,7 +470,30 @@ void ticket_setTier(struct Ticket* ticket, wchar_t* tier)
 {
 	if (ticket != NULL)
 	{
-		ticket->tier = tier;
+		if (ticket->tier == NULL)
+		{
+			ticket->tier = malloc(sizeof(wchar_t) * (wcslen(tier) + 1));
+			if (ticket->tier == NULL)
+			{
+				return;
+			}
+		}
+		else if (wcslen(tier) != wcslen(ticket->tier))
+		{
+			wchar_t* old_tier = ticket->tier;
+			ticket->tier = realloc(ticket->tier, sizeof(wchar_t) * (wcslen(tier) + 1));
+			if (ticket->tier == NULL)
+			{
+				ticket->tier = old_tier;
+				return;
+			}
+			else if (old_tier != ticket->tier)
+			{
+				free(old_tier);
+			}
+		}
+
+		wcscpy(ticket->tier, tier);
 	}
 }
 
@@ -487,7 +510,30 @@ void ticket_setStatus(struct Ticket* ticket, wchar_t* status)
 {
 	if (ticket != NULL)
 	{
-		ticket->status = status;
+		if (ticket->status == NULL)
+		{
+			ticket->status = malloc(sizeof(wchar_t) * (wcslen(status) + 1));
+			if (ticket->status == NULL)
+			{
+				return;
+			}
+		}
+		else if (wcslen(status) != wcslen(ticket->status))
+		{
+			wchar_t* old_status = ticket->status;
+			ticket->status = realloc(ticket->status, sizeof(wchar_t) * (wcslen(status) + 1));
+			if (ticket->status == NULL)
+			{
+				ticket->status = old_status;
+				return;
+			}
+			else if (old_status != ticket->status)
+			{
+				free(old_status);
+			}
+		}
+
+		wcscpy(ticket->status, status);
 	}
 }
 
