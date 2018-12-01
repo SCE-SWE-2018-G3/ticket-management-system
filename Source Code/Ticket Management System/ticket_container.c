@@ -6,7 +6,7 @@
 
 bool filterByTicketId(wchar_t* column, wchar_t* value, void* desired_id)
 {
-	return (wcscmp(column, L"ID") != 0) && (wcscmp(value, desired_id) != 0);
+	return (wcscmp(column, L"ID") == 0) && (wcscmp(value, desired_id) == 0);
 }
 
 void createDatabaseTable()
@@ -81,18 +81,29 @@ void ticketContainer_update(struct Ticket* ticket)
 		data[5] = ticket_getDescription(ticket);
 		data[6] = ticket_getTier(ticket);
 		data[7] = ticket_getStatus(ticket);
-		data[8] = L""; // TODO: Stakeholders
-		data[9] = L""; // TODO: Tags
-		data[10] = L""; // TODO: Notes
-		data[11] = L""; // TODO: creation date
+		data[8] = L" "; // TODO: Stakeholders
+		data[9] = L" "; // TODO: Tags
+		data[10] = L" "; // TODO: Notes
+		data[11] = L" "; // TODO: creation date
 
 		struct LeanSQL_ActionReport update = LeanSQL_update(L"Tickets", data, NULL, 12, filterByTicketId, ticket_getId(ticket));
-		if (!update.success)
+		if (update.success)
+		{
+			if (update.result.rows == 0) // Ticket does not exist, was not added
+			{
+				update = LeanSQL_insert(L"Tickets", data, 12);
+				if (!update.success)
+				{
+					fwprintf(stderr, L"Could not update ticket.\n");
+				}
+			}
+		}
+		else
 		{
 			if (update.error == LEANSQL_ERROR_NO_TABLE)
 			{
 				createDatabaseTable();
-				struct LeanSQL_ActionReport update = LeanSQL_insert(L"Tickets", data, 12);
+				update = LeanSQL_insert(L"Tickets", data, 12);
 				if (!update.success)
 				{
 					fwprintf(stderr, L"Could not update ticket.\n");
