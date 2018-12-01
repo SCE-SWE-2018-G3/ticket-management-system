@@ -247,7 +247,7 @@ void openTickets()
 		struct Ticket* ticket = ticket_create(title, type_support, description_support, customer_email);
 		if (ticket != NULL)
 		{
-			ticket_setSeverity(ticket, severity[severity_num]);
+			ticket_setSeverity(ticket, severity[severity_num - 1]);
 
 			ticketContainer_update(ticket);
 
