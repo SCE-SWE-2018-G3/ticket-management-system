@@ -148,6 +148,7 @@
     <ClCompile Include="supportgiver_menu.c" />
     <ClCompile Include="ticket.c" />
     <ClCompile Include="ticket_container.c" />
+    <ClCompile Include="ticket_container_util.c" />
     <ClCompile Include="user.c" />
     <ClCompile Include="user_container.c" />
     <ClCompile Include="vector.c" />
@@ -161,6 +162,7 @@
     <ClInclude Include="supportgiver_menu.h" />
     <ClInclude Include="ticket.h" />
     <ClInclude Include="ticket_container.h" />
+    <ClInclude Include="ticket_container_util.h" />
     <ClInclude Include="user.h" />
     <ClInclude Include="user_container.h" />
     <ClInclude Include="vector.h" />
