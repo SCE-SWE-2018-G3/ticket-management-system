@@ -29,3 +29,9 @@ Run the following before working:
         git submodule update
 
 #### Please compile and run your code before opening a pull request. Never merge to master code that doesn't compile, doesn't work, or crashes.
+
+### Misc
+
+- This project uses [OpenSSL](https://www.openssl.org/). Windows binaries compiled by [Shining Light Productions](https://slproweb.com/products/Win32OpenSSL.html).
+In order to run builds, cetrain DLLs need to be present.
+Copy `libcrypto-1_1-x64.dll` from `OpenSSL/bin` to `Source Code/x64/Debug`!
