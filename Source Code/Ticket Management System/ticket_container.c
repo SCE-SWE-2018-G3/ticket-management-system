@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-bool filterByTicketId(wchar_t* column, wchar_t* value, void* desired_id)
+bool findByTicketId(wchar_t* column, wchar_t* value, void* desired_id)
 {
 	return (wcscmp(column, L"ID") == 0) && (wcscmp(value, desired_id) == 0);
 }
@@ -86,7 +86,7 @@ void ticketContainer_update(struct Ticket* ticket)
 		data[10] = L" "; // TODO: Notes
 		data[11] = L" "; // TODO: creation date
 
-		struct LeanSQL_ActionReport update = LeanSQL_update(L"Tickets", data, NULL, 12, filterByTicketId, ticket_getId(ticket));
+		struct LeanSQL_ActionReport update = LeanSQL_update(L"Tickets", data, NULL, 12, findByTicketId, ticket_getId(ticket));
 		if (update.success)
 		{
 			if (update.result.rows == 0) // Ticket does not exist, was not added
@@ -152,7 +152,7 @@ struct Ticket* ticketContainer_getById(wchar_t* ticket_id)
 {
 	struct Ticket* ticket = NULL;
 
-	struct LeanSQL_ActionReport select = LeanSQL_select(L"Tickets", NULL, 0, filterByTicketId, ticket_id);
+	struct LeanSQL_ActionReport select = LeanSQL_select(L"Tickets", NULL, 0, findByTicketId, ticket_id);
 	if (select.success)
 	{
 		if (select.result.rows == 1)
