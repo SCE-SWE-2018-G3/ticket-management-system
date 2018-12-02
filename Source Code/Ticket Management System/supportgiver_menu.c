@@ -58,7 +58,7 @@ bool filterByStakeholders(void* ticket1, void* stakeholders)
 }
 bool searchByCustomerEmail(void* ticket1, void* customer_email)
 {
-	return wcscmp(ticket_getCustomerEmail(ticket1), customer_email) != 0;
+	return strcmp(ticket_getCustomerEmail(ticket1), customer_email) != 0;
 
 }
 bool searchByTags(void* ticket, void* tag)
@@ -68,7 +68,7 @@ bool searchByTags(void* ticket, void* tag)
 	bool found_tag = false;
 	for (unsigned int i = 0; i < vector_getSize(ticket_tags); ++i)
 	{
-		if (wcscmp(ticket_tags, tag) == 0)
+		if (wcscmp(vector_getAt(ticket_tags, i), tag) == 0)
 		{
 			found_tag = true;
 		}
@@ -115,7 +115,7 @@ void browseTickets()
 						wchar_t status[32];
 						wprintf(L"Please input status.\n");
 						wscanf(L"%s", status);
-						wcstok(status, "\n", &ctx);
+						wcstok(status, L"\n", &ctx);
 						struct Vector* filtered_vector = vector_filter(tickets, filterByStatus, status);
 						printTicketsArray(filtered_vector);
 						vector_destroy(filtered_vector);
@@ -127,7 +127,7 @@ void browseTickets()
 						wchar_t tier[32];
 						wprintf(L"%s\n", L"please input tier");
 						wscanf(L"%s", tier);
-						wcstok(tier, "\n", &ctx);
+						wcstok(tier, L"\n", &ctx);
 						struct Vector* filtered_vector = vector_filter(tickets, filterByTier, tier);
 						printTicketsArray(filtered_vector);
 						vector_destroy(filtered_vector);
@@ -139,7 +139,7 @@ void browseTickets()
 						wchar_t type[32];
 						wprintf(L"%s\n", L"please input type");
 						wscanf(L"%s", type);
-						wcstok(type, "\n", &ctx);
+						wcstok(type, L"\n", &ctx);
 						struct Vector* filtered_vector = vector_filter(tickets, filterByType, type);
 						printTicketsArray(filtered_vector);
 						vector_destroy(filtered_vector);
@@ -151,7 +151,7 @@ void browseTickets()
 						wchar_t stakeholders[32];
 						wprintf(L"%s\n", L"please input stakeholders");
 						wscanf(L"%s", stakeholders);
-						wcstok(stakeholders, "\n", &ctx);
+						wcstok(stakeholders, L"\n", &ctx);
 						struct Vector* stakeholders_vector = vector_create();
 						vector_push(stakeholders_vector, stakeholders);
 						struct Vector* filtered_vector = vector_filter(tickets, filterByStakeholders, stakeholders);
@@ -166,7 +166,7 @@ void browseTickets()
 						wchar_t customer_email[32];
 						wprintf(L"%s\n", L"please input Customer Email");
 						wscanf(L"%s", customer_email);
-						wcstok(customer_email, "\n", &ctx);
+						wcstok(customer_email, L"\n", &ctx);
 						struct Vector* filtered_vector = vector_filter(tickets, searchByCustomerEmail, customer_email);
 						printTicketsArray(filtered_vector);
 						vector_destroy(filtered_vector);
@@ -178,7 +178,7 @@ void browseTickets()
 						wchar_t tags[32];
 						wprintf(L"%s\n", L"please input tags");
 						wscanf(L"%s", tags);
-						wcstok(tags, "\n", &ctx);
+						wcstok(tags, L"\n", &ctx);
 						struct Vector* filtered_vector = vector_filter(tickets, searchByTags, tags);
 						printTicketsArray(filtered_vector);
 						vector_destroy(filtered_vector);

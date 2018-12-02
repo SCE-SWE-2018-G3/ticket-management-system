@@ -99,7 +99,7 @@ void viewFAQ()
 	wprintf(L"A: Check if there is light coming from the ethernet cable (it's on the lower side behind the computer). It looks like a phones connection to the wall. Check connectivity of said cable. Try right clicking that icon, and making sure the internet isn't disabled. if using netstick, try to reinsert the netstick.\n");
 	wprintf(L"\n");
 	wprintf(L"Q: My computer works slowly.\n");
-	wprintf(L"A: Try to close programs to reduce work stress on the computer. If you didn't restart the computer in a while, do so. If that doesn't help then delete temporary files from the computer; you can find them by seraching %temp% in the search bar in the start menu. Check if the C: drive is full, and if it is then clean it up.\n");
+	wprintf(L"A: Try to close programs to reduce work stress on the computer. If you didn't restart the computer in a while, do so. If that doesn't help then delete temporary files from the computer; you can find them by seraching %%temp%% in the search bar in the start menu. Check if the C: drive is full, and if it is then clean it up.\n");
 	wprintf(L"\n");
 	wprintf(L"Q: A program doesn't start no matter how many times I try to open it.\n");
 	wprintf(L"A: Try pressing CTRL + ALT + DEL or ctrl + shift + esc to open the task manager. There search for the programs name, right click it, and then on \"end process\". Now try to open the program again.\n");

@@ -576,6 +576,14 @@ time_t ticket_getDate(struct Ticket* ticket)
 	return time(NULL);
 }
 
+void ticket_setDate(struct Ticket* ticket, time_t time)
+{
+	if (ticket != NULL)
+	{
+		ticket->creation_date = time;
+	}
+}
+
 time_t note_getDate(struct Note* note)
 {
 	if (note != NULL)

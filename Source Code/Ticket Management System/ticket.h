@@ -27,6 +27,7 @@ wchar_t* ticket_getTier(struct Ticket*);
 wchar_t* ticket_getStatus(struct Ticket*);
 struct Vector* ticket_getTags(struct Ticket*);
 struct Vector* ticket_getNotes(struct Ticket*);
+time_t ticket_getDate(struct Ticket*);
 
 // Setters:
 void ticket_setId(struct Ticket*, wchar_t*);
@@ -38,7 +39,7 @@ void ticket_setSeverity(struct Ticket*, wchar_t*);
 void ticket_setDescription(struct Ticket*, wchar_t*);
 void ticket_setTier(struct Ticket*, wchar_t*);
 void ticket_setStatus(struct Ticket*, wchar_t*);
-time_t ticket_getDate(struct Ticket*);
+void ticket_setDate(struct Ticket*, time_t);
 
 void ticket_addTag(struct Ticket*, wchar_t* tag);
 void ticket_addStakeholder(struct Ticket*, wchar_t* stakeholder);
