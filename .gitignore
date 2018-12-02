@@ -19,7 +19,6 @@ Source Code/Ticket Management System/database/*
 *.pch
 
 # Libraries
-*.lib
 *.a
 *.la
 *.lo
