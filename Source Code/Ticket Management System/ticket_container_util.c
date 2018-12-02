@@ -87,6 +87,7 @@ struct ticketContainer_wcsArrStatus
 {
 	bool malloced_data1;
 	bool malloced_data8;
+	bool malloced_data9;
 	bool malloced_data11;
 };
 
@@ -104,6 +105,7 @@ struct ticketContainer_wcsArrStatus* ticketContainer_wcsArrFromTicket(wchar_t** 
 	}
 	status->malloced_data1 = false;
 	status->malloced_data8 = false;
+	status->malloced_data9 = false;
 	status->malloced_data11 = false;
 
 	data[0] = ticket_getId(ticket);
@@ -158,7 +160,37 @@ struct ticketContainer_wcsArrStatus* ticketContainer_wcsArrFromTicket(wchar_t** 
 		}
 	}
 
-	data[9] = L" "; // TODO: Tags
+	struct Vector* tags = ticket_getTags(ticket);
+	if (tags == NULL)
+	{
+		data[9] = L" ";
+	}
+	else
+	{
+		unsigned int length = 0;
+		for (unsigned int i = 0; i < vector_getSize(tags); ++i)
+		{
+			length += wcslen(vector_getAt(tags, i));
+			length += 1;
+		}
+		data[9] = malloc(sizeof(wchar_t) * (length + 1));
+		if (data[9] == NULL)
+		{
+			data[9] = L" ";
+			fwprintf(stderr, L"Failed saving ticket tags to database\n");
+		}
+		else
+		{
+			data[9][0] = L'\0';
+			for (unsigned int i = 0; i < vector_getSize(tags); ++i)
+			{
+				wcscat(data[9], vector_getAt(tags, i));
+				wcscat(data[9], SEPARATOR);
+			}
+			status->malloced_data9 = true;
+		}
+	}
+
 	data[10] = L" "; // TODO: Notes
 
 	data[11] = malloc(sizeof(wchar_t) * 100);
@@ -191,6 +223,11 @@ void ticketContainer_cleanUpWcsArr(wchar_t** data, struct ticketContainer_wcsArr
 	{
 		free(data[8]);
 		data[8] = NULL;
+	}
+	if (status->malloced_data9 && data[9] != NULL)
+	{
+		free(data[9]);
+		data[9] = NULL;
 	}
 	if (status->malloced_data11 && data[11] != NULL)
 	{
