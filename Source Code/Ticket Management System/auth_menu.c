@@ -13,7 +13,7 @@ void (*onAuth)() = NULL;
 void setEmail()
 {
 	char input[100];
-	fgets(input, 10, stdin);
+	fgets(input, 100, stdin);
 	strtok(input, "\n");
 	if (email != NULL)
 	{
