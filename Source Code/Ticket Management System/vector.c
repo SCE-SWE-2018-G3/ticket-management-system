@@ -153,13 +153,13 @@ struct Vector* vector_sort(struct Vector* source_vector, bool(*isBigger)(void*, 
 			do
 			{
 				swapped = false;
-				for (unsigned int i = 0; i < result_vector->size - 1; ++i)
+				for (unsigned int i = 1; i < result_vector->size; ++i)
 				{
-					if (isBigger(result_vector->data[i], result_vector->data[i + 1]))
+					if (isBigger(result_vector->data[i-1], result_vector->data[i]))
 					{
-						void* temp = result_vector->data[i];
-						result_vector->data[i] = result_vector->data[i+1];
-						result_vector->data[i+1] = temp;
+						void* temp = result_vector->data[i-1];
+						result_vector->data[i-1] = result_vector->data[i];
+						result_vector->data[i] = temp;
 						swapped = true;
 					}
 				}

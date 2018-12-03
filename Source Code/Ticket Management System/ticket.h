@@ -48,6 +48,7 @@ void ticket_addTag(struct Ticket*, wchar_t* tag);
 
 struct Vector* ticket_getNotes(struct Ticket*);
 time_t ticket_getDate(struct Ticket*);
+void ticket_setDate(struct Ticket*, time_t);
 
 void ticket_copyFrom(struct Ticket* dest, struct Ticket* src);
 
