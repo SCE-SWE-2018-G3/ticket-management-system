@@ -82,16 +82,21 @@ void filterByStatusAction()
 	struct Vector* tickets = ticketContainer_getAll();
 	if (tickets == NULL) {
 		wprintf(L"No tickets in the system.\n");
-		system("PAUSE");
+		return 0;
 	}
-	wchar_t* ctx;
-	wchar_t status[32];
-	wprintf(L"Please input status.\n");
-	wscanf(L"%s", status);
-	wcstok(status, L"\n", &ctx);
-	struct Vector* filtered_vector = vector_filter(tickets, filterByStatus, status);
-	printTicketsArray(filtered_vector);
-	vector_destroy(filtered_vector);
+	else
+	{
+		wchar_t* ctx;
+		wchar_t status[32];
+		wprintf(L"Please input status:\n");
+		wscanf(L"%s", status);
+		wcstok(status, "\n", &ctx);
+		struct Vector* filtered_vector = vector_filter(tickets, filterByStatus, status);
+		printTicketsArray(filtered_vector);
+		system("PAUSE");
+		vector_destroy(filtered_vector);
+		vector_destroy(tickets);
+	}
 }
 void filterByTierAction()
 {
@@ -100,14 +105,19 @@ void filterByTierAction()
 		wprintf(L"No tickets in the system.\n");
 		system("PAUSE");
 	}
-	wchar_t* ctx;
-	wchar_t tier[32];
-	wprintf(L"%s\n", L"please input tier");
-	wscanf(L"%s", tier);
-	wcstok(tier, L"\n", &ctx);
-	struct Vector* filtered_vector = vector_filter(tickets, filterByTier, tier);
-	printTicketsArray(filtered_vector);
-	vector_destroy(filtered_vector);
+	else
+	{
+		wchar_t* ctx;
+		wchar_t tier[32];
+		wprintf(L"Please input tier:\n");
+		wscanf(L"%s", tier);
+		wcstok(tier, "\n", &ctx);
+		struct Vector* filtered_vector = vector_filter(tickets, filterByTier, tier);
+		printTicketsArray(filtered_vector);
+		system("PAUSE");
+		vector_destroy(filtered_vector);
+		vector_destroy(tickets);
+	}
 }
 void filterByTypeAction()
 {
@@ -116,14 +126,19 @@ void filterByTypeAction()
 		wprintf(L"No tickets in the system.\n");
 		system("PAUSE");
 	}
-	wchar_t* ctx;
-	wchar_t type[32];
-	wprintf(L"%s\n", L"please input type");
-	wscanf(L"%s", type);
-	wcstok(type, L"\n", &ctx);
-	struct Vector* filtered_vector = vector_filter(tickets, filterByType, type);
-	printTicketsArray(filtered_vector);
-	vector_destroy(filtered_vector);
+	else
+	{
+		wchar_t* ctx;
+		wchar_t type[32];
+		wprintf(L"Please input type:\n");
+		wscanf(L"%s", type);
+		wcstok(type, "\n", &ctx);
+		struct Vector* filtered_vector = vector_filter(tickets, filterByType, type);
+		printTicketsArray(filtered_vector);
+		system("PAUSE");
+		vector_destroy(filtered_vector);
+		vector_destroy(tickets);
+	}
 }
 void filterByStakeHolderAction() 
 {
@@ -132,17 +147,22 @@ void filterByStakeHolderAction()
 		wprintf(L"No tickets in the system.\n");
 		system("PAUSE");
 	}
-	wchar_t* ctx;
-	wchar_t stakeholders[32];
-	wprintf(L"%s\n", L"please input stakeholders");
-	wscanf(L"%s", stakeholders);
-	wcstok(stakeholders, L"\n", &ctx);
-	struct Vector* stakeholders_vector = vector_create();
-	vector_push(stakeholders_vector, stakeholders);
-	struct Vector* filtered_vector = vector_filter(tickets, filterByStakeholders, stakeholders);
-	printTicketsArray(filtered_vector);
-	vector_destroy(stakeholders_vector);
-	vector_destroy(filtered_vector);
+	else
+	{
+		wchar_t* ctx;
+		wchar_t stakeholders[32];
+		wprintf(L"Please input stakeholders:\n");
+		wscanf(L"%s", stakeholders);
+		wcstok(stakeholders, "\n", &ctx);
+		struct Vector* stakeholders_vector = vector_create();
+		vector_push(stakeholders_vector, stakeholders);
+		struct Vector* filtered_vector = vector_filter(tickets, filterByStakeholders, stakeholders);
+		printTicketsArray(filtered_vector);
+		system("PAUSE");
+		vector_destroy(stakeholders_vector);
+		vector_destroy(filtered_vector);
+		vector_destroy(tickets);
+	}
 }
 void SearchByCustomerEmailAction()
 {
@@ -151,14 +171,19 @@ void SearchByCustomerEmailAction()
 		wprintf(L"No tickets in the system.\n");
 		system("PAUSE");
 	}
-	wchar_t* ctx;
-	wchar_t customer_email[32];
-	wprintf(L"%s\n", L"please input Customer Email");
-	wscanf(L"%s", customer_email);
-	wcstok(customer_email, L"\n", &ctx);
-	struct Vector* filtered_vector = vector_filter(tickets, searchByCustomerEmail, customer_email);
-	printTicketsArray(filtered_vector);
-	vector_destroy(filtered_vector);
+	else
+	{
+		wchar_t* ctx;
+		wchar_t customer_email[32];
+		wprintf(L"please input Customer Email:\n");
+		wscanf(L"%s", customer_email);
+		wcstok(customer_email, "\n", &ctx);
+		struct Vector* filtered_vector = vector_filter(tickets, searchByCustomerEmail, customer_email);
+		printTicketsArray(filtered_vector);
+		system("PAUSE");
+		vector_destroy(filtered_vector);
+		vector_destroy(tickets);
+	}
 }
 void SearchByTagsAction()
 {
@@ -167,14 +192,20 @@ void SearchByTagsAction()
 		wprintf(L"No tickets in the system.\n");
 		system("PAUSE");
 	}
-	wchar_t* ctx;
-	wchar_t tags[32];
-	wprintf(L"%s\n", L"please input tags");
-	wscanf(L"%s", tags);
-	wcstok(tags, L"\n", &ctx);
-	struct Vector* filtered_vector = vector_filter(tickets, searchByTags, tags);
-	printTicketsArray(filtered_vector);
-	vector_destroy(filtered_vector);
+	else
+	{
+		wchar_t* ctx;
+		wchar_t tags[32];
+		wprintf(L"Please input tags:\n");
+		wscanf(L"%s", tags);
+		wcstok(tags, L"\n", &ctx);
+		struct Vector* filtered_vector = vector_filter(tickets, searchByTags, tags);
+		printTicketsArray(filtered_vector);
+		system("PAUSE");
+		fflush(stdin);
+		vector_destroy(filtered_vector);
+		vector_destroy(tickets);
+	}
 }
 void SortByTitleAction()
 {
@@ -183,18 +214,35 @@ void SortByTitleAction()
 		wprintf(L"No tickets in the system.\n");
 		system("PAUSE");
 	}
-	struct Vector* sorted_vector = vector_sort(tickets, sortByTitle);
-	printTicketsArray(sorted_vector);
-	vector_destroy(sorted_vector);
+	else 
+	{
+		struct Vector* sorted_vector = vector_sort(tickets, sortByTitle);
+		if (sorted_vector != NULL) 
+		{
+			printTicketsArray(sorted_vector);
+			system("PAUSE");
+			vector_destroy(sorted_vector);
+			vector_destroy(tickets);
+		}
+		else
+		{
+			wprintf(L"No tickets in the system.");
+		}
+	}
 }
 
 void browseTickets()
 {
-	system("@cls||clear");
+	system("CLS");
 	struct Vector* tickets = ticketContainer_getAll();
-	if (tickets != NULL) {
+	if (tickets == NULL)
+	{
+		wprintf(L"No tickets in the system.\n");
+		system("Pause");
+	}
+	else
+	{
 		printTicketsArray(tickets);
-
 		//Creating the menu and giving it a title
 		struct Menu* browse_tickets = menu_create();
 		menu_setTitle(browse_tickets, L"Browse Tickets\n==============");
@@ -218,13 +266,14 @@ void browseTickets()
 		menu_addOption(browse_tickets, titleSortOption);
 
 		//Displaying the menu "browse_tickets"
-		menu_tick(browse_tickets);
+		while (menu_isOpen(browse_tickets) && !menu_hasError(browse_tickets))
+		{
+			system("CLS");
+			menu_tick(browse_tickets);
+		}
 		system("PAUSE");
 	}
-	else 
-	{
-		wprintf(L"Failed to retrieve the tickets.");
-	}
+	vector_destroy(tickets);
 }
 
 

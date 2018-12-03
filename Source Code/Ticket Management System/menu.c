@@ -104,6 +104,7 @@ void menu_tick(struct Menu* menu)
 		{
 			input_is_valid = true;
 
+			fflush(stdin);
 			fgets(input, 10, stdin);
 			unsigned int input_as_int = atoi(input);
 			if (input_as_int != 0) // able to convert input to int
@@ -133,6 +134,8 @@ void menu_tick(struct Menu* menu)
 				case('q'):
 				case('Q'):
 					menu->is_open = false;
+					break;
+				case('\n'):
 					break;
 
 				default:
