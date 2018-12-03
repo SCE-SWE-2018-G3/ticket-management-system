@@ -23,8 +23,7 @@ Source Code/Ticket Management System/database/*
 *.la
 *.lo
 
-# Shared objects (inc. Windows DLLs)
-*.dll
+# Shared objects
 *.so
 *.so.*
 *.dylib
