@@ -34,4 +34,4 @@ Run the following before working:
 
 - This project uses [OpenSSL](https://www.openssl.org/). Windows binaries compiled by [Shining Light Productions](https://slproweb.com/products/Win32OpenSSL.html).
 In order to run builds, cetrain DLLs need to be present.
-Copy `libcrypto-1_1-x64.dll` from `OpenSSL/bin` to `Source Code/x64/Debug`!
+Copy `libcrypto-1_1-x64.dll` from `OpenSSL/dist` to `Source Code/x64/Debug`!
