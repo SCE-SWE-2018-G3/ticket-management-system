@@ -1,30 +1,45 @@
 #include "auth.h"
+#include "user_container.h"
 
-bool authenticated = false;
-bool support_giver = true;
+struct User* authenticated_user = NULL;
 
 void auth_authenticate(char* email, wchar_t* password)
 {
-	authenticated = true; // TODO
+	if (auth_isAuthenticated())
+	{
+		auth_logOut();
+	}
+
+	struct User* user = userContainer_getByEmail(email);
+	if (user != NULL)
+	{
+		if (user_passwordMatches(user, password))
+		{
+			authenticated_user = user;
+		}
+	}
 }
 
 void auth_logOut()
 {
-	authenticated = false; // TODO
+	if (authenticated_user != NULL)
+	{
+		user_destroy(authenticated_user);
+		authenticated_user = NULL;
+	}
 }
 
 bool auth_isAuthenticated()
 {
-	return authenticated;
+	return authenticated_user != NULL;
 }
 
 bool auth_isSupportGiver()
 {
-	return support_giver;
+	return authenticated_user != NULL && user_isSupportGiver(authenticated_user);
 }
 
 char* auth_getEmail()
 {
-	// TODO
-	return "somecustomer@gmail.com";
+	return user_getEmail(authenticated_user);
 }
