@@ -88,6 +88,10 @@ struct Ticket* ticketContainer_getById(wchar_t* ticket_id)
 		{
 			ticket = ticketContainer_createTicketFromDatabaseRow(select.result.data[0]);
 		}
+		else if (select.result.rows == 0)
+		{
+			ticket = NULL;
+		}
 		else
 		{
 			fwprintf(stderr, L"Tickets database has multiple tickets with identical IDs\n");

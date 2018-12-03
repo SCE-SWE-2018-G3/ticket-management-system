@@ -1,3 +1,5 @@
 #pragma once
 
-// TODO
+#include "user.h"
+
+struct User* userContainer_getByEmail(char*);

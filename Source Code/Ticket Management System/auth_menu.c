@@ -15,12 +15,20 @@ void setEmail()
 	char input[100];
 	fgets(input, 10, stdin);
 	strtok(input, "\n");
-	email = input;
+	if (email != NULL)
+	{
+		free(email);
+	}
+	email = malloc(strlen(input) + 1);
+	if (email != NULL)
+	{
+		strcpy(email, input);
+	}
 	if (email_option != NULL)
 	{
 		wchar_t email_wchar[64];
 		email_wchar[0] = L'\0';
-		swprintf(email_wchar, 64, L"%S", email);
+		swprintf(email_wchar, 64, L"%S", input);
 		wchar_t new_title[64] = L"E-Mail: ";
 		wcscat(new_title, email_wchar);
 		menuOption_setTitle(email_option, new_title);
@@ -33,11 +41,19 @@ void setPassword()
 	wchar_t input[100];
 	fgetws(input, 10, stdin);
 	wcstok(input, L"\n", &context);
-	password = input;
+	if (password != NULL)
+	{
+		free(password);
+	}
+	password = malloc(sizeof(wchar_t) * (wcslen(input) + 1));
+	if (password != NULL)
+	{
+		wcscpy(password, input);
+	}
 	if (email_option != NULL)
 	{
 		wchar_t new_title[64] = L"Password: ";
-		wcscat(new_title, password);
+		wcscat(new_title, input);
 		menuOption_setTitle(password_option, new_title);
 	}
 }
@@ -55,6 +71,7 @@ void login()
 	else
 	{
 		wprintf(L"Invalid E-Mail or Password.\n");
+		system("PAUSE");
 	}
 }
 
