@@ -36,7 +36,7 @@ struct User* userContainer_createUserFromDatabaseRow(wchar_t** data)
 	wchar_t* name = data[4];
 	wchar_t* phone = data[5];
 
-	struct User* user = user_create(email, password, salt, is_support_giver, name, phone);
+	struct User* user = user_create(email, password, true, salt, is_support_giver, name, phone);
 	return user;
 }
 
@@ -53,6 +53,10 @@ struct User* userContainer_getByEmail(char* email)
 		if (select.result.rows == 1)
 		{
 			user = userContainer_createUserFromDatabaseRow(select.result.data[0]);
+		}
+		else if (select.result.rows == 0)
+		{
+			user = NULL;
 		}
 		else
 		{

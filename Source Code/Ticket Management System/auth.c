@@ -10,12 +10,15 @@ void auth_authenticate(char* email, wchar_t* password)
 		auth_logOut();
 	}
 
-	struct User* user = userContainer_getByEmail(email);
-	if (user != NULL)
+	if (email != NULL && password != NULL)
 	{
-		if (user_passwordMatches(user, password))
+		struct User* user = userContainer_getByEmail(email);
+		if (user != NULL)
 		{
-			authenticated_user = user;
+			if (user_passwordMatches(user, password))
+			{
+				authenticated_user = user;
+			}
 		}
 	}
 }
