@@ -32,7 +32,7 @@ void whenLogOut()
 
 bool init()
 {
-	srand(time(NULL));
+	srand((unsigned int) time(NULL));
 
 	LeanSQL_init("database");
 

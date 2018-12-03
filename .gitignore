@@ -19,13 +19,11 @@ Source Code/Ticket Management System/database/*
 *.pch
 
 # Libraries
-*.lib
 *.a
 *.la
 *.lo
 
-# Shared objects (inc. Windows DLLs)
-*.dll
+# Shared objects
 *.so
 *.so.*
 *.dylib

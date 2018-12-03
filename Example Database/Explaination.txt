@@ -1,0 +1,6 @@
+Users.txt is the users database.
+
+All files can be edited using Microsoft Excel.
+Move the files to `Source Code\Ticket Management System\database` for the program to use them when running from Visual Studio.
+Log in with `admin@gmail.com` and password `1234` to become a support giver.
+Log in with `customer@gmail.com` and password `1234` to become a customer.
