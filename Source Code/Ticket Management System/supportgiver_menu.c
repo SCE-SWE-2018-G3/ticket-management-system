@@ -254,7 +254,7 @@ void openTickets()
 			system("CLS");
 			wprintf(L"Ticket saved\n");
 			wprintf(L"==================\n");
-			wprintf(L"The ticked was saved in the system.\n");
+			wprintf(L"The ticket was saved in the system.\n");
 			wprintf(L"The ticket ID is:\n");
 			wprintf(L"%s\n", ticket_getId(ticket));
 			wprintf(L"Please save this ID for future reference.\n");
