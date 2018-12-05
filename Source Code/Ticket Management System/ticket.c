@@ -148,7 +148,7 @@ void ticket_destroy(struct Ticket* ticket)
 		{
 			for (unsigned int i = 0; i < vector_getSize(ticket->notes); ++i)
 			{
-				struct Note* note = vector_getAt(ticket->notes, i);
+				wchar_t* note = vector_getAt(ticket->notes, i);
 				free(note);
 			}
 			vector_destroy(ticket->notes);
@@ -373,7 +373,12 @@ void ticket_addStakeholder(struct Ticket* ticket, wchar_t* stakeholder)
 		{
 			ticket->stakeholders = vector_create();
 		}
-		vector_push(ticket->stakeholders, stakeholder);
+		wchar_t* alloced_stakeholder = malloc(sizeof(wchar_t) * (wcslen(stakeholder) + 1));
+		if (alloced_stakeholder != NULL)
+		{
+			wcscpy(alloced_stakeholder, stakeholder);
+			vector_push(ticket->stakeholders, alloced_stakeholder);
+		}
 	}
 }
 
@@ -544,7 +549,12 @@ void ticket_addTag(struct Ticket* ticket, wchar_t* tag)
 		{
 			ticket->tags = vector_create();
 		}
-		vector_push(ticket->tags, tag);
+		wchar_t* alloced_tag = malloc(sizeof(wchar_t) * (wcslen(tag) + 1));
+		if (alloced_tag != NULL)
+		{
+			wcscpy(alloced_tag, tag);
+			vector_push(ticket->tags, alloced_tag);
+		}
 	}
 }
 
