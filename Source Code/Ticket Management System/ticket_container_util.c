@@ -78,7 +78,15 @@ struct Ticket* ticketContainer_createTicketFromDatabaseRow(wchar_t** data)
 			}
 		}
 
-		// TODO: set notes
+		wchar_t* note = wcstok(notes, SEPARATOR, &ctx);
+		if (note != NULL)
+		{
+			ticket_addNote(ticket, note);
+			while ((note = wcstok(NULL, SEPARATOR, &ctx)) != NULL)
+			{
+				ticket_addNote(ticket, note);
+			}
+		}
 	}
 	return ticket;
 }
@@ -88,6 +96,7 @@ struct ticketContainer_wcsArrStatus
 	bool malloced_data1;
 	bool malloced_data8;
 	bool malloced_data9;
+	bool malloced_data10;
 	bool malloced_data11;
 };
 
@@ -106,6 +115,7 @@ struct ticketContainer_wcsArrStatus* ticketContainer_wcsArrFromTicket(wchar_t** 
 	status->malloced_data1 = false;
 	status->malloced_data8 = false;
 	status->malloced_data9 = false;
+	status->malloced_data10 = false;
 	status->malloced_data11 = false;
 
 	data[0] = ticket_getId(ticket);
@@ -191,7 +201,36 @@ struct ticketContainer_wcsArrStatus* ticketContainer_wcsArrFromTicket(wchar_t** 
 		}
 	}
 
-	data[10] = L" "; // TODO: Notes
+	struct Vector* note = ticket_getNotes(ticket);
+	if (note == NULL)
+	{
+		data[10] = L" ";
+	}
+	else
+	{
+		unsigned int length = 0;
+		for (unsigned int i = 0; i < vector_getSize(note); ++i)
+		{
+			length += wcslen(vector_getAt(note, i));
+			length += 1;
+		}
+		data[10] = malloc(sizeof(wchar_t) * (length + 1));
+		if (data[10] == NULL)
+		{
+			data[10] = L" ";
+			fwprintf(stderr, L"Failed saving ticket notes to database\n");
+		}
+		else
+		{
+			data[10][0] = L'\0';
+			for (unsigned int i = 0; i < vector_getSize(note); ++i)
+			{
+				wcscat(data[10], vector_getAt(note, i));
+				wcscat(data[10], SEPARATOR);
+			}
+			status->malloced_data10 = true;
+		}
+	}
 
 	data[11] = malloc(sizeof(wchar_t) * 100);
 	if (data[11] == NULL)
@@ -228,6 +267,11 @@ void ticketContainer_cleanUpWcsArr(wchar_t** data, struct ticketContainer_wcsArr
 	{
 		free(data[9]);
 		data[9] = NULL;
+	}
+	if (status->malloced_data10 && data[10] != NULL)
+	{
+		free(data[10]);
+		data[10] = NULL;
 	}
 	if (status->malloced_data11 && data[11] != NULL)
 	{

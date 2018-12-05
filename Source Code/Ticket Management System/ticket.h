@@ -43,13 +43,7 @@ void ticket_setDate(struct Ticket*, time_t);
 
 void ticket_addTag(struct Ticket*, wchar_t* tag);
 void ticket_addStakeholder(struct Ticket*, wchar_t* stakeholder);
-void ticket_addNote(struct Ticket*, wchar_t* author, wchar_t* content);
+void ticket_addNote(struct Ticket*, wchar_t* content);
 
 // Makes a new ticket out of an existing ticket
 void ticket_copyFrom(struct Ticket* dest, struct Ticket* src);
-
-// Note:
-
-time_t note_getDate(struct Note*);
-wchar_t* note_getAuthor(struct Note*);
-wchar_t* note_getContent(struct Note*);

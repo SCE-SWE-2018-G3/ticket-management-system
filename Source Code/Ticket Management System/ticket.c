@@ -29,13 +29,6 @@ wchar_t* generateRandomString(unsigned int length)
 	return str;
 }
 
-struct Note
-{
-	time_t date;
-	wchar_t* author;
-	wchar_t* content;
-};
-
 struct Ticket
 {
 	wchar_t* id;
@@ -165,7 +158,7 @@ void ticket_destroy(struct Ticket* ticket)
 	}
 }
 
-void ticket_addNote(struct Ticket* ticket, wchar_t* author, wchar_t* content)
+void ticket_addNote(struct Ticket* ticket, wchar_t* note_content)
 {
 	if (ticket != NULL)
 	{
@@ -176,13 +169,10 @@ void ticket_addNote(struct Ticket* ticket, wchar_t* author, wchar_t* content)
 
 		if (ticket->notes != NULL)
 		{
-			struct Note* note = malloc(sizeof(struct Note));
+			wchar_t* note = malloc(sizeof(wchar_t) * (wcslen(note_content)+1));
 			if (note != NULL)
 			{
-				note->author = author;
-				note->content = content;
-				note->date = time(NULL);
-
+				wcscpy(note, note_content);
 				vector_push(ticket->notes, note);
 			}
 			else
@@ -582,33 +572,6 @@ void ticket_setDate(struct Ticket* ticket, time_t time)
 	{
 		ticket->creation_date = time;
 	}
-}
-
-time_t note_getDate(struct Note* note)
-{
-	if (note != NULL)
-	{
-		return note->date;
-	}
-	return time(NULL);
-}
-
-wchar_t* note_getAuthor(struct Note* note)
-{
-	if (note != NULL)
-	{
-		return note->author;
-	}
-	return NULL;
-}
-
-wchar_t* note_getContent(struct Note* note)
-{
-	if (note != NULL)
-	{
-		return note->content;
-	}
-	return NULL;
 }
 
 void ticket_copyFrom(struct Ticket* dest, struct Ticket* src)
