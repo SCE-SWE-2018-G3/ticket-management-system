@@ -258,13 +258,12 @@ void browseTickets()
 	if (tickets == NULL)
 	{
 		wprintf(L"No tickets in the system.\n");
+		system("PAUSE");
 	}
 	else
 	{
-		printTicketsArray(tickets);
 		//Creating the menu and giving it a title
 		struct Menu* browse_tickets = menu_create();
-		menu_setTitle(browse_tickets, L"Browse Tickets\n==============");
 
 		//Creating the options and inserting them into the menu
 		struct MenuOption* statusOption = menuOption_create(L"Filter by status", filterByStatusAction);
@@ -288,6 +287,8 @@ void browseTickets()
 		while (menu_isOpen(browse_tickets) && !menu_hasError(browse_tickets))
 		{
 			system("CLS");
+			wprintf(L"Browse Tickets\n==============\n");
+			printTicketsArray(tickets);
 			menu_tick(browse_tickets);
 		}
 		
@@ -298,7 +299,6 @@ void browseTickets()
 		}
 		vector_destroy(tickets);
 	}
-	system("PAUSE");
 }
 
 
