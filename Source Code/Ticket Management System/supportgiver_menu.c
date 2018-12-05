@@ -80,9 +80,9 @@ bool searchByTags(void* ticket, void* tag)
 void filterByStatusAction() 
 {
 	struct Vector* tickets = ticketContainer_getAll();
-	if (tickets == NULL) {
+	if (tickets == NULL)
+	{
 		wprintf(L"No tickets in the system.\n");
-		return 0;
 	}
 	else
 	{
@@ -90,20 +90,24 @@ void filterByStatusAction()
 		wchar_t status[32];
 		wprintf(L"Please input status:\n");
 		wscanf(L"%s", status);
-		wcstok(status, "\n", &ctx);
+		wcstok(status, L"\n", &ctx);
 		struct Vector* filtered_vector = vector_filter(tickets, filterByStatus, status);
 		printTicketsArray(filtered_vector);
-		system("PAUSE");
 		vector_destroy(filtered_vector);
+		for(unsigned int i = 0; i < vector_getSize(tickets); ++i)
+		{
+			ticket_destroy(vector_getAt(tickets, i));
+		}
 		vector_destroy(tickets);
 	}
+	system("PAUSE");
 }
 void filterByTierAction()
 {
 	struct Vector* tickets = ticketContainer_getAll();
-	if (tickets == NULL) {
+	if (tickets == NULL)
+	{
 		wprintf(L"No tickets in the system.\n");
-		system("PAUSE");
 	}
 	else
 	{
@@ -111,20 +115,24 @@ void filterByTierAction()
 		wchar_t tier[32];
 		wprintf(L"Please input tier:\n");
 		wscanf(L"%s", tier);
-		wcstok(tier, "\n", &ctx);
+		wcstok(tier, L"\n", &ctx);
 		struct Vector* filtered_vector = vector_filter(tickets, filterByTier, tier);
 		printTicketsArray(filtered_vector);
-		system("PAUSE");
 		vector_destroy(filtered_vector);
+		for(unsigned int i = 0; i < vector_getSize(tickets); ++i)
+		{
+			ticket_destroy(vector_getAt(tickets, i));
+		}
 		vector_destroy(tickets);
 	}
+	system("PAUSE");
 }
 void filterByTypeAction()
 {
 	struct Vector* tickets = ticketContainer_getAll();
-	if (tickets == NULL) {
+	if (tickets == NULL)
+	{
 		wprintf(L"No tickets in the system.\n");
-		system("PAUSE");
 	}
 	else
 	{
@@ -132,20 +140,24 @@ void filterByTypeAction()
 		wchar_t type[32];
 		wprintf(L"Please input type:\n");
 		wscanf(L"%s", type);
-		wcstok(type, "\n", &ctx);
+		wcstok(type, L"\n", &ctx);
 		struct Vector* filtered_vector = vector_filter(tickets, filterByType, type);
 		printTicketsArray(filtered_vector);
-		system("PAUSE");
 		vector_destroy(filtered_vector);
+		for(unsigned int i = 0; i < vector_getSize(tickets); ++i)
+		{
+			ticket_destroy(vector_getAt(tickets, i));
+		}
 		vector_destroy(tickets);
 	}
+	system("PAUSE");
 }
 void filterByStakeHolderAction() 
 {
 	struct Vector* tickets = ticketContainer_getAll();
-	if (tickets == NULL) {
+	if (tickets == NULL)
+	{
 		wprintf(L"No tickets in the system.\n");
-		system("PAUSE");
 	}
 	else
 	{
@@ -153,23 +165,27 @@ void filterByStakeHolderAction()
 		wchar_t stakeholders[32];
 		wprintf(L"Please input stakeholders:\n");
 		wscanf(L"%s", stakeholders);
-		wcstok(stakeholders, "\n", &ctx);
+		wcstok(stakeholders, L"\n", &ctx);
 		struct Vector* stakeholders_vector = vector_create();
 		vector_push(stakeholders_vector, stakeholders);
 		struct Vector* filtered_vector = vector_filter(tickets, filterByStakeholders, stakeholders);
 		printTicketsArray(filtered_vector);
-		system("PAUSE");
 		vector_destroy(stakeholders_vector);
 		vector_destroy(filtered_vector);
+		for(unsigned int i = 0; i < vector_getSize(tickets); ++i)
+		{
+			ticket_destroy(vector_getAt(tickets, i));
+		}
 		vector_destroy(tickets);
 	}
+	system("PAUSE");
 }
 void SearchByCustomerEmailAction()
 {
 	struct Vector* tickets = ticketContainer_getAll();
-	if (tickets == NULL) {
+	if (tickets == NULL)
+	{
 		wprintf(L"No tickets in the system.\n");
-		system("PAUSE");
 	}
 	else
 	{
@@ -177,20 +193,24 @@ void SearchByCustomerEmailAction()
 		wchar_t customer_email[32];
 		wprintf(L"please input Customer Email:\n");
 		wscanf(L"%s", customer_email);
-		wcstok(customer_email, "\n", &ctx);
+		wcstok(customer_email, L"\n", &ctx);
 		struct Vector* filtered_vector = vector_filter(tickets, searchByCustomerEmail, customer_email);
 		printTicketsArray(filtered_vector);
-		system("PAUSE");
 		vector_destroy(filtered_vector);
+		for(unsigned int i = 0; i < vector_getSize(tickets); ++i)
+		{
+			ticket_destroy(vector_getAt(tickets, i));
+		}
 		vector_destroy(tickets);
 	}
+	system("PAUSE");
 }
 void SearchByTagsAction()
 {
 	struct Vector* tickets = ticketContainer_getAll();
-	if (tickets == NULL) {
+	if (tickets == NULL)
+	{
 		wprintf(L"No tickets in the system.\n");
-		system("PAUSE");
 	}
 	else
 	{
@@ -201,34 +221,34 @@ void SearchByTagsAction()
 		wcstok(tags, L"\n", &ctx);
 		struct Vector* filtered_vector = vector_filter(tickets, searchByTags, tags);
 		printTicketsArray(filtered_vector);
-		system("PAUSE");
-		fflush(stdin);
 		vector_destroy(filtered_vector);
+		for(unsigned int i = 0; i < vector_getSize(tickets); ++i)
+		{
+			ticket_destroy(vector_getAt(tickets, i));
+		}
 		vector_destroy(tickets);
 	}
+	system("PAUSE");
 }
 void SortByTitleAction()
 {
 	struct Vector* tickets = ticketContainer_getAll();
-	if (tickets == NULL) {
+	if (tickets == NULL)
+	{
 		wprintf(L"No tickets in the system.\n");
-		system("PAUSE");
 	}
 	else 
 	{
 		struct Vector* sorted_vector = vector_sort(tickets, sortByTitle);
-		if (sorted_vector != NULL) 
+		printTicketsArray(sorted_vector);
+		vector_destroy(sorted_vector);
+		for(unsigned int i = 0; i < vector_getSize(tickets); ++i)
 		{
-			printTicketsArray(sorted_vector);
-			system("PAUSE");
-			vector_destroy(sorted_vector);
-			vector_destroy(tickets);
+			ticket_destroy(vector_getAt(tickets, i));
 		}
-		else
-		{
-			wprintf(L"No tickets in the system.");
-		}
+		vector_destroy(tickets);
 	}
+	system("PAUSE");
 }
 
 void browseTickets()
@@ -238,7 +258,6 @@ void browseTickets()
 	if (tickets == NULL)
 	{
 		wprintf(L"No tickets in the system.\n");
-		system("Pause");
 	}
 	else
 	{
@@ -271,9 +290,15 @@ void browseTickets()
 			system("CLS");
 			menu_tick(browse_tickets);
 		}
-		system("PAUSE");
+		
+		
+		for(unsigned int i = 0; i < vector_getSize(tickets); ++i)
+		{
+			ticket_destroy(vector_getAt(tickets, i));
+		}
+		vector_destroy(tickets);
 	}
-	vector_destroy(tickets);
+	system("PAUSE");
 }
 
 
