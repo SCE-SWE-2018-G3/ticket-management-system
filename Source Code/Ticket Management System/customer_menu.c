@@ -66,10 +66,7 @@ void viewTicket()
 		struct Vector* notes = ticket_getNotes(ticket);
 		for (unsigned int i = 0; i < vector_getSize(notes); ++i)
 		{
-			struct Note* note = vector_getAt(notes, i);
-			wprintf(L"\tDate: %S\n", ctime(note_getDate(note)));
-			wprintf(L"\tAuthor: %s\n", note_getAuthor(note));
-			wprintf(L"\t%s\n", note_getContent(note));
+			wprintf(L"%s\n", vector_getAt(notes, i));
 		}
 	}
 	else
