@@ -20,8 +20,8 @@ void createTicket()
 	input_wchar(title, 256);
 	wprintf(L"Please list the type(s) related to this incident.\n");
 	input_wchar(type, 256);
-
-	struct Ticket* ticket = ticket_create(title, type, description, auth_getEmail());
+	//Add more fields
+	struct Ticket* ticket = ticket_create(title, type, description, auth_getEmail());// add more fields
 	if (ticket != NULL)
 	{
 		ticketContainer_update(ticket);
