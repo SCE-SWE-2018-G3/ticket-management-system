@@ -68,3 +68,7 @@ struct User* userContainer_getByEmail(char* email)
 
 	return user;
 }
+void userContainer_update(struct User* user, char* original_email)
+{
+
+}

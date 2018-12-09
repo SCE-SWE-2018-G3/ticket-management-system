@@ -1,9 +1,12 @@
 #include "customer_menu.h"
 #include "ticket_container.h"
+#include "user_container.h"
 #include "auth.h"
+#include "user.h"
+#include "Input_manip.h"
 #include <stdio.h>
 #include <stdbool.h>
-#include "Input_manip.h"
+#include <string.h>
 
 void createTicket()
 {
@@ -17,9 +20,9 @@ void createTicket()
 	wprintf(L"Please describe what happened.\n");
 	input_wchar(description,512);		
 	wprintf(L"Please give a short title to the incident.\n");
-	input_wchar(title, 256);
+	input_wchar(&title, 256);
 	wprintf(L"Please list the type(s) related to this incident.\n");
-	input_wchar(type, 256);
+	input_wchar(&type, 256);
 	//Add more fields
 	struct Ticket* ticket = ticket_create(title, type, description, auth_getEmail());// add more fields
 	if (ticket != NULL)
@@ -113,25 +116,28 @@ void updateContactInfo()
 {	
 	system("CLS");
 	char email[512];
+	char OG_email[512];
 	wchar_t password[50];
 	wchar_t name[50];
 	wchar_t phone_number[20];	
-	struct User* logged_user=auth_getUser(); //fetchs the user from the container
+	struct User* logged_user=auth_getUser(); //fetchs the user from the container	
+	strcpy(OG_email,auth_getEmail()); //stores original Email of the user.
+
 	wprintf(L"Contact Info update\n");
 	wprintf(L"===============\n");
 	wprintf(L"enter 'no' every field you wish to not update.\n");
 	wprintf(L"Update email:\n");
-	input_char(email, 512);
+	input_char(&email, 512);
 	wprintf(L"Update password:\n");
-	input_wchar(password, 50);
+	input_wchar(&password, 50);
 	wprintf(L"Update name:\n");
-	input_wchar(name, 50);
+	input_wchar(&name, 50);
 	wprintf(L"Update Phone number:.\n");
-	input_wchar(phone_number, 50);
-	if (!input_valid_email(email))
-		wprintf(L"invalid Email, email won't be updated:.\n");
-	else if (!strcmp(email,"no"))
-		wprintf(L"email won't be updated:.\n");
+	input_wchar(&phone_number, 50);
+	if (!strcmp(email, "no"))
+		 wprintf(L"email won't be updated:.\n");
+	else if (!input_valid_email(email))
+		wprintf(L"invalid Email, email won't be updated:.\n");		
 	else
 		user_setEmail(logged_user,email);
 	if (wcscmp(password,L"no"))
@@ -140,6 +146,7 @@ void updateContactInfo()
 		user_setName(logged_user, name);
 	if (wcscmp(phone_number, L"no"))
 		user_setPhone(logged_user, phone_number);		
+	userContainer_update(logged_user, OG_email);
 	system("PAUSE");
 	
 }

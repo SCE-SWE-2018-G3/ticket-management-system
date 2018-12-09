@@ -13,7 +13,7 @@ void (*onAuth)() = NULL;
 void setEmail()
 {
 	char input[100];
-	input_char(input, 100);
+	input_char(&input, 100);
 	if (email != NULL)
 	{
 		free(email);
