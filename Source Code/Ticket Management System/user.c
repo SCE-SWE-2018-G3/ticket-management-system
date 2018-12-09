@@ -109,17 +109,17 @@ void user_setEmail(struct User* user, char* email)
 		}
 		else if (strlen(email) != strlen(user->email))
 		{
-			wchar_t* old_email = user->email;
-			user->email = realloc(user->email, strlen(email) + 1);
+			char* old_email = user->email;
+			user->email = (char*)realloc(user->email, strlen(email) + 1);
 			if (user->email == NULL)
 			{
 				user->email = old_email;
 				return;
 			}
-			else if (old_email != user->email)
+			/*else if (old_email != user->email)
 			{
 				free(old_email);
-			}
+			}*/
 		}
 
 		strcpy(user->email, email);
@@ -185,16 +185,16 @@ void user_setName(struct User* user, wchar_t* name)
 		else if (wcslen(name) != wcslen(user->contact_details.name))
 		{
 			wchar_t* old_name = user->contact_details.name;
-			user->contact_details.name = realloc(user->contact_details.name, sizeof(wchar_t) * (wcslen(name) + 1));
+			user->contact_details.name =(char*)realloc(user->contact_details.name, sizeof(wchar_t) * (wcslen(name) + 1));
 			if (user->contact_details.name == NULL)
 			{
 				user->contact_details.name = old_name;
 				return;
 			}
-			else if (old_name != user->contact_details.name)
+			/*else if (old_name != user->contact_details.name)
 			{
 				free(old_name);
-			}
+			}*/
 		}
 
 		wcscpy(user->contact_details.name, name);
@@ -222,10 +222,10 @@ void user_setPhone(struct User* user, wchar_t* phone)
 				user->contact_details.phone = old_phone;
 				return;
 			}
-			else if (old_phone != user->contact_details.phone)
+			/*else if (old_phone != user->contact_details.phone)
 			{
 				free(old_phone);
-			}
+			}*/
 		}
 
 		wcscpy(user->contact_details.phone, phone);

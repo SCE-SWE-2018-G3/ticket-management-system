@@ -9,7 +9,15 @@ struct Ticket;
 
 // Ticket:
 
-// Creates a new ticket.
+/**
+* creates tickets and returns a pointer to the newly created ticket
+*@param title widechar type pointer- the title of the ticket
+*@param type- widechar_type pointer- the problem type of the ticket
+*@param description- widechar_type pointer- the description of the problem
+*@param customer_email -char_pointer- the email of the customer to create the ticket for
+*@return struct Ticket* a point to struct Ticket type.
+* Todo: a ticket is more vast that this this function needs to get more values.
+*/
 struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description, char* customer_email);
 
 // Destroys a ticket, performing deallocation.

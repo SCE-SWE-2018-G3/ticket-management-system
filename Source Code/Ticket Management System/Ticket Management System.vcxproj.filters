@@ -72,6 +72,9 @@
     <ClCompile Include="ticket_container_util.c">
       <Filter>Source Files\Data</Filter>
     </ClCompile>
+    <ClCompile Include="Input_manip.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ticket.h">
@@ -109,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="ticket_container_util.h">
       <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Input_manip.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

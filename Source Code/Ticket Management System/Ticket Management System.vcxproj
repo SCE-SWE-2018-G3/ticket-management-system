@@ -142,6 +142,7 @@
     <ClCompile Include="auth.c" />
     <ClCompile Include="auth_menu.c" />
     <ClCompile Include="customer_menu.c" />
+    <ClCompile Include="Input_manip.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="menu.c" />
     <ClCompile Include="menu_option.c" />
@@ -157,6 +158,7 @@
     <ClInclude Include="auth.h" />
     <ClInclude Include="auth_menu.h" />
     <ClInclude Include="customer_menu.h" />
+    <ClInclude Include="Input_manip.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="menu_option.h" />
     <ClInclude Include="supportgiver_menu.h" />

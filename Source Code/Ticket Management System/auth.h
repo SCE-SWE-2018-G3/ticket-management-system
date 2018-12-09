@@ -18,3 +18,9 @@ bool auth_isSupportGiver();
 
 // Gets the email of the logged in user
 char* auth_getEmail();
+
+/**
+gets the user that's logged in right now
+@return User* a pointer to the logged in user
+*/
+struct User* auth_getUser();
