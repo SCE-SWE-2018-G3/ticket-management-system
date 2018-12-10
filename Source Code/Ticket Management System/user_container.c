@@ -60,6 +60,7 @@ void userContainer_update(struct User* user, char* original_email)
 	struct userContainer_wcsArrStatus* data_status = userContainer_wcsArrFromUser(data, user);
 
 	struct LeanSQL_ActionReport update = LeanSQL_update(L"Users", data, NULL, 6, findByUserEmail, original_email_wcs);
+	free(original_email_wcs);
 	if (update.success)
 	{
 		if (update.result.rows == 0) // User does not exist, was not added
