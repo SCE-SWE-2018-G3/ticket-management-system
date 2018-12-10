@@ -120,11 +120,15 @@ void updateContactInfo()
 	wchar_t password[50];
 	wchar_t name[50];
 	wchar_t phone_number[20];	
-	struct User* logged_user=auth_getUser(); //fetchs the user from the container	
-	strcpy(OG_email,auth_getEmail()); //stores original Email of the user.
+	struct User* logged_user = auth_getUser(); // Fetches the logged-in user.
+	if (logged_user == NULL)
+	{
+		return;
+	}
+	strcpy(OG_email,auth_getEmail()); // Stores original Email of the user in case it's edited.
 
 	wprintf(L"Contact Info update\n");
-	wprintf(L"===============\n");
+	wprintf(L"===================\n");
 	wprintf(L"enter 'no' every field you wish to not update.\n");
 	wprintf(L"Update email:\n");
 	input_char(&email, 512);
@@ -148,7 +152,6 @@ void updateContactInfo()
 		user_setPhone(logged_user, phone_number);		
 	userContainer_update(logged_user, OG_email);
 	system("PAUSE");
-	
 }
 
 struct Menu* createCustomerMenu(void(*onLogOutCallback)())
