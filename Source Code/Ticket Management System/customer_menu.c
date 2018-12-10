@@ -18,7 +18,7 @@ void createTicket()
 	wprintf(L"Contact Support\n");
 	wprintf(L"===============\n");
 	wprintf(L"Please describe what happened.\n");
-	input_wchar(description,512);		
+	input_wchar(&description,512);		
 	wprintf(L"Please give a short title to the incident.\n");
 	input_wchar(&title, 256);
 	wprintf(L"Please list the type(s) related to this incident.\n");

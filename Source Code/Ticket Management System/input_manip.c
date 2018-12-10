@@ -1,17 +1,25 @@
 #include  "Input_manip.h"
+#include <stdio.h>
+#include <string.h>
 
-void input_wchar(wchar_t** input ,int max_characters)
+void input_wchar(wchar_t* input[], int max_characters)
 {
-	wchar_t* context;
-	fgetws(input, max_characters, stdin);	
-	wcstok(input, L"\n",&context);	
-	fflush(stdin); //clears the buffer just in case there is input that exceeds the limit.
+	if (input != NULL && *input != NULL)
+	{
+		wchar_t* context;
+		fgetws(*input, max_characters, stdin);	
+		wcstok(*input, L"\n",&context);	
+		fflush(stdin); // Clears the buffer just in case there is input that exceeds the limit.
+	}
 }
-void input_char(char** input, int max_characters)
+void input_char(char* input[], int max_characters)
 {
-	fgets(input, max_characters, stdin);
-	strtok(input, "\n");
-	fflush(stdin);	
+	if (input != NULL && *input != NULL)
+	{
+		fgets(*input, max_characters, stdin);
+		strtok(*input, "\n");
+		fflush(stdin); // Clears the buffer just in case there is input that exceeds the limit.
+	}
 }
 bool input_valid_email(char* input)
 {

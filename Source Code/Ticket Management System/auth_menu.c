@@ -1,5 +1,6 @@
 #include "auth_menu.h"
 #include "auth.h"
+#include "input_manip.h"
 #include <stdio.h>
 #include <string.h>
 
