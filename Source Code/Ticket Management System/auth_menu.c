@@ -14,7 +14,7 @@ void (*onAuth)() = NULL;
 void setEmail()
 {
 	char input[100];
-	input_char(&input, 100);
+	input_char(input, 100);
 	if (email != NULL)
 	{
 		free(email);
@@ -38,7 +38,7 @@ void setEmail()
 void setPassword()
 {
 	wchar_t input[100];
-	input_wchar(input, 10);
+	input_wchar(input, 100);
 	if (password != NULL)
 	{
 		free(password);

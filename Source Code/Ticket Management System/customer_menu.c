@@ -18,11 +18,11 @@ void createTicket()
 	wprintf(L"Contact Support\n");
 	wprintf(L"===============\n");
 	wprintf(L"Please describe what happened.\n");
-	input_wchar(&description,512);		
+	input_wchar(description,512);		
 	wprintf(L"Please give a short title to the incident.\n");
-	input_wchar(&title, 256);
+	input_wchar(title, 256);
 	wprintf(L"Please list the type(s) related to this incident.\n");
-	input_wchar(&type, 256);
+	input_wchar(type, 256);
 	//Add more fields
 	struct Ticket* ticket = ticket_create(title, type, description, auth_getEmail());// add more fields
 	if (ticket != NULL)
@@ -131,13 +131,13 @@ void updateContactInfo()
 	wprintf(L"===================\n");
 	wprintf(L"enter 'no' every field you wish to not update.\n");
 	wprintf(L"Update email:\n");
-	input_char(&email, 512);
+	input_char(email, 512);
 	wprintf(L"Update password:\n");
-	input_wchar(&password, 50);
+	input_wchar(password, 50);
 	wprintf(L"Update name:\n");
-	input_wchar(&name, 50);
+	input_wchar(name, 50);
 	wprintf(L"Update Phone number:.\n");
-	input_wchar(&phone_number, 50);
+	input_wchar(phone_number, 50);
 	if (!strcmp(email, "no"))
 		 wprintf(L"email won't be updated:.\n");
 	else if (!input_valid_email(email))
