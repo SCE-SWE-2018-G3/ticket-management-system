@@ -1,6 +1,7 @@
 #include "user.h"
 #include <stdbool.h>
 #include <string.h>
+#include <stdio.h>
 #include "openssl/sha.h"
 
 void sha256(char *src, char dst[65])

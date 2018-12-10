@@ -1,4 +1,4 @@
-#include  "Input_manip.h"
+#include  "input_manip.h"
 #include <stdio.h>
 #include <string.h>
 

@@ -3,7 +3,7 @@
 #include "user_container.h"
 #include "auth.h"
 #include "user.h"
-#include "Input_manip.h"
+#include "input_manip.h"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -71,7 +71,7 @@ void viewTicket()
 		struct Vector* notes = ticket_getNotes(ticket);
 		for (unsigned int i = 0; i < vector_getSize(notes); ++i)
 		{
-			wprintf(L"%s\n", vector_getAt(notes, i));
+			wprintf(L"%s\n", (wchar_t*) vector_getAt(notes, i));
 		}
 	}
 	else
