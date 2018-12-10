@@ -15,7 +15,7 @@ void ticketContainer_update(struct Ticket* ticket)
 	if (ticket != NULL)
 	{
 		wchar_t* data[12];
-		struct ticketContainer_wcsArrStatus* dataStatus = ticketContainer_wcsArrFromTicket(data, ticket);
+		struct ticketContainer_wcsArrStatus* data_status = ticketContainer_wcsArrFromTicket(data, ticket);
 
 		struct LeanSQL_ActionReport update = LeanSQL_update(L"Tickets", data, NULL, 12, findByTicketId, ticket_getId(ticket));
 		if (update.success)
@@ -46,7 +46,7 @@ void ticketContainer_update(struct Ticket* ticket)
 			}
 		}
 
-		ticketContainer_cleanUpWcsArr(data, dataStatus);
+		ticketContainer_cleanUpWcsArr(data, data_status);
 	}
 }
 

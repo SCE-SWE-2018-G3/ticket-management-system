@@ -46,3 +46,10 @@ char* auth_getEmail()
 {
 	return user_getEmail(authenticated_user);
 }
+
+struct User* auth_getUser()
+{	
+	return authenticated_user;
+}
+
+

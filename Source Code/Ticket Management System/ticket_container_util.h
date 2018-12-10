@@ -2,6 +2,7 @@
 
 #include <wchar.h>
 
+struct Ticket;
 struct ticketContainer_wcsArrStatus;
 
 // Creates an empty tickets table file.

@@ -142,6 +142,7 @@
     <ClCompile Include="auth.c" />
     <ClCompile Include="auth_menu.c" />
     <ClCompile Include="customer_menu.c" />
+    <ClCompile Include="input_manip.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="menu.c" />
     <ClCompile Include="menu_option.c" />
@@ -151,12 +152,14 @@
     <ClCompile Include="ticket_container_util.c" />
     <ClCompile Include="user.c" />
     <ClCompile Include="user_container.c" />
+    <ClCompile Include="user_container_util.c" />
     <ClCompile Include="vector.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="auth.h" />
     <ClInclude Include="auth_menu.h" />
     <ClInclude Include="customer_menu.h" />
+    <ClInclude Include="input_manip.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="menu_option.h" />
     <ClInclude Include="supportgiver_menu.h" />
@@ -165,6 +168,7 @@
     <ClInclude Include="ticket_container_util.h" />
     <ClInclude Include="user.h" />
     <ClInclude Include="user_container.h" />
+    <ClInclude Include="user_container_util.h" />
     <ClInclude Include="vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

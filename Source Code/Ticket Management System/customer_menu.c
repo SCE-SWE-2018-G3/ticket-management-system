@@ -1,7 +1,12 @@
 #include "customer_menu.h"
 #include "ticket_container.h"
+#include "user_container.h"
 #include "auth.h"
+#include "user.h"
+#include "input_manip.h"
 #include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
 
 void createTicket()
 {
@@ -13,13 +18,13 @@ void createTicket()
 	wprintf(L"Contact Support\n");
 	wprintf(L"===============\n");
 	wprintf(L"Please describe what happened.\n");
-	wscanf(L"%s", description);
+	input_wchar(description,512);		
 	wprintf(L"Please give a short title to the incident.\n");
-	wscanf(L"%s", title);
+	input_wchar(title, 256);
 	wprintf(L"Please list the type(s) related to this incident.\n");
-	wscanf(L"%s", type);
-
-	struct Ticket* ticket = ticket_create(title, type, description, auth_getEmail());
+	input_wchar(type, 256);
+	//Add more fields
+	struct Ticket* ticket = ticket_create(title, type, description, auth_getEmail());// add more fields
 	if (ticket != NULL)
 	{
 		ticketContainer_update(ticket);
@@ -66,7 +71,7 @@ void viewTicket()
 		struct Vector* notes = ticket_getNotes(ticket);
 		for (unsigned int i = 0; i < vector_getSize(notes); ++i)
 		{
-			wprintf(L"%s\n", vector_getAt(notes, i));
+			wprintf(L"%s\n", (wchar_t*) vector_getAt(notes, i));
 		}
 	}
 	else
@@ -83,6 +88,9 @@ void listTickets()
 
 void viewFAQ()
 {
+	system("CLS");
+	wprintf(L"Frequently Asked Questions\n");
+	wprintf(L"========================\n");
 	wprintf(L"Q: My computer is on but I can't see anything on the screen.\n");
 	wprintf(L"A: Try moving the mouse or hitting any key on the keyboard.\nIf that fails, locate the power button on the screen and press it./nCheck the connectivity of the screen monitor to the computer, and check if the screen is on.\n");
 	wprintf(L"\n");
@@ -105,8 +113,45 @@ void viewFAQ()
 }
 
 void updateContactInfo()
-{
-	// TODO
+{	
+	system("CLS");
+	char email[512];
+	char OG_email[512];
+	wchar_t password[50];
+	wchar_t name[50];
+	wchar_t phone_number[20];	
+	struct User* logged_user = auth_getUser(); // Fetches the logged-in user.
+	if (logged_user == NULL)
+	{
+		return;
+	}
+	strcpy(OG_email,auth_getEmail()); // Stores original Email of the user in case it's edited.
+
+	wprintf(L"Contact Info update\n");
+	wprintf(L"===================\n");
+	wprintf(L"enter 'no' every field you wish to not update.\n");
+	wprintf(L"Update email:\n");
+	input_char(email, 512);
+	wprintf(L"Update password:\n");
+	input_wchar(password, 50);
+	wprintf(L"Update name:\n");
+	input_wchar(name, 50);
+	wprintf(L"Update Phone number:.\n");
+	input_wchar(phone_number, 50);
+	if (!strcmp(email, "no"))
+		 wprintf(L"email won't be updated:.\n");
+	else if (!input_valid_email(email))
+		wprintf(L"invalid Email, email won't be updated:.\n");		
+	else
+		user_setEmail(logged_user,email);
+	if (wcscmp(password,L"no"))
+		user_setPassword(logged_user, password, false); //The initial state of a password is that it's not hashed yet.
+	if (wcscmp(name, L"no"))
+		user_setName(logged_user, name);
+	if (wcscmp(phone_number, L"no"))
+		user_setPhone(logged_user, phone_number);		
+	userContainer_update(logged_user, OG_email);
+	system("PAUSE");
 }
 
 struct Menu* createCustomerMenu(void(*onLogOutCallback)())

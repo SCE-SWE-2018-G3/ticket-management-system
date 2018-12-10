@@ -278,4 +278,6 @@ void ticketContainer_cleanUpWcsArr(wchar_t** data, struct ticketContainer_wcsArr
 		free(data[11]);
 		data[11] = NULL;
 	}
+	
+	free(status);
 }

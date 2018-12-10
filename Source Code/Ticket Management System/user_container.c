@@ -1,43 +1,10 @@
 #include "user_container.h"
+#include "user_container_util.h"
 #include <leansql.h>
 
 bool findByUserEmail(wchar_t* column, wchar_t* value, void* desired_email)
 {
 	return (wcscmp(column, L"Email") == 0) && (wcscmp(value, desired_email) == 0);
-}
-
-void userContainer_createDatabaseTable()
-{
-	wchar_t* columns[] =
-	{
-		L"Email",
-		L"Password",
-		L"Salt",
-		L"Support Giver?",
-		L"Name",
-		L"Phone"
-	};
-	struct LeanSQL_ActionReport creation = LeanSQL_createTable(L"Users", columns, 6);
-	if (!creation.success)
-	{
-		fwprintf(stderr, L"Could not create users database.\n");
-	}
-}
-
-struct User* userContainer_createUserFromDatabaseRow(wchar_t** data)
-{
-	wchar_t* wide_email = data[0];
-	char email[128];
-	wcstombs(email, wide_email, 128);
-	wchar_t* password = data[1];
-	wchar_t* salt = data[2];
-	wchar_t* is_support_giver_str = data[3];
-	bool is_support_giver = is_support_giver_str && (is_support_giver_str[0] == '1') || !wcscmp(is_support_giver_str, L"true");
-	wchar_t* name = data[4];
-	wchar_t* phone = data[5];
-
-	struct User* user = user_create(email, password, true, salt, is_support_giver, name, phone);
-	return user;
 }
 
 struct User* userContainer_getByEmail(char* email)
@@ -67,4 +34,60 @@ struct User* userContainer_getByEmail(char* email)
 	}
 
 	return user;
+}
+
+void userContainer_update(struct User* user, char* original_email)
+{
+	if (user == NULL)
+	{
+		return;
+	}
+
+	if (original_email == NULL)
+	{
+		original_email = user_getEmail(user);
+	}
+
+	wchar_t* original_email_wcs = malloc(sizeof(wchar_t) * (strlen(original_email) + 1));
+	if (original_email_wcs == NULL)
+	{
+		fwprintf(stderr, L"Could not update user due to memory issue");
+		return;
+	}
+	mbstowcs(original_email_wcs, original_email, strlen(original_email) + 1);
+
+	wchar_t* data[6];
+	struct userContainer_wcsArrStatus* data_status = userContainer_wcsArrFromUser(data, user);
+
+	struct LeanSQL_ActionReport update = LeanSQL_update(L"Users", data, NULL, 6, findByUserEmail, original_email_wcs);
+	free(original_email_wcs);
+	if (update.success)
+	{
+		if (update.result.rows == 0) // User does not exist, was not added
+		{
+			update = LeanSQL_insert(L"Users", data, 6);
+			if (!update.success)
+			{
+				fwprintf(stderr, L"Could not update user");
+			}
+		}
+	}
+	else
+	{
+		if (update.error == LEANSQL_ERROR_NO_TABLE)
+		{
+			userContainer_createDatabaseTable();
+			update = LeanSQL_insert(L"Users", data, 6);
+			if (!update.success)
+			{
+				fwprintf(stderr, L"Could not update user");
+			}
+		}
+		else
+		{
+			fwprintf(stderr, L"Could not update user");
+		}
+	}
+	
+	userContainer_cleanUpWcsArr(data, data_status);
 }

@@ -1,5 +1,6 @@
 #include "auth_menu.h"
 #include "auth.h"
+#include "input_manip.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -13,8 +14,7 @@ void (*onAuth)() = NULL;
 void setEmail()
 {
 	char input[100];
-	fgets(input, 100, stdin);
-	strtok(input, "\n");
+	input_char(input, 100);
 	if (email != NULL)
 	{
 		free(email);
@@ -37,10 +37,8 @@ void setEmail()
 
 void setPassword()
 {
-	wchar_t* context;
 	wchar_t input[100];
-	fgetws(input, 10, stdin);
-	wcstok(input, L"\n", &context);
+	input_wchar(input, 100);
 	if (password != NULL)
 	{
 		free(password);

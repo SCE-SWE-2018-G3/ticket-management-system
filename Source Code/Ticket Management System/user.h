@@ -19,6 +19,9 @@ void user_destroy(struct User*);
 
 // Getters:
 char* user_getEmail(struct User*);
+char* user_getPasswordHash(struct User*);
+char* user_getPasswordSalt(struct User*);
+struct ContactDetails user_getContactDetails(struct User*);
 bool user_isSupportGiver(struct User*);
 
 // Setters:
