@@ -1,21 +1,7 @@
 #pragma once
 
 #include "user.h"
-/*
-*API
-*/
-bool findByUserEmail(wchar_t* column, wchar_t* value, void* desired_email);
-/*
-*API
-*/
-void userContainer_createDatabaseTable();
-/*
-*API
-*/
-struct User* userContainer_createUserFromDatabaseRow(wchar_t** data);
 
-
- 
 /*
 *Get a user by their email.
 * You own the user, so make sure to destroy it when you're done.
