@@ -48,10 +48,18 @@ void userContainer_update(struct User* user, char* original_email)
 		original_email = user_getEmail(user);
 	}
 
+	wchar_t* original_email_wcs = malloc(sizeof(wchar_t) * (strlen(original_email) + 1));
+	if (original_email_wcs == NULL)
+	{
+		fwprintf(stderr, L"Could not update user due to memory issue");
+		return;
+	}
+	mbstowcs(original_email_wcs, original_email, strlen(original_email) + 1);
+
 	wchar_t* data[6];
 	struct userContainer_wcsArrStatus* data_status = userContainer_wcsArrFromUser(data, user);
 
-	struct LeanSQL_ActionReport update = LeanSQL_update(L"Users", data, NULL, 6, findByUserEmail, original_email);
+	struct LeanSQL_ActionReport update = LeanSQL_update(L"Users", data, NULL, 6, findByUserEmail, original_email_wcs);
 	if (update.success)
 	{
 		if (update.result.rows == 0) // User does not exist, was not added

@@ -40,8 +40,9 @@ struct User* userContainer_createUserFromDatabaseRow(wchar_t** data)
 
 struct userContainer_wcsArrStatus
 {
-	// No need for this right now.
-	bool reserved_for_future_expansion;
+	bool malloced_data0;
+	bool malloced_data1;
+	bool malloced_data2;
 };
 
 struct userContainer_wcsArrStatus* userContainer_wcsArrFromUser(wchar_t** data, struct User* user)
@@ -58,11 +59,54 @@ struct userContainer_wcsArrStatus* userContainer_wcsArrFromUser(wchar_t** data, 
 		return NULL;
 	}
 
-	data[0] = user_getEmail(user);
-	data[1] = user_getPasswordHash(user);
-	data[2] = user_getPasswordSalt(user);
-	data[3] = user_isSupportGiver(user) ? L"1" : L"0";
+	status->malloced_data0 = false;
+	status->malloced_data1 = false;
+	status->malloced_data2 = false;
 
+	data[0] = malloc(sizeof(wchar_t) * (strlen(user_getEmail(user)) + 1));
+	if (data[0] == NULL)
+	{
+		data[0] = L" ";
+		fwprintf(stderr, L"Failed saving user email to database\n");
+	}
+	else
+	{
+		mbstowcs(data[0], user_getEmail(user), strlen(user_getEmail(user)) + 1);
+		status->malloced_data0 = true;
+	}
+
+	data[1] = malloc(sizeof(wchar_t) * (strlen(user_getPasswordHash(user)) + 1));
+	if (data[1] == NULL)
+	{
+		data[1] = L" ";
+		fwprintf(stderr, L"Failed saving user password to database\n");
+	}
+	else
+	{
+		mbstowcs(data[1], user_getPasswordHash(user), strlen(user_getPasswordHash(user)) + 1);
+		status->malloced_data1 = true;
+	}
+
+	if (user_getPasswordSalt(user) != NULL)
+	{
+		data[2] = malloc(sizeof(wchar_t) * (strlen(user_getPasswordSalt(user)) + 1));
+	}
+	else
+	{
+		data[2] = NULL;
+	}
+	if (data[2] == NULL)
+	{
+		data[2] = L" ";
+		fwprintf(stderr, L"Failed saving user password salt to database\n");
+	}
+	else
+	{
+		mbstowcs(data[2], user_getPasswordSalt(user), strlen(user_getPasswordSalt(user)) + 1);
+		status->malloced_data2 = true;
+	}
+
+	data[3] = user_isSupportGiver(user) ? L"1" : L"0";
 	struct ContactDetails user_contact_details = user_getContactDetails(user);
 	data[4] = user_contact_details.name;
 	data[5] = user_contact_details.phone;
@@ -77,7 +121,21 @@ void userContainer_cleanUpWcsArr(wchar_t** data, struct userContainer_wcsArrStat
 		return;
 	}
 
-	// Reserved for future expansion
+	if (status->malloced_data0 && data[0] != NULL)
+	{
+		free(data[0]);
+		data[0] = NULL;
+	}
+	if (status->malloced_data1 && data[1] != NULL)
+	{
+		free(data[1]);
+		data[1] = NULL;
+	}
+	if (status->malloced_data2 && data[2] != NULL)
+	{
+		free(data[2]);
+		data[2] = NULL;
+	}
 
 	free(status);
 }
