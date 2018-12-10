@@ -44,7 +44,7 @@ struct userContainer_wcsArrStatus
 	bool reserved_for_future_expansion;
 };
 
-struct userContainer_wcsArrStatus* userContainer_wcsArrFromTicket(wchar_t** data, struct User* user)
+struct userContainer_wcsArrStatus* userContainer_wcsArrFromUser(wchar_t** data, struct User* user)
 {
 	if (data == NULL || user == NULL)
 	{
@@ -62,8 +62,10 @@ struct userContainer_wcsArrStatus* userContainer_wcsArrFromTicket(wchar_t** data
 	data[1] = user_getPasswordHash(user);
 	data[2] = user_getPasswordSalt(user);
 	data[3] = user_isSupportGiver(user) ? L"1" : L"0";
-	data[4] = user_getName(user);
-	data[5] = user_getPhone(user);
+
+	struct ContactDetails user_contact_details = user_getContactDetails(user);
+	data[4] = user_contact_details.name;
+	data[5] = user_contact_details.phone;
 
 	return status;
 }
