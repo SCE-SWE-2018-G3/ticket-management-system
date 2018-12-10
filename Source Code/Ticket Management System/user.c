@@ -86,6 +86,37 @@ char* user_getEmail(struct User* user)
 	return NULL;
 }
 
+char* user_getPasswordHash(struct User* user)
+{
+	if (user != NULL)
+	{
+		return user->password;
+	}
+	return NULL;
+}
+
+char* user_getPasswordSalt(struct User* user)
+{
+	if (user != NULL)
+	{
+		return user->salt;
+	}
+	return NULL;
+}
+
+struct ContactDetails user_getContactDetails(struct User* user)
+{
+	if (user != NULL)
+	{
+		return user->contact_details;
+	}
+	
+	struct ContactDetails def;
+	def.name = NULL;
+	def.phone = NULL;
+	return def;
+}
+
 bool user_isSupportGiver(struct User* user)
 {
 	if (user != NULL)
