@@ -12,7 +12,7 @@ void userContainer_createDatabaseTable();
 struct User* userContainer_createUserFromDatabaseRow(wchar_t** data);
 
 // Creates an array of 6 wide strings from a user. wcsArr points to the array.
-struct userContainer_wcsArrStatus* userContainer_wcsArrFromTicket(wchar_t** wcsArr, struct User* user);
+struct userContainer_wcsArrStatus* userContainer_wcsArrFromUser(wchar_t** wcsArr, struct User* user);
 
 // Deallocates what needs to be deallocated in `wcsArr`.
 void userContainer_cleanUpWcsArr(wchar_t** wcsArr, struct userContainer_wcsArrStatus*);
