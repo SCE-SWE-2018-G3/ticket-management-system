@@ -35,7 +35,50 @@ struct User* userContainer_getByEmail(char* email)
 
 	return user;
 }
+
 void userContainer_update(struct User* user, char* original_email)
 {
+	if (user == NULL)
+	{
+		return;
+	}
 
+	if (original_email == NULL)
+	{
+		original_email = user_getEmail(user);
+	}
+
+	wchar_t* data[6];
+	struct userContainer_wcsArrStatus* data_status = userContainer_wcsArrFromUser(data, user);
+
+	struct LeanSQL_ActionReport update = LeanSQL_update(L"Users", data, NULL, 6, findByUserEmail, original_email);
+	if (update.success)
+	{
+		if (update.result.rows == 0) // User does not exist, was not added
+		{
+			update = LeanSQL_insert(L"Users", data, 6);
+			if (!update.success)
+			{
+				fwprintf(stderr, L"Could not update user");
+			}
+		}
+	}
+	else
+	{
+		if (update.error == LEANSQL_ERROR_NO_TABLE)
+		{
+			userContainer_createDatabaseTable();
+			update = LeanSQL_insert(L"Users", data, 6);
+			if (!update.success)
+			{
+				fwprintf(stderr, L"Could not update user");
+			}
+		}
+		else
+		{
+			fwprintf(stderr, L"Could not update user");
+		}
+	}
+	
+	userContainer_cleanUpWcsArr(data, data_status);
 }

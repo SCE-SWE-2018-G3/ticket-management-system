@@ -1,6 +1,7 @@
 #include "user_container_util.h"
 #include "user.h"
 #include <string.h>
+#include <stdlib.h>
 #include <leansql.h>
 
 void userContainer_createDatabaseTable()
@@ -35,4 +36,46 @@ struct User* userContainer_createUserFromDatabaseRow(wchar_t** data)
 
 	struct User* user = user_create(email, password, true, salt, is_support_giver, name, phone);
 	return user;
+}
+
+struct userContainer_wcsArrStatus
+{
+	// No need for this right now.
+	bool reserved_for_future_expansion;
+};
+
+struct userContainer_wcsArrStatus* userContainer_wcsArrFromTicket(wchar_t** data, struct User* user)
+{
+	if (data == NULL || user == NULL)
+	{
+		return NULL;
+	}
+
+	struct userContainer_wcsArrStatus* status = malloc(sizeof(struct userContainer_wcsArrStatus));
+	if (status == NULL)
+	{
+		fwprintf(stderr, L"Converting user to wcsArr failed due to memory error.\n");
+		return NULL;
+	}
+
+	data[0] = user_getEmail(user);
+	data[1] = user_getPasswordHash(user);
+	data[2] = user_getPasswordSalt(user);
+	data[3] = user_isSupportGiver(user) ? L"1" : L"0";
+	data[4] = user_getName(user);
+	data[5] = user_getPhone(user);
+
+	return status;
+}
+
+void userContainer_cleanUpWcsArr(wchar_t** data, struct userContainer_wcsArrStatus* status)
+{
+	if (status == NULL || data == NULL)
+	{
+		return;
+	}
+
+	// Reserved for future expansion
+
+	free(status);
 }
