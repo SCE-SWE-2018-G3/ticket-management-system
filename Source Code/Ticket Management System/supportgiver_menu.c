@@ -225,7 +225,7 @@ void browseTickets()
 			menu_tick(browse_tickets);
 		}
 		
-		
+		menu_destroy(browse_tickets);
 		for(unsigned int i = 0; i < vector_getSize(tickets); ++i)
 		{
 			ticket_destroy(vector_getAt(tickets, i));
