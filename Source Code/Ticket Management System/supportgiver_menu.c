@@ -1,6 +1,9 @@
 #include "supportgiver_menu.h"
 #include "supportgiver_menu_util.h"
 #include "ticket_container.h"
+#include "user_container.h"
+#include "input_manip.h"
+#include "user.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -291,6 +294,97 @@ void doNothing2()
 {
 }
 
+void viewOrUpdateTicket()
+{
+	wchar_t ticket_id[64];
+	wprintf(L"Please input ticket ID\n");
+	input_wchar(ticket_id, 64);
+
+	struct Ticket* ticket = ticketContainer_getById(ticket_id);
+	if (ticket == NULL)
+	{
+		wprintf(L"Ticket not found.\n");
+		system("PAUSE");
+		return;
+	}
+
+	struct User* ticket_customer = userContainer_getByEmail(ticket_getCustomerEmail(ticket));
+	if (ticket_customer == NULL)
+	{
+		wprintf(L"Ticket has no associated customer.\n");
+		system("PAUSE");
+		ticket_destroy(ticket);
+		return;
+	}
+
+	struct Menu* menu = menu_create();
+	if (menu == NULL)
+	{
+		fwprintf(stderr, L"Could not create menu\n");
+		user_destroy(ticket_customer);
+		ticket_destroy(ticket);
+		return;
+	}
+
+	struct MenuOption* title_option = menuOption_create(L"Edit title", doNothing2);
+	struct MenuOption* tier_option = menuOption_create(L"Edit tier", doNothing2);
+	struct MenuOption* status_option = menuOption_create(L"Edit status", doNothing2);
+	struct MenuOption* stakeholders_option = menuOption_create(L"Edit stakeholders", doNothing2);
+	struct MenuOption* type_option = menuOption_create(L"Edit type", doNothing2);
+	struct MenuOption* severity_option = menuOption_create(L"Edit severity", doNothing2);
+	struct MenuOption* tags_option = menuOption_create(L"Edit tags", doNothing2);
+	struct MenuOption* note_option = menuOption_create(L"Add note", doNothing2);
+
+	menu_addOption(menu, title_option);
+	menu_addOption(menu, tier_option);
+	menu_addOption(menu, status_option);
+	menu_addOption(menu, stakeholders_option);
+	menu_addOption(menu, type_option);
+	menu_addOption(menu, severity_option);
+	menu_addOption(menu, tags_option);
+	menu_addOption(menu, note_option);
+
+	while (menu_isOpen(menu) && !menu_hasError(menu))
+	{
+		time_t date = ticket_getDate(ticket);
+
+		system("CLS");
+		wprintf(L"Ticket details\n==============\n");
+		wprintf(L"Customer:\n");
+		wprintf(L"\tEmail: %S\n", user_getEmail(ticket_customer));
+		struct ContactDetails contact = user_getContactDetails(ticket_customer);
+		wprintf(L"\tName: %s\n", contact.name);
+		wprintf(L"\tPhone: %s\n", contact.phone);
+		wprintf(L"Ticket ID: %s\n", ticket_getId(ticket));
+		wprintf(L"Title: %s\n", ticket_getTitle(ticket));
+		wprintf(L"Description: %s\n", ticket_getDescription(ticket));
+		wprintf(L"Date opened: %S", ctime(&date));
+		wprintf(L"Tier: %s\n", ticket_getTier(ticket));
+		wprintf(L"Status: %s\n", ticket_getStatus(ticket));
+		wprintf(L"Type: %s\n", ticket_getType(ticket));
+		wprintf(L"Severity: %s\n", ticket_getSeverity(ticket));
+		wprintf(L"Stakeholders:\n");
+		struct Vector* stakeholders = ticket_getStakeholders(ticket);
+		for (unsigned int i = 0; i < vector_getSize(stakeholders); ++i)
+		{
+			wprintf(L"%s\n", (wchar_t*)vector_getAt(stakeholders, i));
+		}
+		wprintf(L"Notes:\n");
+		struct Vector* notes = ticket_getNotes(ticket);
+		for (unsigned int i = 0; i < vector_getSize(notes); ++i)
+		{
+			wprintf(L"%s\n", (wchar_t*)vector_getAt(notes, i));
+		}
+
+		wprintf(L"What would you like to do?\n");
+		menu_tick(menu);
+	}
+
+	menu_destroy(menu);
+	user_destroy(ticket_customer);
+	ticket_destroy(ticket);
+}
+
 struct Menu* createSupportGiverMenu(void(*onLogOutCallback)())
 {
 	struct Menu* menu = menu_create();
@@ -298,7 +392,7 @@ struct Menu* createSupportGiverMenu(void(*onLogOutCallback)())
 	{
 		menu_setTitle(menu, L"Welcome\nWhat would you like to do?");
 		menu_addOption(menu, menuOption_create(L"Open Ticket", openTickets));
-		menu_addOption(menu, menuOption_create(L"View / Update Ticket", doNothing2));
+		menu_addOption(menu, menuOption_create(L"View / Update Ticket", viewOrUpdateTicket));
 		menu_addOption(menu, menuOption_create(L"Browse Tickets", browseTickets));
 		menu_addOption(menu, menuOption_create(L"Create User", doNothing2));
 		menu_addOption(menu, menuOption_create(L"Log Out", onLogOutCallback));
