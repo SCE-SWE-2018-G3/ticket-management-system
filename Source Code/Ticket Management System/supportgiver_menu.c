@@ -199,22 +199,22 @@ void browseTickets()
 		struct Menu* browse_tickets = menu_create();
 
 		//Creating the options and inserting them into the menu
-		struct MenuOption* statusOption = menuOption_create(L"Filter by status", filterByStatusAction);
-		struct MenuOption* tierOption = menuOption_create(L"Filter by tier", filterByTierAction);
-		struct MenuOption* typeOption = menuOption_create(L"Filter by type", filterByTypeAction);
-		struct MenuOption* stakeholdersOption = menuOption_create(L"Filter by stakeholders", filterByStakeHolderAction);
-		struct MenuOption* emailOption = menuOption_create(L"Search by customer email", SearchByCustomerEmailAction);
-		struct MenuOption* tagsOption = menuOption_create(L"Search by tags", SearchByTagsAction);
-		struct MenuOption* titleSortOption = menuOption_create(L"Sort by title", SortByTitleAction);
+		struct MenuOption* status_option = menuOption_create(L"Filter by status", filterByStatusAction);
+		struct MenuOption* tier_option = menuOption_create(L"Filter by tier", filterByTierAction);
+		struct MenuOption* type_option = menuOption_create(L"Filter by type", filterByTypeAction);
+		struct MenuOption* stakeholders_option = menuOption_create(L"Filter by stakeholders", filterByStakeHolderAction);
+		struct MenuOption* email_option = menuOption_create(L"Search by customer email", SearchByCustomerEmailAction);
+		struct MenuOption* tags_option = menuOption_create(L"Search by tags", SearchByTagsAction);
+		struct MenuOption* title_sort_option = menuOption_create(L"Sort by title", SortByTitleAction);
 
 		//Inserting the options into "browse_tickets" menu struct
-		menu_addOption(browse_tickets, statusOption);
-		menu_addOption(browse_tickets, tierOption);
-		menu_addOption(browse_tickets, typeOption);
-		menu_addOption(browse_tickets, stakeholdersOption);
-		menu_addOption(browse_tickets, emailOption);
-		menu_addOption(browse_tickets, tagsOption);
-		menu_addOption(browse_tickets, titleSortOption);
+		menu_addOption(browse_tickets, status_option);
+		menu_addOption(browse_tickets, tier_option);
+		menu_addOption(browse_tickets, type_option);
+		menu_addOption(browse_tickets, stakeholders_option);
+		menu_addOption(browse_tickets, email_option);
+		menu_addOption(browse_tickets, tags_option);
+		menu_addOption(browse_tickets, title_sort_option);
 
 		//Displaying the menu "browse_tickets"
 		while (menu_isOpen(browse_tickets) && !menu_hasError(browse_tickets))
