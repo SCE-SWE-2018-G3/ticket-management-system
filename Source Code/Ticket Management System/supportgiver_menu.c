@@ -17,11 +17,9 @@ void filterByStatusAction()
 	}
 	else
 	{
-		wchar_t* ctx;
 		wchar_t status[32];
 		wprintf(L"Please input status:\n");
-		wscanf(L"%s", status);
-		wcstok(status, L"\n", &ctx);
+		input_wchar(status, 32);
 		struct Vector* filtered_vector = vector_filter(tickets, filterByStatus, status);
 		printTicketsArray(filtered_vector);
 		vector_destroy(filtered_vector);
@@ -43,11 +41,9 @@ void filterByTierAction()
 	}
 	else
 	{
-		wchar_t* ctx;
 		wchar_t tier[32];
 		wprintf(L"Please input tier:\n");
-		wscanf(L"%s", tier);
-		wcstok(tier, L"\n", &ctx);
+		input_wchar(tier, 32);
 		struct Vector* filtered_vector = vector_filter(tickets, filterByTier, tier);
 		printTicketsArray(filtered_vector);
 		vector_destroy(filtered_vector);
@@ -69,11 +65,9 @@ void filterByTypeAction()
 	}
 	else
 	{
-		wchar_t* ctx;
 		wchar_t type[32];
 		wprintf(L"Please input type:\n");
-		wscanf(L"%s", type);
-		wcstok(type, L"\n", &ctx);
+		input_wchar(type, 32);
 		struct Vector* filtered_vector = vector_filter(tickets, filterByType, type);
 		printTicketsArray(filtered_vector);
 		vector_destroy(filtered_vector);
@@ -95,11 +89,9 @@ void filterByStakeHolderAction()
 	}
 	else
 	{
-		wchar_t* ctx;
 		wchar_t stakeholders[32];
 		wprintf(L"Please input stakeholders:\n");
-		wscanf(L"%s", stakeholders);
-		wcstok(stakeholders, L"\n", &ctx);
+		input_wchar(stakeholders, 32);
 		struct Vector* stakeholders_vector = vector_create();
 		vector_push(stakeholders_vector, stakeholders);
 		struct Vector* filtered_vector = vector_filter(tickets, filterByStakeholders, stakeholders);
@@ -124,11 +116,9 @@ void SearchByCustomerEmailAction()
 	}
 	else
 	{
-		wchar_t* ctx;
 		wchar_t customer_email[32];
 		wprintf(L"please input Customer Email:\n");
-		wscanf(L"%s", customer_email);
-		wcstok(customer_email, L"\n", &ctx);
+		input_wchar(customer_email, 32);
 		struct Vector* filtered_vector = vector_filter(tickets, searchByCustomerEmail, customer_email);
 		printTicketsArray(filtered_vector);
 		vector_destroy(filtered_vector);
@@ -150,11 +140,9 @@ void SearchByTagsAction()
 	}
 	else
 	{
-		wchar_t* ctx;
 		wchar_t tags[32];
 		wprintf(L"Please input tags:\n");
-		wscanf(L"%s", tags);
-		wcstok(tags, L"\n", &ctx);
+		input_wchar(tags, 32);
 		struct Vector* filtered_vector = vector_filter(tickets, searchByTags, tags);
 		printTicketsArray(filtered_vector);
 		vector_destroy(filtered_vector);
@@ -250,15 +238,15 @@ void openTickets()
 
 	system("CLS");
 	wprintf(L"Please input customer email\n");
-	wscanf(L"%S", customer_email);
+	input_char(customer_email, 256);
 	wprintf(L"Creating a ticket\n");
 	wprintf(L"===============\n");
 	wprintf(L"Please input description\n");
-	wscanf(L"%s", description_support);
+	input_wchar(description_support, 512);
 	wprintf(L"Please input title\n");
-	wscanf(L"%s", title);
+	input_wchar(title, 256);
 	wprintf(L"Please input type\n");
-	wscanf(L"%s", type_support);
+	input_wchar(type_support, 256);
 	wprintf(L"Please input severity.\n1. Medium\n2. High\n3. Critical\n4. Urgent\n");
 	do
 	{
