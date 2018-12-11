@@ -217,10 +217,6 @@ void ticket_setId(struct Ticket* ticket, wchar_t* id)
 				ticket->id = old_id;
 				return;
 			}
-			else if(old_id != ticket->id)
-			{
-				free(old_id);
-			}
 		}
 
 		wcscpy(ticket->id, id);
@@ -256,10 +252,6 @@ void ticket_setCustomerEmail(struct Ticket* ticket, char* email)
 			{
 				ticket->customer_email = old_email;
 				return;
-			}
-			else if(old_email != ticket->customer_email)
-			{
-				free(old_email);
 			}
 		}
 
@@ -297,10 +289,6 @@ void ticket_setTitle(struct Ticket* ticket, wchar_t* title)
 				ticket->title = old_title;
 				return;
 			}
-			else if (old_title != ticket->title)
-			{
-				free(old_title);
-			}
 		}
 
 		wcscpy(ticket->title, title);
@@ -336,10 +324,6 @@ void ticket_setType(struct Ticket* ticket, wchar_t* type)
 			{
 				ticket->type = old_type;
 				return;
-			}
-			else if (old_type != ticket->type)
-			{
-				free(old_type);
 			}
 		}
 
@@ -403,10 +387,6 @@ void ticket_setSeverity(struct Ticket* ticket, wchar_t* severity)
 				ticket->severity = old_severity;
 				return;
 			}
-			else if (old_severity != ticket->severity)
-			{
-				free(old_severity);
-			}
 		}
 		wcscpy(ticket->severity, severity);
 	}
@@ -441,10 +421,6 @@ void ticket_setDescription(struct Ticket* ticket, wchar_t* description)
 			{
 				ticket->description = old_description;
 				return;
-			}
-			else if (old_description != ticket->description)
-			{
-				free(old_description);
 			}
 		}
 
@@ -482,10 +458,6 @@ void ticket_setTier(struct Ticket* ticket, wchar_t* tier)
 				ticket->tier = old_tier;
 				return;
 			}
-			else if (old_tier != ticket->tier)
-			{
-				free(old_tier);
-			}
 		}
 
 		wcscpy(ticket->tier, tier);
@@ -521,10 +493,6 @@ void ticket_setStatus(struct Ticket* ticket, wchar_t* status)
 			{
 				ticket->status = old_status;
 				return;
-			}
-			else if (old_status != ticket->status)
-			{
-				free(old_status);
 			}
 		}
 
