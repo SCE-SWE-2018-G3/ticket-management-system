@@ -532,6 +532,68 @@ void ticket_setStatus(struct Ticket* ticket, wchar_t* status)
 	}
 }
 
+void ticket_setStakeholders(struct Ticket *ticket, wchar_t *stakeholders)
+{
+	if (ticket != NULL)
+	{
+		if (ticket->stakeholders == NULL)
+		{
+			ticket->stakeholders = malloc(sizeof(wchar_t) * (wcslen(stakeholders) + 1));
+			if (ticket->stakeholders == NULL)
+			{
+				return;
+			}
+		}
+		else if (wcslen(stakeholders) != wcslen(ticket->stakeholders))
+		{
+			wchar_t* old_stakeholders = ticket->stakeholders;
+			ticket->stakeholders = realloc(ticket->stakeholders, sizeof(wchar_t) * (wcslen(stakeholders) + 1));
+			if (ticket->title == NULL)
+			{
+				ticket->title = old_stakeholders;
+				return;
+			}
+			else if (old_stakeholders != ticket->title)
+			{
+				free(old_stakeholders);
+			}
+		}
+
+		wcscpy(ticket->title, stakeholders);
+	}
+}
+
+void ticket_setTags(struct Ticket *ticket, wchar_t *tags)
+{
+	if (ticket != NULL)
+	{
+		if (ticket->tags == NULL)
+		{
+			ticket->tags = malloc(sizeof(wchar_t) * (wcslen(tags) + 1));
+			if (ticket->tags == NULL)
+			{
+				return;
+			}
+		}
+		else if (wcslen(tags) != wcslen(ticket->tags))
+		{
+			wchar_t* old_tags = ticket->tags;
+			ticket->tags = realloc(ticket->tags, sizeof(wchar_t) * (wcslen(tags) + 1));
+			if (ticket->tags == NULL)
+			{
+				ticket->title = old_tags;
+				return;
+			}
+			else if (old_tags != ticket->tags)
+			{
+				free(old_tags);
+			}
+		}
+
+		wcscpy(ticket->title, tags);
+	}
+}
+
 struct Vector* ticket_getTags(struct Ticket* ticket)
 {
 	if (ticket != NULL)

@@ -354,6 +354,129 @@ void openTickets()
 		}
 	}
 
+void UpdateTitle()
+{
+	wchar_t title[256];
+	wprintf(L"Enter a new title:");
+	wscanf(L"%s", title);
+	struct Ticket* ticketh= ticketContainer_getById(title);
+	ticket_setTitle(ticketh, title);
+}
+void UpdateTier()
+{
+	wchar_t tier[256];
+	wprintf(L"Enter a new tier:");
+	wscanf(L"%s", tier);
+	struct Ticket* ticketh = ticketContainer_getById(tier);
+	ticket_setTier(ticketh, tier);
+}
+void UpdateStatus()
+{
+	wchar_t status[256];
+	wprintf(L"Enter a new status:");
+	wscanf(L"%s", status);
+	struct Ticket* ticketh = ticketContainer_getById(status);
+	ticket_setTier(ticketh, status);
+}
+void UpdateStakeholders()
+{
+	wchar_t stakeholders[256];
+	wprintf(L"Enter a new stakeholders:");
+	wscanf(L"%s", stakeholders);
+	struct Ticket* ticketh = ticketContainer_getById(stakeholders);
+	ticket_setStakeholders(ticketh, stakeholders);
+}
+void UpdateType()
+{
+	wchar_t type[256];
+	wprintf(L"Enter a new type:");
+	wscanf(L"%s", type);
+	struct Ticket* ticketh = ticketContainer_getById(type);
+	ticket_setType(ticketh, type);
+}
+void UpdateSeverity()
+{
+	wchar_t* severity[] = { "Medium","High","Critical","Urgent" };
+	int severity_num;
+	wprintf(L"Please input severity.\n1. Medium\n2. High\n3. Critical\n4. Urgent\n");
+	do
+	{
+		wscanf(L"%d", &severity_num);
+		if (severity_num < 1 || severity_num > 4)
+		{
+			wprintf("Invaild severity. Try again.\n");
+		}
+	} while (severity_num < 1 || severity_num > 4);
+	struct Ticket* ticketh = ticketContainer_getById(severity[severity_num]);
+	ticket_setSeverity(ticketh, severity[severity_num]);
+}
+void UpdateTags()
+{
+	wchar_t tags[256];
+	wprintf(L"Enter a new tags:");
+	wscanf(L"%s", tags);
+	struct Ticket* ticketh = ticketContainer_getById(tags);
+	ticket_setTags(ticketh, tags);
+}
+void UpdateNote()
+{
+
+}
+
+void UpdateTicket()
+{
+	wchar_t id[256];
+	wprintf(L"Enter id pls:");
+	wscanf(L"%s", id);
+	struct Ticket* ticptr = ticketContainer_getById(id);
+	if (ticptr == NULL)
+	{
+		wprintf(L"Id Not Fuond!");
+	}
+	else
+	{
+		time_t date = ticket_getDate(ticptr);
+
+		wprintf(L"Ticket ID: %s\n", ticket_getId(ticptr));
+		wprintf(L"Title: %s\n", ticket_getTitle(ticptr));
+		wprintf(L"Date opened: %S\n", ctime(&date));
+		wprintf(L"Status: %s\n", ticket_getStatus(ticptr));
+		wprintf(L"Tier: %s\n", ticket_getTier(ticptr));
+		wprintf(L"Type: %s\n", ticket_getType(ticptr));
+		wprintf(L"Severity: %s\n", ticket_getSeverity(ticptr));
+		wprintf(L"Description: %s\n", ticket_getDescription(ticptr));
+		wprintf(L"Notes:\n");
+		system("PAUSE");
+
+		struct Tickets* ticket = ticketContainer_getAll(id);
+		struct Menu* update_tickets = menu_create();
+
+		struct MenuOption* statusOption = menuOption_create(L"Update Title", UpdateTitle);
+		struct MenuOption* tierOption = menuOption_create(L"Update Tier", UpdateTier);
+		struct MenuOption* typeOption = menuOption_create(L"Update Status", UpdateStatus);
+		struct MenuOption* emailOption = menuOption_create(L"Update Stakeholders", UpdateStakeholders);
+		struct MenuOption* tagsOption = menuOption_create(L"Update Type", UpdateType);
+		struct MenuOption* stakeholdersOption = menuOption_create(L"Update Severity", UpdateSeverity);
+		struct MenuOption* titleSortOption = menuOption_create(L"Update Tags", UpdateTags);
+
+		menu_addOption(update_tickets, statusOption);
+		menu_addOption(update_tickets, tierOption);
+		menu_addOption(update_tickets, typeOption);
+		menu_addOption(update_tickets, stakeholdersOption);
+		menu_addOption(update_tickets, emailOption);
+		menu_addOption(update_tickets, tagsOption);
+		menu_addOption(update_tickets, titleSortOption);
+
+		while (menu_isOpen(update_tickets) && !menu_hasError(update_tickets))
+		{
+			system("CLS");
+			wprintf(L"Update Tickets\n==============\n");
+			printTicketsArray(ticket);
+			menu_tick(update_tickets);
+		}
+
+	}
+}
 void doNothing2()
 {
 }
@@ -365,7 +488,7 @@ struct Menu* createSupportGiverMenu(void(*onLogOutCallback)())
 	{
 		menu_setTitle(menu, L"Welcome\nWhat would you like to do?");
 		menu_addOption(menu, menuOption_create(L"Open Ticket", openTickets));
-		menu_addOption(menu, menuOption_create(L"View / Update Ticket", doNothing2));
+		menu_addOption(menu, menuOption_create(L"View / Update Ticket", UpdateTicket));
 		menu_addOption(menu, menuOption_create(L"Browse Tickets", browseTickets));
 		menu_addOption(menu, menuOption_create(L"Create User", doNothing2));
 		menu_addOption(menu, menuOption_create(L"Log Out", onLogOutCallback));

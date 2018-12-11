@@ -39,6 +39,8 @@ void ticket_setSeverity(struct Ticket*, wchar_t*);
 void ticket_setDescription(struct Ticket*, wchar_t*);
 void ticket_setTier(struct Ticket*, wchar_t*);
 void ticket_setStatus(struct Ticket*, wchar_t*);
+void ticket_setStakeholders(struct Ticket*, wchar_t*);
+void ticket_setTags(struct Ticket*, wchar_t*);
 void ticket_setDate(struct Ticket*, time_t);
 
 void ticket_addTag(struct Ticket*, wchar_t* tag);
