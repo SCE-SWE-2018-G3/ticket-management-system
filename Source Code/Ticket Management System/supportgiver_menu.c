@@ -4,6 +4,7 @@
 #include "user_container.h"
 #include "input_manip.h"
 #include "user.h"
+#include "auth.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -290,8 +291,114 @@ void openTickets()
 	}
 }
 
-void doNothing2()
+void editTitleAction(void* ticket)
 {
+	wchar_t input[128];
+	wprintf(L"Please input new title.\n");
+	input_wchar(input, 128);
+	ticket_setTitle(ticket, input);
+}
+
+void editTierAction(void* ticket)
+{
+	wchar_t input[128];
+	wprintf(L"Please input new tier.\n");
+	input_wchar(input, 128);
+	ticket_setTier(ticket, input);
+}
+
+void editStatusAction(void* ticket)
+{
+	wchar_t input[128];
+	wprintf(L"Please input new status.\n");
+	input_wchar(input, 128);
+	ticket_setStatus(ticket, input);
+}
+
+void editTypeAction(void* ticket)
+{
+	wchar_t input[128];
+	wprintf(L"Please input new type.\n");
+	input_wchar(input, 128);
+	ticket_setType(ticket, input);
+}
+
+void editSeverityAction(void* ticket)
+{
+	wchar_t input[128];
+	wprintf(L"Please input new severity.\n");
+	input_wchar(input, 128);
+	ticket_setSeverity(ticket, input);
+}
+
+void editStakeholdersAction(void* ticket)
+{
+	wprintf(L"You are now adding stakeholders.\n");
+	wprintf(L"Type END to finish.\n");
+	
+	wchar_t input[128];
+	do
+	{
+		input_wchar(input, 128);
+		if (wcscmp(input, L"END") != 0)
+		{
+			ticket_addStakeholder(ticket, input);
+		}
+	} while (wcscmp(input, L"END") != 0);
+}
+
+void editTagsAction(void* ticket)
+{
+	wprintf(L"You are now adding tags.\n");
+	wprintf(L"Type END to finish.\n");
+
+	wchar_t input[128];
+	do
+	{
+		input_wchar(input, 128);
+		if (wcscmp(input, L"END") != 0)
+		{
+			ticket_addTag(ticket, input);
+		}
+	} while (wcscmp(input, L"END") != 0);
+}
+
+void addNoteAction(void* ticket)
+{
+	time_t date = ticket_getDate(ticket);
+	char* time_str = ctime(&date);
+	strtok(time_str, "\n");
+	wchar_t* time_wcs = malloc(sizeof(wchar_t) * (strlen(time_str) + 1));
+	if (time_wcs == NULL)
+	{
+		return;
+	}
+	mbstowcs(time_wcs, time_str, strlen(time_str) + 1);
+
+	wchar_t* email_wcs = malloc(sizeof(wchar_t) * (strlen(auth_getEmail()) + 1));
+	if (email_wcs == NULL)
+	{
+		free(time_wcs);
+		return;
+	}
+	mbstowcs(email_wcs, auth_getEmail(), strlen(auth_getEmail()) + 1);
+
+	wchar_t input[512];
+	wprintf(L"Please input your note.\n");
+	input_wchar(input, 512 - wcslen(time_wcs) - wcslen(email_wcs) - 2*wcslen(L": "));
+
+	wchar_t note_str[512];
+	note_str[0] = L'\0';
+	wcscat(note_str, time_wcs);
+	wcscat(note_str, L": ");
+	wcscat(note_str, email_wcs);
+	wcscat(note_str, L": ");
+	wcscat(note_str, input);
+
+	ticket_addNote(ticket, note_str);
+
+	free(email_wcs);
+	free(time_wcs);
 }
 
 void viewOrUpdateTicket()
@@ -326,14 +433,14 @@ void viewOrUpdateTicket()
 		return;
 	}
 
-	struct MenuOption* title_option = menuOption_create(L"Edit title", doNothing2, NULL);
-	struct MenuOption* tier_option = menuOption_create(L"Edit tier", doNothing2, NULL);
-	struct MenuOption* status_option = menuOption_create(L"Edit status", doNothing2, NULL);
-	struct MenuOption* stakeholders_option = menuOption_create(L"Edit stakeholders", doNothing2, NULL);
-	struct MenuOption* type_option = menuOption_create(L"Edit type", doNothing2, NULL);
-	struct MenuOption* severity_option = menuOption_create(L"Edit severity", doNothing2, NULL);
-	struct MenuOption* tags_option = menuOption_create(L"Edit tags", doNothing2, NULL);
-	struct MenuOption* note_option = menuOption_create(L"Add note", doNothing2, NULL);
+	struct MenuOption* title_option = menuOption_create(L"Edit title", editTitleAction, ticket);
+	struct MenuOption* tier_option = menuOption_create(L"Edit tier", editTierAction, ticket);
+	struct MenuOption* status_option = menuOption_create(L"Edit status", editStatusAction, ticket);
+	struct MenuOption* stakeholders_option = menuOption_create(L"Edit stakeholders", editStakeholdersAction, ticket);
+	struct MenuOption* type_option = menuOption_create(L"Edit type", editTypeAction, ticket);
+	struct MenuOption* severity_option = menuOption_create(L"Edit severity", editSeverityAction, ticket);
+	struct MenuOption* tags_option = menuOption_create(L"Edit tags", editTagsAction, ticket);
+	struct MenuOption* note_option = menuOption_create(L"Add note", addNoteAction, ticket);
 
 	menu_addOption(menu, title_option);
 	menu_addOption(menu, tier_option);
@@ -363,6 +470,12 @@ void viewOrUpdateTicket()
 		wprintf(L"Status: %s\n", ticket_getStatus(ticket));
 		wprintf(L"Type: %s\n", ticket_getType(ticket));
 		wprintf(L"Severity: %s\n", ticket_getSeverity(ticket));
+		wprintf(L"Tags:\n");
+		struct Vector* tags = ticket_getTags(ticket);
+		for (unsigned int i = 0; i < vector_getSize(tags); ++i)
+		{
+			wprintf(L"%s\n", (wchar_t*)vector_getAt(tags, i));
+		}
 		wprintf(L"Stakeholders:\n");
 		struct Vector* stakeholders = ticket_getStakeholders(ticket);
 		for (unsigned int i = 0; i < vector_getSize(stakeholders); ++i)
@@ -378,6 +491,7 @@ void viewOrUpdateTicket()
 
 		wprintf(L"What would you like to do?\n");
 		menu_tick(menu);
+		ticketContainer_update(ticket);
 	}
 
 	menu_destroy(menu);
