@@ -52,7 +52,7 @@ void viewTicket()
 	wprintf(L"========================\n");
 	wprintf(L"Please input the ticket ID given to you when contacting support.\n");
 	wprintf(L"Alternatively, find the ticket ID by going back and selecting 'List My Support Calls'.\n");
-	wscanf(L"%s", ticket_id);
+	input_wchar(ticket_id, 128);
 	struct Ticket* ticket = ticketContainer_getById(ticket_id);
 	if (ticket != NULL)
 	{
