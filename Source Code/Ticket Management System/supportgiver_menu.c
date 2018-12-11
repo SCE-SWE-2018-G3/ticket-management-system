@@ -385,6 +385,46 @@ void viewOrUpdateTicket()
 	ticket_destroy(ticket);
 }
 
+void createUser()
+{
+	char email[128];
+	wchar_t password[128];
+	wchar_t name[128];
+	wchar_t phone[128];
+	wchar_t supportgiver[32];
+	bool is_supportgiver = false;
+
+	system("CLS");
+	wprintf(L"Create user\n");
+	wprintf(L"===========\n");
+	wprintf(L"Please input new user E-mail.\n");
+	input_char(email, 128);
+	wprintf(L"Please input new user password.\n");
+	input_wchar(password, 128);
+	wprintf(L"Please input new user name.\n");
+	input_wchar(name, 128);
+	wprintf(L"Please input new user phone.\n");
+	input_wchar(phone, 128);
+	wprintf(L"Are they a support giver? (warning: this gives them full access to the system)\n");
+	wprintf(L"(yes/no)\n");
+	do
+	{
+		input_wchar(supportgiver, 32);
+		if (wcscmp(supportgiver, L"yes") == 0)
+		{
+			is_supportgiver = true;
+		}
+		else if (wcscmp(supportgiver, L"no") != 0)
+		{
+			wprintf(L"Invalid input. Try again.\n");
+		}
+	} while (wcscmp(supportgiver, L"yes") != 0 && wcscmp(supportgiver, L"no") != 0);
+
+	struct User* user = user_create(email, password, false, NULL, is_supportgiver, name, phone);
+	userContainer_update(user, NULL);
+	user_destroy(user);
+}
+
 struct Menu* createSupportGiverMenu(void(*onLogOutCallback)())
 {
 	struct Menu* menu = menu_create();
@@ -394,7 +434,7 @@ struct Menu* createSupportGiverMenu(void(*onLogOutCallback)())
 		menu_addOption(menu, menuOption_create(L"Open Ticket", openTickets));
 		menu_addOption(menu, menuOption_create(L"View / Update Ticket", viewOrUpdateTicket));
 		menu_addOption(menu, menuOption_create(L"Browse Tickets", browseTickets));
-		menu_addOption(menu, menuOption_create(L"Create User", doNothing2));
+		menu_addOption(menu, menuOption_create(L"Create User", createUser));
 		menu_addOption(menu, menuOption_create(L"Log Out", onLogOutCallback));
 	}
 	return menu;
