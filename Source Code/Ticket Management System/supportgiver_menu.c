@@ -1,81 +1,8 @@
 #include "supportgiver_menu.h"
+#include "supportgiver_menu_util.h"
 #include "ticket_container.h"
 #include <stdio.h>
 #include <string.h>
-
-void printTicketsArray(struct Vector* tickets)
-{
-	if (tickets != NULL)
-	{
-		for (unsigned int i = 0; i < vector_getSize(tickets); ++i)
-		{
-			struct Ticket* ticket = vector_getAt(tickets, i);
-			wprintf(L"%s: %s\n", ticket_getId(ticket), ticket_getTitle(ticket));
-		}
-		wprintf(L"Tickets that answer the criteria: %d\n", vector_getSize(tickets));
-	}
-	else
-	{
-		wprintf(L"Tickets that answer the criteria: 0\n");
-	}
-}
-
-bool filterByStatus(void* ticket, void* status)
-{
-	return wcscmp(ticket_getStatus(ticket), status) != 0;
-}
-bool filterByTier(void* ticket1, void* tier)
-{
-	return wcscmp(ticket_getTier(ticket1), tier) != 0;
-}
-bool filterByType(void* ticket1, void* type)
-{
-	return wcscmp(ticket_getType(ticket1), type) != 0;
-
-}
-bool sortByTitle(void* ticket1, void* ticket2)
-{
-	return wcscmp(ticket_getTitle(ticket1), ticket_getTitle(ticket2)) > 0;
-}
-bool filterByStakeholders(void* ticket1, void* stakeholders)
-{
-	struct Vector* ticket_stakeholders = ticket_getStakeholders(ticket1);
-	struct Vector* desired_stakeholders = stakeholders;
-
-	bool found_matching_stakeholders = false;
-	for (unsigned int i = 0; i < vector_getSize(ticket_stakeholders) && !found_matching_stakeholders; ++i)
-	{
-		for (unsigned int j = 0; j < vector_getSize(desired_stakeholders) && !found_matching_stakeholders; ++j)
-		{
-			if (wcscmp(vector_getAt(ticket_stakeholders, i), vector_getAt(desired_stakeholders, j)) == 0)
-			{
-				found_matching_stakeholders = true;
-			}
-		}
-	}
-
-	return !found_matching_stakeholders;
-}
-bool searchByCustomerEmail(void* ticket1, void* customer_email)
-{
-	return strcmp(ticket_getCustomerEmail(ticket1), customer_email) != 0;
-
-}
-bool searchByTags(void* ticket, void* tag)
-{
-	struct Vector* ticket_tags = ticket_getTags(ticket);
-
-	bool found_tag = false;
-	for (unsigned int i = 0; i < vector_getSize(ticket_tags); ++i)
-	{
-		if (wcscmp(vector_getAt(ticket_tags, i), tag) == 0)
-		{
-			found_tag = true;
-		}
-	}
-
-	return found_tag;
-}
 
 void filterByStatusAction() 
 {
@@ -102,6 +29,7 @@ void filterByStatusAction()
 	}
 	system("PAUSE");
 }
+
 void filterByTierAction()
 {
 	struct Vector* tickets = ticketContainer_getAll();
@@ -127,6 +55,7 @@ void filterByTierAction()
 	}
 	system("PAUSE");
 }
+
 void filterByTypeAction()
 {
 	struct Vector* tickets = ticketContainer_getAll();
@@ -152,6 +81,7 @@ void filterByTypeAction()
 	}
 	system("PAUSE");
 }
+
 void filterByStakeHolderAction() 
 {
 	struct Vector* tickets = ticketContainer_getAll();
@@ -180,6 +110,7 @@ void filterByStakeHolderAction()
 	}
 	system("PAUSE");
 }
+
 void SearchByCustomerEmailAction()
 {
 	struct Vector* tickets = ticketContainer_getAll();
@@ -205,6 +136,7 @@ void SearchByCustomerEmailAction()
 	}
 	system("PAUSE");
 }
+
 void SearchByTagsAction()
 {
 	struct Vector* tickets = ticketContainer_getAll();
@@ -230,6 +162,7 @@ void SearchByTagsAction()
 	}
 	system("PAUSE");
 }
+
 void SortByTitleAction()
 {
 	struct Vector* tickets = ticketContainer_getAll();
@@ -304,55 +237,55 @@ void browseTickets()
 
 void openTickets()
 {
-		char customer_email[256];
-		wchar_t title[256];
-		wchar_t type_support[256];
-		wchar_t* severity[] = { L"Medium", L"High", L"Critical", L"Urgent" };
-		wchar_t description_support[512];
-		int severity_num;
+	char customer_email[256];
+	wchar_t title[256];
+	wchar_t type_support[256];
+	wchar_t* severity[] = { L"Medium", L"High", L"Critical", L"Urgent" };
+	wchar_t description_support[512];
+	int severity_num;
+
+	system("CLS");
+	wprintf(L"Please input customer email\n");
+	wscanf(L"%S", customer_email);
+	wprintf(L"Creating a ticket\n");
+	wprintf(L"===============\n");
+	wprintf(L"Please input description\n");
+	wscanf(L"%s", description_support);
+	wprintf(L"Please input title\n");
+	wscanf(L"%s", title);
+	wprintf(L"Please input type\n");
+	wscanf(L"%s", type_support);
+	wprintf(L"Please input severity.\n1. Medium\n2. High\n3. Critical\n4. Urgent\n");
+	do
+	{
+		wscanf(L"%d", &severity_num);
+		if(severity_num < 1 || severity_num > 4)
+		{
+			wprintf(L"Invaild severity. Try again.\n");
+		}
+	} while(severity_num < 1 || severity_num > 4);
+		
+	struct Ticket* ticket = ticket_create(title, type_support, description_support, customer_email);
+	if (ticket != NULL)
+	{
+		ticket_setSeverity(ticket, severity[severity_num - 1]);
+
+		ticketContainer_update(ticket);
 
 		system("CLS");
-		wprintf(L"Please input customer email\n");
-		wscanf(L"%S", customer_email);
-		wprintf(L"Creating a ticket\n");
-		wprintf(L"===============\n");
-		wprintf(L"Please input description\n");
-		wscanf(L"%s", description_support);
-		wprintf(L"Please input title\n");
-		wscanf(L"%s", title);
-		wprintf(L"Please input type\n");
-		wscanf(L"%s", type_support);
-		wprintf(L"Please input severity.\n1. Medium\n2. High\n3. Critical\n4. Urgent\n");
-		do
-		{
-			wscanf(L"%d", &severity_num);
-			if(severity_num < 1 || severity_num > 4)
-			{
-				wprintf(L"Invaild severity. Try again.\n");
-			}
-		} while(severity_num < 1 || severity_num > 4);
-		
-		struct Ticket* ticket = ticket_create(title, type_support, description_support, customer_email);
-		if (ticket != NULL)
-		{
-			ticket_setSeverity(ticket, severity[severity_num - 1]);
-
-			ticketContainer_update(ticket);
-
-			system("CLS");
-			wprintf(L"Ticket saved\n");
-			wprintf(L"==================\n");
-			wprintf(L"The ticket was saved in the system.\n");
-			wprintf(L"The ticket ID is:\n");
-			wprintf(L"%s\n", ticket_getId(ticket));
-			wprintf(L"Please save this ID for future reference.\n");
-			system("PAUSE");
-		}
-		else
-		{
-			fwprintf(stderr, L"Failed to create ticket\n");
-		}
+		wprintf(L"Ticket saved\n");
+		wprintf(L"==================\n");
+		wprintf(L"The ticket was saved in the system.\n");
+		wprintf(L"The ticket ID is:\n");
+		wprintf(L"%s\n", ticket_getId(ticket));
+		wprintf(L"Please save this ID for future reference.\n");
+		system("PAUSE");
 	}
+	else
+	{
+		fwprintf(stderr, L"Failed to create ticket\n");
+	}
+}
 
 void doNothing2()
 {
