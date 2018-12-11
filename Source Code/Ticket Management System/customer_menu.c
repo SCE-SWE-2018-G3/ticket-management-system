@@ -81,9 +81,50 @@ void viewTicket()
 	system("PAUSE");
 }
 
+void printCustomerTicketsArray(struct Vector* tickets)
+{
+	if (tickets != NULL)
+	{
+		for (unsigned int i = 0; i < vector_getSize(tickets); ++i)
+		{
+			struct Ticket* ticket = vector_getAt(tickets, i);
+			wprintf(L"%s: %s\n", ticket_getId(ticket), ticket_getTitle(ticket));
+		}
+	}
+	else
+	{
+		wprintf(L"No tickets.");
+	}
+}
+
+bool filterByCustomer(void* ticket, void* email)
+{
+	return strcmp(ticket_getCustomerEmail(ticket), email) != 0;
+}
+
+bool filterByStatuss(void* ticket, void* status)
+{
+	return wcscmp(ticket_getStatus(ticket), status) != 0;
+}
+
 void listTickets()
 {
-	// TODO
+	struct Vector* tickets = ticketContainer_getAll();
+	struct Vector* filtered_tickets = vector_filter(tickets, filterByCustomer, auth_getEmail());
+	filtered_tickets = vector_filter(filtered_tickets, filterByStatuss, L"open");
+	
+	system("CLS");
+	wprintf(L"My support calls\n");
+	wprintf(L"================\n");
+	wprintf(L"Your open tickets are:\n");
+	printCustomerTicketsArray(filtered_tickets);
+	system("PAUSE");
+
+	for (unsigned int i = 0; i < vector_getSize(tickets); ++i)
+	{
+		ticket_destroy(vector_getAt(tickets, i));
+	}
+	vector_destroy(tickets);
 }
 
 void viewFAQ()
