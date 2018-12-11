@@ -6,9 +6,10 @@ struct MenuOption
 {
 	wchar_t* title;
 	void (*action)();
+	void* data;
 };
 
-struct MenuOption* menuOption_create(wchar_t* title, void(*action)())
+struct MenuOption* menuOption_create(wchar_t* title, void(*action)(), void* data)
 {
 	struct MenuOption* option = malloc(sizeof(struct MenuOption));
 	if (option != NULL)
@@ -19,6 +20,7 @@ struct MenuOption* menuOption_create(wchar_t* title, void(*action)())
 			option->title = wcscpy(option->title, title);
 		}
 		option->action = action;
+		option->data = data;
 	}
 	return option;
 }
@@ -66,6 +68,6 @@ void menuOption_performAction(struct MenuOption* option)
 {
 	if (option != NULL && option->action != NULL)
 	{
-		option->action();
+		option->action(option->data);
 	}
 }

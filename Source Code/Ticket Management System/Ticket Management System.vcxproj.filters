@@ -78,6 +78,9 @@
     <ClCompile Include="user_container_util.c">
       <Filter>Source Files\Data</Filter>
     </ClCompile>
+    <ClCompile Include="supportgiver_menu_util.c">
+      <Filter>Source Files\BL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ticket.h">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="user_container_util.h">
       <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="supportgiver_menu_util.h">
+      <Filter>Header Files\BL</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

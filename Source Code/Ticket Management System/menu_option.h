@@ -5,7 +5,8 @@
 struct MenuOption;
 
 // Creates a new menu option. `action` will be called when it's selected.
-struct MenuOption* menuOption_create(wchar_t* title, void(*action)());
+// `data` will be sent to `action` each time.
+struct MenuOption* menuOption_create(wchar_t* title, void(*action)(), void* data);
 
 // Destroys a menu option.
 void menuOption_destroy(struct MenuOption*);
