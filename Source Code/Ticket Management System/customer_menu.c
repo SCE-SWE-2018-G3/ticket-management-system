@@ -160,12 +160,12 @@ struct Menu* createCustomerMenu(void(*onLogOutCallback)())
 	if (menu != NULL)
 	{
 		menu_setTitle(menu, L"Welcome\nWhat would you like to do?");
-		menu_addOption(menu, menuOption_create(L"Contact Support", createTicket));
-		menu_addOption(menu, menuOption_create(L"View Support Call Status", viewTicket));
-		menu_addOption(menu, menuOption_create(L"List My Support Calls", listTickets));
-		menu_addOption(menu, menuOption_create(L"Update Contact Information", updateContactInfo));
-		menu_addOption(menu, menuOption_create(L"FAQ / Q&A", viewFAQ));
-		menu_addOption(menu, menuOption_create(L"Log Out", onLogOutCallback));
+		menu_addOption(menu, menuOption_create(L"Contact Support", createTicket, NULL));
+		menu_addOption(menu, menuOption_create(L"View Support Call Status", viewTicket, NULL));
+		menu_addOption(menu, menuOption_create(L"List My Support Calls", listTickets, NULL));
+		menu_addOption(menu, menuOption_create(L"Update Contact Information", updateContactInfo, NULL));
+		menu_addOption(menu, menuOption_create(L"FAQ / Q&A", viewFAQ, NULL));
+		menu_addOption(menu, menuOption_create(L"Log Out", onLogOutCallback, NULL));
 	}
 	return menu;
 }

@@ -81,9 +81,9 @@ struct Menu* createAuthMenu(void(*onAuthCallback)())
 	{
 		menu_setTitle(menu, L"Welcome to the system\n=====================\nPlease log in:\n(Don't have a user? Contact HR)");
 
-		email_option    = menuOption_create(L"E-Mail:",   setEmail);
-		password_option = menuOption_create(L"Password:", setPassword);
-		login_option    = menuOption_create(L"Log In",    login);
+		email_option    = menuOption_create(L"E-Mail:",   setEmail, NULL);
+		password_option = menuOption_create(L"Password:", setPassword, NULL);
+		login_option    = menuOption_create(L"Log In",    login, NULL);
 
 		menu_addOption(menu, email_option);
 		menu_addOption(menu, password_option);

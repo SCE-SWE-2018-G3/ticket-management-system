@@ -202,13 +202,13 @@ void browseTickets()
 		struct Menu* browse_tickets = menu_create();
 
 		//Creating the options and inserting them into the menu
-		struct MenuOption* status_option = menuOption_create(L"Filter by status", filterByStatusAction);
-		struct MenuOption* tier_option = menuOption_create(L"Filter by tier", filterByTierAction);
-		struct MenuOption* type_option = menuOption_create(L"Filter by type", filterByTypeAction);
-		struct MenuOption* stakeholders_option = menuOption_create(L"Filter by stakeholders", filterByStakeHolderAction);
-		struct MenuOption* email_option = menuOption_create(L"Search by customer email", SearchByCustomerEmailAction);
-		struct MenuOption* tags_option = menuOption_create(L"Search by tags", SearchByTagsAction);
-		struct MenuOption* title_sort_option = menuOption_create(L"Sort by title", SortByTitleAction);
+		struct MenuOption* status_option = menuOption_create(L"Filter by status", filterByStatusAction, NULL);
+		struct MenuOption* tier_option = menuOption_create(L"Filter by tier", filterByTierAction, NULL);
+		struct MenuOption* type_option = menuOption_create(L"Filter by type", filterByTypeAction, NULL);
+		struct MenuOption* stakeholders_option = menuOption_create(L"Filter by stakeholders", filterByStakeHolderAction, NULL);
+		struct MenuOption* email_option = menuOption_create(L"Search by customer email", SearchByCustomerEmailAction, NULL);
+		struct MenuOption* tags_option = menuOption_create(L"Search by tags", SearchByTagsAction, NULL);
+		struct MenuOption* title_sort_option = menuOption_create(L"Sort by title", SortByTitleAction, NULL);
 
 		//Inserting the options into "browse_tickets" menu struct
 		menu_addOption(browse_tickets, status_option);
@@ -326,14 +326,14 @@ void viewOrUpdateTicket()
 		return;
 	}
 
-	struct MenuOption* title_option = menuOption_create(L"Edit title", doNothing2);
-	struct MenuOption* tier_option = menuOption_create(L"Edit tier", doNothing2);
-	struct MenuOption* status_option = menuOption_create(L"Edit status", doNothing2);
-	struct MenuOption* stakeholders_option = menuOption_create(L"Edit stakeholders", doNothing2);
-	struct MenuOption* type_option = menuOption_create(L"Edit type", doNothing2);
-	struct MenuOption* severity_option = menuOption_create(L"Edit severity", doNothing2);
-	struct MenuOption* tags_option = menuOption_create(L"Edit tags", doNothing2);
-	struct MenuOption* note_option = menuOption_create(L"Add note", doNothing2);
+	struct MenuOption* title_option = menuOption_create(L"Edit title", doNothing2, NULL);
+	struct MenuOption* tier_option = menuOption_create(L"Edit tier", doNothing2, NULL);
+	struct MenuOption* status_option = menuOption_create(L"Edit status", doNothing2, NULL);
+	struct MenuOption* stakeholders_option = menuOption_create(L"Edit stakeholders", doNothing2, NULL);
+	struct MenuOption* type_option = menuOption_create(L"Edit type", doNothing2, NULL);
+	struct MenuOption* severity_option = menuOption_create(L"Edit severity", doNothing2, NULL);
+	struct MenuOption* tags_option = menuOption_create(L"Edit tags", doNothing2, NULL);
+	struct MenuOption* note_option = menuOption_create(L"Add note", doNothing2, NULL);
 
 	menu_addOption(menu, title_option);
 	menu_addOption(menu, tier_option);
@@ -431,11 +431,11 @@ struct Menu* createSupportGiverMenu(void(*onLogOutCallback)())
 	if (menu != NULL)
 	{
 		menu_setTitle(menu, L"Welcome\nWhat would you like to do?");
-		menu_addOption(menu, menuOption_create(L"Open Ticket", openTickets));
-		menu_addOption(menu, menuOption_create(L"View / Update Ticket", viewOrUpdateTicket));
-		menu_addOption(menu, menuOption_create(L"Browse Tickets", browseTickets));
-		menu_addOption(menu, menuOption_create(L"Create User", createUser));
-		menu_addOption(menu, menuOption_create(L"Log Out", onLogOutCallback));
+		menu_addOption(menu, menuOption_create(L"Open Ticket", openTickets, NULL));
+		menu_addOption(menu, menuOption_create(L"View / Update Ticket", viewOrUpdateTicket, NULL));
+		menu_addOption(menu, menuOption_create(L"Browse Tickets", browseTickets, NULL));
+		menu_addOption(menu, menuOption_create(L"Create User", createUser, NULL));
+		menu_addOption(menu, menuOption_create(L"Log Out", onLogOutCallback, NULL));
 	}
 	return menu;
 }
