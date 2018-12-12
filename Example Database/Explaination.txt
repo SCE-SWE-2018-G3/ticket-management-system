@@ -1,4 +1,5 @@
 Users.txt is the users database.
+Tickets.txt is the tickets database.
 
 All files can be edited using Microsoft Excel.
 Move the files to `Source Code\Ticket Management System\database` for the program to use them when running from Visual Studio.

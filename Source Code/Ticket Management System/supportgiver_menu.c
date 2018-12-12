@@ -340,10 +340,19 @@ void editTypeAction(void* ticket)
 
 void editSeverityAction(void* ticket)
 {
-	wchar_t input[128];
+	wchar_t* severity[] = { L"Medium", L"High", L"Critical", L"Urgent" };//////
+	int severity_num;
 	wprintf(L"Please input new severity.\n");
-	input_wchar(input, 128);
-	ticket_setSeverity(ticket, input);
+	do
+	{
+		wscanf(L"%d", &severity_num);
+		if (severity_num < 1 || severity_num > 4)
+		{
+			wprintf(L"Invaild severity. Try again.\n");
+
+		}
+	} while (severity_num < 1 || severity_num > 4);
+	ticket_setSeverity(ticket, severity[severity_num-1]);
 }
 
 void editStakeholdersAction(void* ticket)
