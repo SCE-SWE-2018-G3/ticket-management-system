@@ -480,7 +480,7 @@ void viewOrUpdateTicket()
 		wprintf(L"Ticket ID: %s\n", ticket_getId(ticket));
 		wprintf(L"Title: %s\n", ticket_getTitle(ticket));
 		wprintf(L"Description: %s\n", ticket_getDescription(ticket));
-		wprintf(L"Media: %S\n",ticket_getMedia(ticket));
+		wprintf(L"Media: %s\n",ticket_getMedia(ticket));
 		wprintf(L"Date opened: %S\n", ctime(&date));
 		wprintf(L"Tier: %s\n", ticket_getTier(ticket));
 		wprintf(L"Status: %s\n", ticket_getStatus(ticket));

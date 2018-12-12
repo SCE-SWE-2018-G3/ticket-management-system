@@ -36,7 +36,7 @@ bool filterByTier(void* ticket1, void* tier)
 
 bool filterByType(void* ticket1, void* type)
 {
-	return wcscmp(ticket_getType(ticket1), type) != 0;
+	return wcscmp(ticket_getMedia(ticket1), type) != 0;
 }
 
 bool filterByStakeholders(void* ticket1, void* stakeholders)

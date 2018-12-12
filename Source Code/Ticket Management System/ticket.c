@@ -531,7 +531,7 @@ void ticket_setMedia(struct Ticket *ticket, wchar_t *media)
 			ticket->media = realloc(ticket->media, sizeof(wchar_t) * (wcslen(media) + 1));
 			if (ticket->media == NULL)
 			{
-				ticket->severity = old_media;
+				ticket->media = old_media;
 				return;
 			}
 		}
