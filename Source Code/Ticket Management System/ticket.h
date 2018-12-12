@@ -35,6 +35,7 @@ wchar_t* ticket_getTier(struct Ticket*);
 wchar_t* ticket_getStatus(struct Ticket*);
 struct Vector* ticket_getTags(struct Ticket*);
 struct Vector* ticket_getNotes(struct Ticket*);
+wchar_t* ticket_getMedia(struct Ticket*);
 time_t ticket_getDate(struct Ticket*);
 
 // Setters:

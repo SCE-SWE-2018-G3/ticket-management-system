@@ -4,6 +4,8 @@
 #include <wchar.h>
 #include <string.h>
 
+
+
 wchar_t* generateRandomString(unsigned int length)
 {
 	wchar_t* str = malloc(sizeof(wchar_t) * (length + 1));
@@ -266,6 +268,11 @@ wchar_t* ticket_getTitle(struct Ticket* ticket)
 		return ticket->title;
 	}
 	return NULL;
+}
+
+wchar_t* ticket_getMedia(struct Ticket* ticket)
+{
+	return L"Phone";
 }
 
 void ticket_setTitle(struct Ticket* ticket, wchar_t* title)
