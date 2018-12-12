@@ -18,13 +18,13 @@ void createTicket()
 	wprintf(L"Contact Support\n");
 	wprintf(L"===============\n");
 	wprintf(L"Please describe what happened.\n");
-	input_wchar(description,512);		
+	input_wchar(description,512);
 	wprintf(L"Please give a short title to the incident.\n");
 	input_wchar(title, 256);
 	wprintf(L"Please list the type(s) related to this incident.\n");
 	input_wchar(type, 256);
 	//Add more fields
-	struct Ticket* ticket = ticket_create(title, type, description, auth_getEmail());// add more fields
+	struct Ticket* ticket = ticket_create(title, type, description, L"Self service",auth_getEmail());// add more fields
 	if (ticket != NULL)
 	{
 		ticketContainer_update(ticket);

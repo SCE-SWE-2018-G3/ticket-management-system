@@ -14,15 +14,15 @@ void ticketContainer_update(struct Ticket* ticket)
 {
 	if (ticket != NULL)
 	{
-		wchar_t* data[12];
+		wchar_t* data[13];
 		struct ticketContainer_wcsArrStatus* data_status = ticketContainer_wcsArrFromTicket(data, ticket);
 
-		struct LeanSQL_ActionReport update = LeanSQL_update(L"Tickets", data, NULL, 12, findByTicketId, ticket_getId(ticket));
+		struct LeanSQL_ActionReport update = LeanSQL_update(L"Tickets", data, NULL, 13, findByTicketId, ticket_getId(ticket));
 		if (update.success)
 		{
 			if (update.result.rows == 0) // Ticket does not exist, was not added
 			{
-				update = LeanSQL_insert(L"Tickets", data, 12);
+				update = LeanSQL_insert(L"Tickets", data, 13);
 				if (!update.success)
 				{
 					fwprintf(stderr, L"Could not update ticket.\n");
@@ -34,7 +34,7 @@ void ticketContainer_update(struct Ticket* ticket)
 			if (update.error == LEANSQL_ERROR_NO_TABLE)
 			{
 				ticketContainer_createDatabaseTable();
-				update = LeanSQL_insert(L"Tickets", data, 12);
+				update = LeanSQL_insert(L"Tickets", data, 13);
 				if (!update.success)
 				{
 					fwprintf(stderr, L"Could not update ticket.\n");
