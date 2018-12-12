@@ -39,13 +39,15 @@ struct Ticket
 	wchar_t* description;
 	wchar_t* tier;
 	wchar_t* status;
+	wchar_t* media;
+
 	struct Vector* stakeholders;
 	struct Vector* tags;
 	struct Vector* notes;
 	time_t creation_date;
 };
 
-struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description, char* customer_email)
+struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description,wchar_t* media, char* customer_email)
 {
 	struct Ticket* ticket = malloc(sizeof(struct Ticket));
 	if (ticket != NULL)
@@ -55,6 +57,7 @@ struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description
 		ticket->title = NULL;
 		ticket->type = NULL;
 		ticket->severity = NULL;
+		ticket->media = NULL;
 		ticket->description = NULL;
 		ticket->tier = NULL;
 		ticket->status = NULL;
@@ -67,6 +70,7 @@ struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description
 		ticket_setTitle(ticket, title);
 		ticket_setType(ticket, type);
 		ticket_setDescription(ticket, description);
+		ticket_setMedia(ticket, media);
 		ticket_setTier(ticket, L"T1");
 		ticket_setStatus(ticket, L"open");
 		ticket->creation_date = time(NULL);
@@ -473,6 +477,15 @@ wchar_t* ticket_getStatus(struct Ticket* ticket)
 	return NULL;
 }
 
+wchar_t * ticket_getMedia(struct Ticket *ticket)
+{
+	if (ticket != NULL)
+	{
+		return ticket->media;
+	}
+	return NULL;
+}
+
 void ticket_setStatus(struct Ticket* ticket, wchar_t* status)
 {
 	if (ticket != NULL)
@@ -497,6 +510,32 @@ void ticket_setStatus(struct Ticket* ticket, wchar_t* status)
 		}
 
 		wcscpy(ticket->status, status);
+	}
+}
+
+void ticket_setMedia(struct Ticket *ticket, wchar_t *media)
+{
+	if (ticket != NULL)
+	{
+		if (ticket->media == NULL)
+		{
+			ticket->media = malloc(sizeof(wchar_t) * (wcslen(media) + 1));
+			if (ticket->media == NULL)
+			{
+				return;
+			}
+		}
+		else if (wcslen(media) != wcslen(ticket->media))
+		{
+			wchar_t* old_media = ticket->media;
+			ticket->media = realloc(ticket->media, sizeof(wchar_t) * (wcslen(media) + 1));
+			if (ticket->media == NULL)
+			{
+				ticket->severity = old_media;
+				return;
+			}
+		}
+		wcscpy(ticket->media, media);
 	}
 }
 

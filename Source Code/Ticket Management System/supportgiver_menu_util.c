@@ -59,6 +59,11 @@ bool filterByStakeholders(void* ticket1, void* stakeholders)
 	return !found_matching_stakeholders;
 }
 
+bool filterByMedia(void * ticket1, void * media)
+{
+	return wcscmp(ticket_getType(ticket1), media) != 0;
+}
+
 bool searchByCustomerEmail(void* ticket1, void* customer_email)
 {
 	return strcmp(ticket_getCustomerEmail(ticket1), customer_email) != 0;
