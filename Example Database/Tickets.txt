@@ -1,0 +1,21 @@
+ID	CustomerEmail	Title	Type	Severity	Description	Tier	Status	Stakeholders	Tags	Notes	CreationDate	Media
+R31K-Y8Y-YBH-416-HV7	ivan@mailinator.com	Computer won't turn on	IT	Medium	I can't turn on my computer	T1	open	 	 	 	1434561527	Self service
+3513-YE3-BH6-3K6-3R1	rick@sce.ac.il	Screen doesn't work	IT	Medium	i try to work but screen doesn't work	T1	closed	 	 	"11/12/2018: admin@gmail.com: Arrived on scene. Screen was not connected to power outlet. Connected screen, now works."	1435561327	Self service
+UER2-5NV-FKF-3J6-324	dafna87@mailinator.com	Coffee machine broken	Maintenance	Medium	The coffee machine makes a lot of noise but does not let out water.	T1	closed	Steve (maintenance);	 	11/12/2018: ilan@mailinator.com: espresso machine is fine now. Tray was not fully engaged.	1436551327	Self service
+ST37-KDO-232-555-FKK	dafna87@mailinator.com	Can't print	Maintenance	High	I have very important document for the manager. The printer doesn't work	T1	closed	 	 	 	1440551387	Self service
+KO3P-SST-C24-26K-SP0	orenoren@mailinator.com	 	 	Critical	 	T1	open	 	 	10/12/2018: alon@mailinator.com: ???; 10/12/2018: shani@mailinator.com: Need to contact the customer	1441541387	Self service
+9998-KFO-SJC-MSW-RER	rachelco7@mailinator.com	printer	IT	Medium	printer	T1	open	 	 	 	1441940387	Phone
+EOE3-PPS-2SM-49W-3ME	lidor@mailinator.com	Set up AWS	Operations	Medium	Does anyone know how to set up AWS? If we move our hosting we may save a few dollars each month	T2	open	 	 	 	1442140387	Phone
+939F-KFO-3SC-MSW-R3X	rachelco7@mailinator.com	printer	IT	Medium	printer	T1	closed	 	 	 	1442830387	Email
+SME3-M3R-MO3-C0S-CO3	yosi@mailinator.com	iphone screen cracked	IT	Medium	 	T1	closed	 	 	08/12/2018: shani@mailinator.com: Closing because we do not fix personal posessions	1443020387	Self service
+DFP3-HA3-KA1-DUB-SF1	ilan@pipi.com	Slow computer	IT	Low	 	T1	open	 	 	 	1447740387	Phone
+GRT2-HUM-TE1-MUM-SE2	tata@holy.com	Computer crash after 5 min	IT	High	 	T2	open	 	 	 	1450740387	Phone
+PQ34-JU2-PUK-TOT-212	tinka@pupu.com	mouse wont work	Maintenance	Low	 	T1	closed	  	 	16/12/2018: admin@gmail.com: Mouse broken. Mouse has been replaced	1450940387	Self service
+ADF4-GUG-PL3-FD9-6A1	rachelco7@mailinator.com	screen shows static snow	IT	High	 	T1	open	  	 	 	1451080387	Email
+SRX6-JHG-R5X-ASD-915	yosi@mailinator.com	fax wont send/receive	Maintenance	Medium	  	T1	open	 	 	 	1451300387	Self service
+KO3P-SST-SSS-26K-SP0	ivan@mailinator.com	server down	Operations	Urgent	 	T3	closed	  	 	  20/12/2018: admin@gmail.com: Reboted system. Works fine now.	1451610387	Email
+EOG3-PQS-2SM-49W-3ME	Martin@sce.ac.il	wont login	IT	Urgent	wont log in to service	T1	open	Martin L.K	  	22/12/2018: admin@gmail.com: VIP Stakeholder need to treat fast	1451900387	Email
+SRX6-159-R5X-ASD-915	yosi@mailinator.com	cant open paint.exe	IT	Low	 	T1	closed	 	 	24/12/2018 ilan@mailinator.com: Paint isnt allowed to be use by system manger	1457000481	Email
+A3F4-G2G-PL3-FD9-6A1	ron@mailinator.com	 slide projector wont project	Operations	Medium	 	T1	closed	 	 	26/12/2018: shani@mailinator.com: Needed to plug in the power	1457501481	Self service
+UER2-5NV-FKF-3J6-324	tata@holy.com	scanner wont work on computer	Operations	Medium	 	T1	open	 	 	 	1468501481	Phone
+KO3P-SST-SSS-26K-SP0	ivan@mailinator.com	Database inactive	Operations	Urgent	Database wont connect	T3	open	 	 	 	1478501481	Phone

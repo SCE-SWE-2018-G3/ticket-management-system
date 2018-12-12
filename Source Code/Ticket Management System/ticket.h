@@ -18,7 +18,7 @@ struct Ticket;
 *@return struct Ticket* a point to struct Ticket type.
 * Todo: a ticket is more vast that this this function needs to get more values.
 */
-struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description, char* customer_email);
+struct Ticket* ticket_create(wchar_t* title, wchar_t* type, wchar_t* description,wchar_t* media ,char* customer_email);
 
 // Destroys a ticket, performing deallocation.
 void ticket_destroy(struct Ticket*);
@@ -33,6 +33,7 @@ struct Vector* ticket_getStakeholders(struct Ticket*);
 wchar_t* ticket_getDescription(struct Ticket*);
 wchar_t* ticket_getTier(struct Ticket*);
 wchar_t* ticket_getStatus(struct Ticket*);
+wchar_t* ticket_getMedia(struct Ticket*);
 struct Vector* ticket_getTags(struct Ticket*);
 struct Vector* ticket_getNotes(struct Ticket*);
 wchar_t* ticket_getMedia(struct Ticket*);
@@ -48,7 +49,9 @@ void ticket_setSeverity(struct Ticket*, wchar_t*);
 void ticket_setDescription(struct Ticket*, wchar_t*);
 void ticket_setTier(struct Ticket*, wchar_t*);
 void ticket_setStatus(struct Ticket*, wchar_t*);
+void ticket_setMedia(struct Ticket*, wchar_t*);
 void ticket_setDate(struct Ticket*, time_t);
+
 
 void ticket_addTag(struct Ticket*, wchar_t* tag);
 void ticket_addStakeholder(struct Ticket*, wchar_t* stakeholder);

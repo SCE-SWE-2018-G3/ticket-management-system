@@ -108,7 +108,29 @@ void filterByStakeHolderAction()
 
 	system("PAUSE");
 }
-
+void filterByMediaAction()
+{
+	struct Vector* tickets = ticketContainer_getAll();
+	if (tickets == NULL)
+	{
+		wprintf(L"No tickets in the system.\n");
+	}
+	else
+	{
+		wchar_t media[32];
+		wprintf(L"Please input media:\n");
+		input_wchar(media,32);
+		struct Vector* filtered_vector = vector_filter(tickets, filterByMedia, media);
+		printTicketsArray(filtered_vector);
+		vector_destroy(filtered_vector);
+		for (unsigned int i = 0; i < vector_getSize(tickets); ++i)
+		{
+			ticket_destroy(vector_getAt(tickets, i));
+		}
+		vector_destroy(tickets);
+	}
+	system("PAUSE");
+}
 void SearchByCustomerEmailAction()
 {
 	struct Vector* tickets = ticketContainer_getAll();
@@ -214,10 +236,51 @@ void browseTickets()
 	//Displaying the menu "browse_tickets"
 	while (menu_isOpen(browse_tickets) && !menu_hasError(browse_tickets))
 	{
+
 		system("CLS");
 		wprintf(L"Browse Tickets\n==============\n");
 		printTicketsArray(tickets);
 		menu_tick(browse_tickets);
+
+		//Creating the menu and giving it a title
+		struct Menu* browse_tickets = menu_create();
+
+		//Creating the options and inserting them into the menu
+		struct MenuOption* status_option = menuOption_create(L"Filter by status", filterByStatusAction, NULL);
+		struct MenuOption* tier_option = menuOption_create(L"Filter by tier", filterByTierAction, NULL);
+		struct MenuOption* type_option = menuOption_create(L"Filter by type", filterByTypeAction, NULL);
+		struct MenuOption* stakeholders_option = menuOption_create(L"Filter by stakeholders", filterByStakeHolderAction, NULL);
+		struct MenuOption* media_option = menuOption_create(L"Filter by media", filterByMediaAction, NULL);
+		struct MenuOption* email_option = menuOption_create(L"Search by customer email", SearchByCustomerEmailAction, NULL);
+		struct MenuOption* tags_option = menuOption_create(L"Search by tags", SearchByTagsAction, NULL);
+		struct MenuOption* title_sort_option = menuOption_create(L"Sort by title", SortByTitleAction, NULL);
+
+		//Inserting the options into "browse_tickets" menu struct
+		menu_addOption(browse_tickets, status_option);
+		menu_addOption(browse_tickets, tier_option);
+		menu_addOption(browse_tickets, type_option);
+		menu_addOption(browse_tickets, stakeholders_option);
+		menu_addOption(browse_tickets, media_option);
+		menu_addOption(browse_tickets, email_option);
+		menu_addOption(browse_tickets, tags_option);
+		menu_addOption(browse_tickets, title_sort_option);
+
+		//Displaying the menu "browse_tickets"
+		while (menu_isOpen(browse_tickets) && !menu_hasError(browse_tickets))
+		{
+			system("CLS");
+			wprintf(L"Browse Tickets\n==============\n");
+			printTicketsArray(tickets);
+			menu_tick(browse_tickets);
+		}
+		
+		menu_destroy(browse_tickets);
+		for(unsigned int i = 0; i < vector_getSize(tickets); ++i)
+		{
+			ticket_destroy(vector_getAt(tickets, i));
+		}
+		vector_destroy(tickets);
+
 	}
 
 	menu_destroy(browse_tickets);
@@ -234,6 +297,7 @@ void openTickets()
 	wchar_t title[256];
 	wchar_t type_support[256];
 	wchar_t* severity[] = { L"Medium", L"High", L"Critical", L"Urgent" };
+	wchar_t media[256];
 	wchar_t description_support[512];
 	int severity_num;
 
@@ -244,6 +308,8 @@ void openTickets()
 	wprintf(L"===============\n");
 	wprintf(L"Please input description\n");
 	input_wchar(description_support, 512);
+	wprintf(L"Please input media\n");
+	input_wchar(media, 256);
 	wprintf(L"Please input title\n");
 	input_wchar(title, 256);
 	wprintf(L"Please input type\n");
@@ -258,7 +324,7 @@ void openTickets()
 		}
 	} while(severity_num < 1 || severity_num > 4);
 		
-	struct Ticket* ticket = ticket_create(title, type_support, description_support, customer_email);
+	struct Ticket* ticket = ticket_create(title, type_support, description_support,media,customer_email);
 	if (ticket != NULL)
 	{
 		ticket_setSeverity(ticket, severity[severity_num - 1]);
@@ -314,10 +380,19 @@ void editTypeAction(void* ticket)
 
 void editSeverityAction(void* ticket)
 {
-	wchar_t input[128];
+	wchar_t* severity[] = { L"Medium", L"High", L"Critical", L"Urgent" };//////
+	int severity_num;
 	wprintf(L"Please input new severity.\n");
-	input_wchar(input, 128);
-	ticket_setSeverity(ticket, input);
+	do
+	{
+		wscanf(L"%d", &severity_num);
+		if (severity_num < 1 || severity_num > 4)
+		{
+			wprintf(L"Invaild severity. Try again.\n");
+
+		}
+	} while (severity_num < 1 || severity_num > 4);
+	ticket_setSeverity(ticket, severity[severity_num-1]);
 }
 
 void editStakeholdersAction(void* ticket)
@@ -454,7 +529,8 @@ void viewOrUpdateTicket()
 		wprintf(L"Ticket ID: %s\n", ticket_getId(ticket));
 		wprintf(L"Title: %s\n", ticket_getTitle(ticket));
 		wprintf(L"Description: %s\n", ticket_getDescription(ticket));
-		wprintf(L"Date opened: %S", ctime(&date));
+		wprintf(L"Media: %s\n",ticket_getMedia(ticket));
+		wprintf(L"Date opened: %S\n", ctime(&date));
 		wprintf(L"Tier: %s\n", ticket_getTier(ticket));
 		wprintf(L"Status: %s\n", ticket_getStatus(ticket));
 		wprintf(L"Type: %s\n", ticket_getType(ticket));

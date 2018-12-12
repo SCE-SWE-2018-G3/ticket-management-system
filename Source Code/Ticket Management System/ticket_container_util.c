@@ -21,9 +21,11 @@ void ticketContainer_createDatabaseTable()
 		L"Stakeholders",
 		L"Tags",
 		L"Notes",
-		L"CreationDate"
+		L"CreationDate",
+		L"Media"
+
 	};
-	struct LeanSQL_ActionReport creation = LeanSQL_createTable(L"Tickets", columns, 12);
+	struct LeanSQL_ActionReport creation = LeanSQL_createTable(L"Tickets", columns, 13);
 	if (!creation.success)
 	{
 		fwprintf(stderr, L"Could not create tickets database.\n");
@@ -47,7 +49,9 @@ struct Ticket* ticketContainer_createTicketFromDatabaseRow(wchar_t** data)
 	wchar_t* notes = data[10];
 	wchar_t* creation_date = data[11];
 	long int creation_date_int = wcstol(creation_date, NULL, 10);
-	struct Ticket* ticket = ticket_create(title, type, description, customer_email);
+	wchar_t* media = data[12];
+
+	struct Ticket* ticket = ticket_create(title, type, description,media,customer_email);
 	if (ticket != NULL)
 	{
 		ticket_setId(ticket, id);
@@ -138,6 +142,7 @@ struct ticketContainer_wcsArrStatus* ticketContainer_wcsArrFromTicket(wchar_t** 
 	data[5] = ticket_getDescription(ticket);
 	data[6] = ticket_getTier(ticket);
 	data[7] = ticket_getStatus(ticket);
+	data[12] = ticket_getMedia(ticket);
 
 	struct Vector* stakeholders = ticket_getStakeholders(ticket);
 	if (stakeholders == NULL)
