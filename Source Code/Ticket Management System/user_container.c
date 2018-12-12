@@ -1,6 +1,7 @@
 #include "user_container.h"
 #include "user_container_util.h"
 #include <leansql.h>
+#include <string.h>
 
 bool findByUserEmail(wchar_t* column, wchar_t* value, void* desired_email)
 {
