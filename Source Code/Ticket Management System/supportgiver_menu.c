@@ -596,7 +596,7 @@ void mostCommonProblem(struct Vector* tickets)
 	wprintf(L"%d issues have been opened with the tag %s.\n", tagCounter3, tagToTrack3);
 }
 
-void mostCommonMedia(struct Vector* tickets) //TODO update once media is implemented.
+void mostCommonMedia(struct Vector* tickets)
 {
 	int phoneCounter = 0;
 	int emailCounter = 0;
