@@ -625,12 +625,11 @@ void mostCommonMedia(struct Vector* tickets) //TODO update once media is impleme
 void tickets_openedToday(struct Vector* tickets)
 {
 	int openedToday = 0;
-	time_t* currentDate = time(NULL);
+	time_t currentDate=time(NULL);
 
 	for (unsigned int i = 0; i < vector_getSize(tickets); ++i)
 	{
-		wchar_t* currentStatus = ticket_getStatus(vector_getAt(tickets, i));
-		time_t* creationDate = ticket_getDate(vector_getAt(tickets, i));
+		time_t creationDate = ticket_getDate(vector_getAt(tickets, i));
 		if (currentDate - creationDate <= 86400)
 			openedToday += 1;
 	}
@@ -659,6 +658,7 @@ void stats()
 	if (tickets == NULL || vector_getSize(tickets) == 0)
 	{
 		wprintf(L"No tickets in the system.\n");
+		vector_destroy(tickets);
 		system("PAUSE");
 		return;
 	}
