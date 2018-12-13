@@ -595,9 +595,9 @@ void mostCommonProblem(struct Vector* tickets)
 		}
 	}
 
-	wprintf(L"%d issues have been opened with the tag %s.\n", tagCounter1, tagToTrack1);
-	wprintf(L"%d issues have been opened with the tag %s.\n", tagCounter2, tagToTrack2);
-	wprintf(L"%d issues have been opened with the tag %s.\n", tagCounter3, tagToTrack3);
+	wprintf(L"%d tickets opened with tag %s.\n", tagCounter1, tagToTrack1);
+	wprintf(L"%d tickets opened with tag %s.\n", tagCounter2, tagToTrack2);
+	wprintf(L"%d tickets opened with tag %s.\n", tagCounter3, tagToTrack3);
 }
 
 void mostCommonMedia(struct Vector* tickets)
@@ -620,10 +620,10 @@ void mostCommonMedia(struct Vector* tickets)
 			other += 1;
 	}
 
-	wprintf(L"%d tickets have been opened through Phone.\n", phoneCounter);
-	wprintf(L"%d tickets have been opened through Email.\n", emailCounter);
-	wprintf(L"%d tickets have been opened through self-service.\n", self_service);
-	wprintf(L"%d tickets have been opened through other means.\n", other);
+	wprintf(L"%d tickets opened through Phone.\n", phoneCounter);
+	wprintf(L"%d tickets opened through Email.\n", emailCounter);
+	wprintf(L"%d tickets opened through self-service.\n", self_service);
+	wprintf(L"%d tickets opened through other means.\n", other);
 }
 
 void tickets_openedToday(struct Vector* tickets)
@@ -638,7 +638,7 @@ void tickets_openedToday(struct Vector* tickets)
 			openedToday += 1;
 	}
 
-	wprintf(L"%d tickets were opened in the last 24 hours.\n", openedToday);
+	wprintf(L"%d tickets opened in the last 24 hours.\n", openedToday);
 }
 
 void tickets_howManyClosed(struct Vector* tickets)
@@ -652,7 +652,7 @@ void tickets_howManyClosed(struct Vector* tickets)
 			closedCounter += 1;
 
 	}
-	wprintf(L"%d tickets have been closed since the system's creation.\n", closedCounter);
+	wprintf(L"%d tickets closed since systems' creation.\n", closedCounter);
 
 }
 
@@ -667,25 +667,19 @@ void stats()
 		return;
 	}
 	system("CLS");
-	wprintf(L"Welcome to the analytical status screen\n==========================\n\n");
-	wprintf(L"Evaluation of most common problems (monitored by given user's tags):\n");
+	wprintf(L"Analytical Stats\n");
+	wprintf(L"================\n");
 	mostCommonProblem(tickets);
-	wprintf(L"\n");
-	wprintf(L"Communication channels information:\n");
 	mostCommonMedia(tickets);
-	wprintf(L"\n");
-	wprintf(L"Ticket database - general information:\n");
 	tickets_openedToday(tickets);
 	tickets_howManyClosed(tickets);
-	wprintf(L"\n");
-	wprintf(L"End of report, returning to menu.\n");
+	system("PAUSE");
+
 	for (unsigned int i = 0; i < vector_getSize(tickets); ++i)
 	{
 		ticket_destroy(vector_getAt(tickets, i));
 	}
 	vector_destroy(tickets);
-	system("PAUSE");
-
 }
 
 struct Menu* createSupportGiverMenu(void(*onLogOutCallback)())
