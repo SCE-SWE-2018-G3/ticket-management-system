@@ -564,6 +564,124 @@ void createUser()
 	user_destroy(user);
 }
 
+void mostCommonProblem(struct Vector* tickets)
+{
+
+	wchar_t tagToTrack1[64];
+	wchar_t tagToTrack2[64];
+	wchar_t tagToTrack3[64];
+
+	int tagCounter1 = 0;
+	int tagCounter2 = 0;
+	int tagCounter3 = 0;
+
+	wprintf(L"Please input three tags you wish to track:\n");
+	input_wchar(tagToTrack1, 64);
+	input_wchar(tagToTrack2, 64);
+	input_wchar(tagToTrack3, 64);
+
+	for (unsigned int i = 0; i < vector_getSize(tickets); ++i)
+	{
+		struct Vector* tags = ticket_getTags(vector_getAt(tickets, i));
+		for (unsigned int j = 0; j < vector_getSize(tags); ++j)
+		{
+			wchar_t* currentTag = vector_getAt(tags, j);
+			if (wcscmp(currentTag, tagToTrack1) == 0)
+				tagCounter1 += 1;
+			if (wcscmp(currentTag, tagToTrack2) == 0)
+				tagCounter2 += 1;
+			if (wcscmp(currentTag, tagToTrack3) == 0)
+				tagCounter3 += 1;
+		}
+	}
+
+	wprintf(L"%d tickets opened with tag %s.\n", tagCounter1, tagToTrack1);
+	wprintf(L"%d tickets opened with tag %s.\n", tagCounter2, tagToTrack2);
+	wprintf(L"%d tickets opened with tag %s.\n", tagCounter3, tagToTrack3);
+}
+
+void mostCommonMedia(struct Vector* tickets)
+{
+	int phoneCounter = 0;
+	int emailCounter = 0;
+	int self_service = 0;
+	int other = 0;
+	for (unsigned int i = 0; i < vector_getSize(tickets); ++i)
+	{
+		wchar_t* currentMedia = ticket_getMedia(vector_getAt(tickets, i));
+
+		if (wcscmp(currentMedia, L"Phone") == 0)
+			phoneCounter += 1;
+		if (wcscmp(currentMedia, L"Email") == 0)
+			emailCounter += 1;
+		if (wcscmp(currentMedia, L"Self service") == 0)
+			self_service += 1;
+		if (wcscmp(currentMedia, L"Other") == 0)
+			other += 1;
+	}
+
+	wprintf(L"%d tickets opened through Phone.\n", phoneCounter);
+	wprintf(L"%d tickets opened through Email.\n", emailCounter);
+	wprintf(L"%d tickets opened through self-service.\n", self_service);
+	wprintf(L"%d tickets opened through other means.\n", other);
+}
+
+void tickets_openedToday(struct Vector* tickets)
+{
+	int openedToday = 0;
+	time_t currentDate=time(NULL);
+
+	for (unsigned int i = 0; i < vector_getSize(tickets); ++i)
+	{
+		time_t creationDate = ticket_getDate(vector_getAt(tickets, i));
+		if (currentDate - creationDate <= 86400)
+			openedToday += 1;
+	}
+
+	wprintf(L"%d tickets opened in the last 24 hours.\n", openedToday);
+}
+
+void tickets_howManyClosed(struct Vector* tickets)
+{
+	int closedCounter = 0;
+
+	for (unsigned int i = 0; i < vector_getSize(tickets); ++i)
+	{
+		wchar_t* currentStatus = ticket_getStatus(vector_getAt(tickets, i));
+		if (wcscmp(currentStatus, L"Closed") == 0 || wcscmp(currentStatus, L"closed") == 0)
+			closedCounter += 1;
+
+	}
+	wprintf(L"%d tickets closed since systems' creation.\n", closedCounter);
+
+}
+
+void stats()
+{
+	struct Vector* tickets = ticketContainer_getAll();
+	if (tickets == NULL || vector_getSize(tickets) == 0)
+	{
+		wprintf(L"No tickets in the system.\n");
+		vector_destroy(tickets);
+		system("PAUSE");
+		return;
+	}
+	system("CLS");
+	wprintf(L"Analytical Stats\n");
+	wprintf(L"================\n");
+	mostCommonProblem(tickets);
+	mostCommonMedia(tickets);
+	tickets_openedToday(tickets);
+	tickets_howManyClosed(tickets);
+	system("PAUSE");
+
+	for (unsigned int i = 0; i < vector_getSize(tickets); ++i)
+	{
+		ticket_destroy(vector_getAt(tickets, i));
+	}
+	vector_destroy(tickets);
+}
+
 struct Menu* createSupportGiverMenu(void(*onLogOutCallback)())
 {
 	struct Menu* menu = menu_create();
@@ -574,6 +692,7 @@ struct Menu* createSupportGiverMenu(void(*onLogOutCallback)())
 		menu_addOption(menu, menuOption_create(L"View / Update Ticket", viewOrUpdateTicket, NULL));
 		menu_addOption(menu, menuOption_create(L"Browse Tickets", browseTickets, NULL));
 		menu_addOption(menu, menuOption_create(L"Create User", createUser, NULL));
+		menu_addOption(menu, menuOption_create(L"Analytical Stats", stats, NULL));
 		menu_addOption(menu, menuOption_create(L"Log Out", onLogOutCallback, NULL));
 	}
 	return menu;
