@@ -582,13 +582,17 @@ void mostCommonProblem(struct Vector* tickets)
 
 	for (unsigned int i = 0; i < vector_getSize(tickets); ++i)
 	{
-		wchar_t* currentTag = ticket_getTags(vector_getAt(tickets, i));
-		if (wcscmp(currentTag, tagToTrack1) == 0)
-			tagCounter1 += 1;
-		if (wcscmp(currentTag, tagToTrack2) == 0)
-			tagCounter2 += 1;
-		if (wcscmp(currentTag, tagToTrack3) == 0)
-			tagCounter3 += 1;
+		struct Vector* tags = ticket_getTags(vector_getAt(tickets, i));
+		for (unsigned int j = 0; j < vector_getSize(tags); ++j)
+		{
+			wchar_t* currentTag = vector_getAt(tags, j);
+			if (wcscmp(currentTag, tagToTrack1) == 0)
+				tagCounter1 += 1;
+			if (wcscmp(currentTag, tagToTrack2) == 0)
+				tagCounter2 += 1;
+			if (wcscmp(currentTag, tagToTrack3) == 0)
+				tagCounter3 += 1;
+		}
 	}
 
 	wprintf(L"%d issues have been opened with the tag %s.\n", tagCounter1, tagToTrack1);
