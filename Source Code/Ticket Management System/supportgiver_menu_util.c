@@ -24,9 +24,9 @@ void printTicketsArray(struct Vector* tickets)
 }
 
 
-bool filterByStatus(void* ticket, void* status)
+bool filterByStatus(void* ticket1, void* status)
 {
-	return wcscmp(ticket_getStatus(ticket), status) != 0;
+	return wcscmp(ticket_getStatus(ticket1), status) != 0;
 }
 
 bool filterByTier(void* ticket1, void* tier)
@@ -36,53 +36,35 @@ bool filterByTier(void* ticket1, void* tier)
 
 bool filterByType(void* ticket1, void* type)
 {
-	return wcscmp(ticket_getMedia(ticket1), type) != 0;
+	return wcscmp(ticket_getType(ticket1), type) != 0;
 }
 
-bool filterByStakeholders(void* ticket1, void* stakeholders)
+bool filterByStakeholders(void* ticket1, void* stakeholder)
 {
-	struct Vector* ticket_stakeholders = ticket_getStakeholders(ticket1);
-	struct Vector* desired_stakeholders = stakeholders;
-
-	bool found_matching_stakeholders = false;
-	for (unsigned int i = 0; i < vector_getSize(ticket_stakeholders) && !found_matching_stakeholders; ++i)
-	{
-		for (unsigned int j = 0; j < vector_getSize(desired_stakeholders) && !found_matching_stakeholders; ++j)
-		{
-			if (wcscmp(vector_getAt(ticket_stakeholders, i), vector_getAt(desired_stakeholders, j)) == 0)
-			{
-				found_matching_stakeholders = true;
-			}
-		}
-	}
-
-	return !found_matching_stakeholders;
+	struct Vector* ticket_stakeholders = ticket_getStakeholders(ticket1);	
+	for (unsigned int i = 0; i < vector_getSize(ticket_stakeholders); ++i)		
+				if (wcscmp(vector_getAt(ticket_stakeholders, i), stakeholder) == 0)
+					return false;
+	return true;
 }
 
 bool filterByMedia(void * ticket1, void * media)
 {
-	return wcscmp(ticket_getType(ticket1), media) != 0;
+	return wcscmp(ticket_getMedia(ticket1), media) != 0;
 }
 
-bool searchByCustomerEmail(void* ticket1, void* customer_email)
+bool searchByCustomerEmail(void* ticket, void* customer_email)
 {
-	return strcmp(ticket_getCustomerEmail(ticket1), customer_email) != 0;
+	return strcmp(ticket_getCustomerEmail(ticket), customer_email) != 0;
 }
 
 bool searchByTags(void* ticket, void* tag)
 {
 	struct Vector* ticket_tags = ticket_getTags(ticket);
-
-	bool found_tag = false;
 	for (unsigned int i = 0; i < vector_getSize(ticket_tags); ++i)
-	{
 		if (wcscmp(vector_getAt(ticket_tags, i), tag) == 0)
-		{
-			found_tag = true;
-		}
-	}
-
-	return found_tag;
+			return false;
+	return true;
 }
 
 bool sortByTitle(void* ticket1, void* ticket2)

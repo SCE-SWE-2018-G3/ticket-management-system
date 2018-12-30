@@ -7,7 +7,7 @@
 #include "auth.h"
 #include <stdio.h>
 #include <string.h>
-
+#define MAX_CHARS_IN_FILTER 64
 void filterByStatusAction() 
 {
 	struct Vector* tickets = ticketContainer_getAll();
@@ -17,9 +17,9 @@ void filterByStatusAction()
 	}
 	else
 	{
-		wchar_t status[32];
+		wchar_t status[MAX_CHARS_IN_FILTER];
 		wprintf(L"Please input status:\n");
-		input_wchar(status, 32);
+		input_wchar(status, MAX_CHARS_IN_FILTER);
 		struct Vector* filtered_vector = vector_filter(tickets, filterByStatus, status);
 		printTicketsArray(filtered_vector);
 		vector_destroy(filtered_vector);
@@ -41,9 +41,9 @@ void filterByTierAction()
 	}
 	else
 	{
-		wchar_t tier[32];
+		wchar_t tier[MAX_CHARS_IN_FILTER];
 		wprintf(L"Please input tier:\n");
-		input_wchar(tier, 32);
+		input_wchar(tier, MAX_CHARS_IN_FILTER);
 		struct Vector* filtered_vector = vector_filter(tickets, filterByTier, tier);
 		printTicketsArray(filtered_vector);
 		vector_destroy(filtered_vector);
@@ -65,9 +65,9 @@ void filterByTypeAction()
 	}
 	else
 	{
-		wchar_t type[32];
+		wchar_t type[MAX_CHARS_IN_FILTER];
 		wprintf(L"Please input type:\n");
-		input_wchar(type, 32);
+		input_wchar(type, MAX_CHARS_IN_FILTER);
 		struct Vector* filtered_vector = vector_filter(tickets, filterByType, type);
 		printTicketsArray(filtered_vector);
 		vector_destroy(filtered_vector);
@@ -89,14 +89,11 @@ void filterByStakeHolderAction()
 	}
 	else
 	{
-		wchar_t stakeholders[32];
+		wchar_t stakeholder[MAX_CHARS_IN_FILTER];
 		wprintf(L"Please input stakeholders:\n");
-		input_wchar(stakeholders, 32);
-		struct Vector* stakeholders_vector = vector_create();
-		vector_push(stakeholders_vector, stakeholders);
-		struct Vector* filtered_vector = vector_filter(tickets, filterByStakeholders, stakeholders);
-		printTicketsArray(filtered_vector);
-		vector_destroy(stakeholders_vector);
+		input_wchar(stakeholder, MAX_CHARS_IN_FILTER);		
+		struct Vector* filtered_vector = vector_filter(tickets, filterByStakeholders, stakeholder);
+		printTicketsArray(filtered_vector);		
 		vector_destroy(filtered_vector);
 		for(unsigned int i = 0; i < vector_getSize(tickets); ++i)
 		{
@@ -115,9 +112,9 @@ void filterByMediaAction()
 	}
 	else
 	{
-		wchar_t media[32];
+		wchar_t media[MAX_CHARS_IN_FILTER];
 		wprintf(L"Please input media:\n");
-		input_wchar(media,32);
+		input_wchar(media, MAX_CHARS_IN_FILTER);
 		struct Vector* filtered_vector = vector_filter(tickets, filterByMedia, media);
 		printTicketsArray(filtered_vector);
 		vector_destroy(filtered_vector);
@@ -138,9 +135,9 @@ void SearchByCustomerEmailAction()
 	}
 	else
 	{
-		wchar_t customer_email[32];
+		char customer_email[MAX_CHARS_IN_FILTER];
 		wprintf(L"please input Customer Email:\n");
-		input_wchar(customer_email, 32);
+		input_char(customer_email, MAX_CHARS_IN_FILTER);
 		struct Vector* filtered_vector = vector_filter(tickets, searchByCustomerEmail, customer_email);
 		printTicketsArray(filtered_vector);
 		vector_destroy(filtered_vector);
@@ -162,9 +159,9 @@ void SearchByTagsAction()
 	}
 	else
 	{
-		wchar_t tags[32];
+		wchar_t tags[MAX_CHARS_IN_FILTER];
 		wprintf(L"Please input tags:\n");
-		input_wchar(tags, 32);
+		input_wchar(tags, MAX_CHARS_IN_FILTER);
 		struct Vector* filtered_vector = vector_filter(tickets, searchByTags, tags);
 		printTicketsArray(filtered_vector);
 		vector_destroy(filtered_vector);
@@ -342,7 +339,7 @@ void editSeverityAction(void* ticket)
 {
 	wchar_t* severity[] = { L"Medium", L"High", L"Critical", L"Urgent" };//////
 	int severity_num;
-	wprintf(L"Please input new severity.\n");
+	wprintf(L"Please input severity.\n1. Medium\n2. High\n3. Critical\n4. Urgent\n");
 	do
 	{
 		wscanf(L"%d", &severity_num);
@@ -427,6 +424,7 @@ void addNoteAction(void* ticket)
 
 void viewOrUpdateTicket()
 {
+	system("CLS");
 	wchar_t ticket_id[64];
 	wprintf(L"Please input ticket ID\n");
 	input_wchar(ticket_id, 64);
