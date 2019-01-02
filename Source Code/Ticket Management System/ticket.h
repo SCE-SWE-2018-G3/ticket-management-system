@@ -44,7 +44,6 @@ void ticket_setCustomerEmail(struct Ticket*, char*);
 void ticket_setTitle(struct Ticket*, wchar_t*);
 void ticket_setType(struct Ticket*, wchar_t*);
 void ticket_setSeverity(struct Ticket*, wchar_t*);
-void ticket_setSeverity(struct Ticket*, wchar_t*);
 void ticket_setDescription(struct Ticket*, wchar_t*);
 void ticket_setTier(struct Ticket*, wchar_t*);
 void ticket_setStatus(struct Ticket*, wchar_t*);

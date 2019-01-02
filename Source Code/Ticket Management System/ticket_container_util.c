@@ -160,7 +160,7 @@ struct ticketContainer_wcsArrStatus* ticketContainer_wcsArrFromTicket(wchar_t** 
 		data[8] = malloc(sizeof(wchar_t) * (length + 1));
 		if (data[8] == NULL)
 		{
-			data[8] = L" ";
+			data[8] = L"NULL";
 			fwprintf(stderr, L"Failed saving ticket stakeholders to database\n");
 		}
 		else
@@ -178,7 +178,7 @@ struct ticketContainer_wcsArrStatus* ticketContainer_wcsArrFromTicket(wchar_t** 
 	struct Vector* tags = ticket_getTags(ticket);
 	if (tags == NULL)
 	{
-		data[9] = L" ";
+		data[9] = L"NULL";
 	}
 	else
 	{
@@ -191,7 +191,7 @@ struct ticketContainer_wcsArrStatus* ticketContainer_wcsArrFromTicket(wchar_t** 
 		data[9] = malloc(sizeof(wchar_t) * (length + 1));
 		if (data[9] == NULL)
 		{
-			data[9] = L" ";
+			data[9] = L"NULL";
 			fwprintf(stderr, L"Failed saving ticket tags to database\n");
 		}
 		else
@@ -209,7 +209,7 @@ struct ticketContainer_wcsArrStatus* ticketContainer_wcsArrFromTicket(wchar_t** 
 	struct Vector* note = ticket_getNotes(ticket);
 	if (note == NULL)
 	{
-		data[10] = L" ";
+		data[10] = L"NULL";
 	}
 	else
 	{
@@ -222,7 +222,7 @@ struct ticketContainer_wcsArrStatus* ticketContainer_wcsArrFromTicket(wchar_t** 
 		data[10] = malloc(sizeof(wchar_t) * (length + 1));
 		if (data[10] == NULL)
 		{
-			data[10] = L" ";
+			data[10] = L"NULL";
 			fwprintf(stderr, L"Failed saving ticket notes to database\n");
 		}
 		else
