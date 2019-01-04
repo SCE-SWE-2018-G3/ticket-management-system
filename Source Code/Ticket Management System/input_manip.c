@@ -1,4 +1,5 @@
 #include  "input_manip.h"
+#include "user_container.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -21,8 +22,13 @@ void input_char(char* input, int max_characters)
 		fflush(stdin); // Clears the buffer just in case there is input that exceeds the limit.
 	}
 }
+
 bool input_valid_email(char* input)
 {
-	//TODO
-	return true;
+	bool valid = true;
+	if (strchr(input, '@') != strrchr(input, '@') || strchr(input, '@') == NULL) //Checks if there is exactly 1 @ in the email.
+		valid = false;
+	if (userContainer_getByEmail(input) != NULL) //Checks if the email is already in the database.
+		valid = false;
+	return valid;
 }

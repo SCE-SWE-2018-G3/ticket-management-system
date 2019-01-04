@@ -256,17 +256,18 @@ void openTickets()
 	wchar_t* severity[] = { L"Medium", L"High", L"Critical", L"Urgent" };
 	wchar_t media[256];
 	wchar_t description_support[512];
-	int severity_num;
+	char severity_num[10];	
 
 	system("CLS");
 	wprintf(L"Please input customer email\n");
-	input_char(customer_email, 256);
+	do
+	{
+		input_char(customer_email, 256);
+		if (!userContainer_getByEmail(customer_email))
+			printf("There is no user with that email. Try again.\n");
+	} while (!userContainer_getByEmail(customer_email));	
 	wprintf(L"Creating a ticket\n");
 	wprintf(L"===============\n");
-	wprintf(L"Please input description\n");
-	input_wchar(description_support, 512);
-	wprintf(L"Please input media\n");
-	input_wchar(media, 256);
 	wprintf(L"Please input title\n");
 	input_wchar(title, 256);
 	wprintf(L"Please input type\n");
@@ -274,20 +275,24 @@ void openTickets()
 	wprintf(L"Please input severity.\n1. Medium\n2. High\n3. Critical\n4. Urgent\n");
 	do
 	{
-		wscanf(L"%d", &severity_num);
-		if(severity_num < 1 || severity_num > 4)
+		input_char(severity_num, 10);
+
+		if (strcmp(severity_num,"1") && strcmp(severity_num, "2") && strcmp(severity_num, "3") && strcmp(severity_num, "4"))
 		{
 			wprintf(L"Invaild severity. Try again.\n");
 		}
-	} while(severity_num < 1 || severity_num > 4);
+	} while (strcmp(severity_num, "1") && strcmp(severity_num, "2") && strcmp(severity_num, "3") && strcmp(severity_num, "4"));	
+	wprintf(L"Please input media\n");
+	input_wchar(media, 256);
+	wprintf(L"Please input description\n");
+	input_wchar(description_support, 512);		
+	
 		
 	struct Ticket* ticket = ticket_create(title, type_support, description_support,media,customer_email);
 	if (ticket != NULL)
 	{
-		ticket_setSeverity(ticket, severity[severity_num - 1]);
-
+		ticket_setSeverity(ticket, severity[severity_num[0] - '0' - 1]);
 		ticketContainer_update(ticket);
-
 		system("CLS");
 		wprintf(L"Ticket saved\n");
 		wprintf(L"==================\n");
@@ -338,18 +343,18 @@ void editTypeAction(void* ticket)
 void editSeverityAction(void* ticket)
 {
 	wchar_t* severity[] = { L"Medium", L"High", L"Critical", L"Urgent" };//////
-	int severity_num;
+	char severity_num[10];	
 	wprintf(L"Please input severity.\n1. Medium\n2. High\n3. Critical\n4. Urgent\n");
 	do
 	{
-		wscanf(L"%d", &severity_num);
-		if (severity_num < 1 || severity_num > 4)
+		input_char(severity_num, 10);
+
+		if (strcmp(severity_num, "1") && strcmp(severity_num, "2") && strcmp(severity_num, "3") && strcmp(severity_num, "4"))
 		{
 			wprintf(L"Invaild severity. Try again.\n");
-
 		}
-	} while (severity_num < 1 || severity_num > 4);
-	ticket_setSeverity(ticket, severity[severity_num-1]);
+	} while (strcmp(severity_num, "1") && strcmp(severity_num, "2") && strcmp(severity_num, "3") && strcmp(severity_num, "4"));	
+	ticket_setSeverity(ticket, severity[severity_num[0] - '0' -1]);
 }
 
 void editStakeholdersAction(void* ticket)
