@@ -291,6 +291,18 @@ void openTickets()
 	struct Ticket* ticket = ticket_create(title, type_support, description_support,media,customer_email);
 	if (ticket != NULL)
 	{
+		wprintf(L"Please add tags (each in new line).\n");
+		wprintf(L"Type END to finish.\n");
+		wchar_t input[128];
+		do
+		{
+			input_wchar(input, 128);
+			if (wcscmp(input, L"END") != 0)
+			{
+				ticket_addTag(ticket, input);
+			}
+		} while (wcscmp(input, L"END") != 0);
+
 		ticket_setSeverity(ticket, severity[severity_num[0] - '0' - 1]);
 		ticketContainer_update(ticket);
 		system("CLS");

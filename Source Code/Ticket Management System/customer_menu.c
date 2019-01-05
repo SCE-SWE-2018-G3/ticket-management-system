@@ -33,11 +33,24 @@ void createTicket()
 		}
 	} while (strcmp(severity_num, "1") && strcmp(severity_num, "2") && strcmp(severity_num, "3") && strcmp(severity_num, "4"));	
 	wprintf(L"Please describe what happened.\n");
-	input_wchar(description,512);	
+	input_wchar(description,512);
+
 	
 	struct Ticket* ticket = ticket_create(title, type, description, L"Self service",auth_getEmail());// add more fields
 	if (ticket != NULL)
 	{
+		wprintf(L"Please add tags (each in new line).\n");
+		wprintf(L"Type END to finish.\n");
+		wchar_t input[128];
+		do
+		{
+			input_wchar(input, 128);
+			if (wcscmp(input, L"END") != 0)
+			{
+				ticket_addTag(ticket, input);
+			}
+		} while (wcscmp(input, L"END") != 0);
+
 		ticket_setSeverity(ticket, severity[severity_num[0]- '0' - 1]);		
 		ticketContainer_update(ticket);
 		system("CLS");
