@@ -186,7 +186,7 @@ void updateContactInfo()
 	char OG_email[512];
 	wchar_t password[50];
 	wchar_t name[50];
-	wchar_t phone_number[20];	
+	wchar_t phone_number[50];	
 	struct User* logged_user = auth_getUser(); // Fetches the logged-in user.
 	if (logged_user == NULL)
 	{
