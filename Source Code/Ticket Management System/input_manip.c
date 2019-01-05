@@ -22,7 +22,6 @@ void input_char(char* input, int max_characters)
 		fflush(stdin); // Clears the buffer just in case there is input that exceeds the limit.
 	}
 }
-
 bool input_valid_email(char* input)
 {
 	bool valid = true;
